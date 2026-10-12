@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>発音の難しい単語練習</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Charis+SIL:wght@400;700&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+
+  :root{
+    color-scheme:light;
+    --bg:#F4F1EA; --paper:#FFFFFF; --soft:#F8F5EE; --ink:#1E2A3A; --ink-2:#4A5568; --ink-3:#8A93A3;
+    --rule:#E2DCCF; --navy:#2B3F5C; --orange:#C8693E; --orange-soft:#F7E6DC; --green:#3E8A6A; --green-soft:#E3F1EA;
+    --red:#C0412F; --red-soft:#F9E3DF; --gold:#E9C46A; --hl:#FFF0B8; --hl-line:#E9C46A;
+    --en:"Crimson Pro","Georgia","Times New Roman",serif;
+    --jp:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+  }
+  :root[data-theme="dark"]{
+    color-scheme:dark;
+    --bg:#13171E; --paper:#1B212B; --soft:#202733; --ink:#E9EDF3; --ink-2:#B8C1CF; --ink-3:#7F8A9C;
+    --rule:#2F3846; --navy:#9CB8E0; --orange:#E89A72; --orange-soft:#3A2A22; --green:#6CC49E; --green-soft:#1C3229;
+    --red:#F08A78; --red-soft:#3A2220; --gold:#E9C46A; --hl:#4A3F17; --hl-line:#C9A443;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--jp);font-size:15.5px;line-height:1.85;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:0 18px 80px}
+  button{font:inherit;cursor:pointer}
+  :focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+
+  /* nav */
+  .nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--rule)}
+  .nav-in{max-width:860px;margin:0 auto;padding:8px 18px;display:flex;gap:6px;align-items:center;overflow-x:auto;scrollbar-width:none}
+  .nav-in::-webkit-scrollbar{display:none}
+  .nav a{flex:none;text-decoration:none;color:var(--ink-2);font-size:13px;font-weight:700;padding:6px 12px;border-radius:99px;white-space:nowrap}
+  .nav a:hover{color:var(--ink);background:var(--soft)}
+  .nav a.on{background:var(--navy);color:var(--paper)}
+  .theme{margin-left:auto;flex:none;border:1px solid var(--rule);background:var(--paper);color:var(--ink-2);border-radius:99px;padding:4px 12px;font-size:12.5px}
+
+  /* header */
+  header{padding:30px 0 14px}
+  .kicker{display:flex;align-items:center;gap:10px;flex-wrap:wrap;color:var(--ink-3);font-size:12.5px;letter-spacing:.04em}
+  .badge{background:var(--navy);color:#fff;border-radius:6px;padding:6px 12px;line-height:1.1;text-align:center;font-weight:700}
+  :root[data-theme="dark"] .badge{color:#13171E}
+  .badge small{display:block;font-size:9.5px;letter-spacing:.12em;opacity:.85}
+  .badge b{font-size:22px;font-family:var(--en)}
+  .tag{border-radius:99px;padding:2px 10px;font-size:12px;font-weight:700}
+  .tag.t1{background:var(--orange);color:#fff}
+  .tag.t2{background:var(--soft);color:var(--ink-2);border:1px solid var(--rule)}
+  h1{font-family:var(--en);font-weight:700;color:var(--navy);font-size:clamp(28px,5vw,38px);line-height:1.18;margin:14px 0 4px}
+  .sub{color:var(--ink-2);font-size:14px;margin:0}
+
+  .card{background:var(--paper);border:1px solid var(--rule);border-radius:16px;padding:22px clamp(16px,4vw,30px);margin-top:18px}
+  .illus{display:block;width:100%;height:auto;border-radius:12px}
+  :root[data-theme="dark"] .illus{filter:brightness(.92)}
+  section{scroll-margin-top:60px}
+  .sec-h{display:flex;align-items:center;gap:10px;margin:34px 0 6px}
+  .sec-h .ic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;color:#fff;font-weight:700;font-size:14px;flex:none}
+  .sec-h h2{margin:0;font-size:18px}
+  .sec-h .note{margin-left:auto;color:var(--ink-3);font-size:12px}
+  .lead{color:var(--ink-2);font-size:13.5px;margin:4px 0 0}
+
+  /* reading */
+  .toggle-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+  .switch{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2);background:none;border:0;padding:0}
+  .switch .knob{width:34px;height:20px;border-radius:99px;background:var(--rule);position:relative;transition:background .2s}
+  .switch .knob::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .2s}
+  .switch[aria-pressed="true"] .knob{background:var(--navy)}
+  .switch[aria-pressed="true"] .knob::after{left:16px}
+  .para{display:flex;gap:12px;margin:14px 0}
+  .pno{flex:none;width:22px;height:22px;border-radius:50%;background:var(--green);color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center;margin-top:6px}
+  .para p{margin:0;font-family:var(--en);font-size:clamp(17px,2.4vw,19.5px);line-height:1.75;text-align:justify;hyphens:auto}
+  .gp{font-weight:700}
+  .show-gp .gp{color:var(--navy);background:linear-gradient(var(--gold),var(--gold)) 0 100%/100% 2.5px no-repeat;padding-bottom:1px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+  .s{transition:background .3s;border-radius:3px}
+  .s.ev{background:var(--hl);box-shadow:0 0 0 2px var(--hl);animation:pulse 1.4s ease 1}
+  @keyframes pulse{0%{box-shadow:0 0 0 6px var(--hl-line)}100%{box-shadow:0 0 0 2px var(--hl)}}
+
+  /* media */
+  .media{display:grid;grid-template-columns:1fr;gap:16px}
+  .media h3{margin:0 0 8px;font-size:14px;color:var(--ink-2);display:flex;align-items:center;gap:6px}
+  audio{width:100%}
+  .rate{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .rate button{border:1px solid var(--rule);background:var(--soft);color:var(--ink-2);border-radius:99px;padding:3px 12px;font-size:12.5px}
+  .rate button[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:var(--paper)}
+  .video{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000}
+  .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .ytlink{display:inline-block;margin-top:6px;font-size:12.5px;color:var(--orange)}
+
+  /* translation */
+  details.tr{background:var(--soft);border-left:4px solid var(--green);border-radius:0 12px 12px 0;padding:0}
+  details.tr summary{list-style:none;cursor:pointer;padding:14px 18px;font-weight:700;display:flex;align-items:center;gap:8px}
+  details.tr summary::-webkit-details-marker{display:none}
+  details.tr summary::after{content:"＋ 開く";margin-left:auto;font-size:12px;color:var(--ink-3);font-weight:500}
+  details.tr[open] summary::after{content:"－ 閉じる"}
+  .tr-body{padding:0 18px 16px}
+  .tr-body p{margin:0 0 10px;text-indent:1em;font-size:14.5px;color:var(--ink-2)}
+
+  /* grammar items */
+  .gi{border-top:1px solid var(--rule);padding:18px 0 6px;scroll-margin-top:70px;transition:background .4s}
+  .gi:first-child{border-top:0;padding-top:4px}
+  .gi.flash{background:var(--orange-soft);border-radius:10px}
+  .gi h3{display:flex;align-items:center;gap:10px;margin:0 0 8px;font-size:16px;color:var(--navy)}
+  .gi h3 .n{width:24px;height:24px;border:1.5px solid var(--navy);border-radius:50%;display:grid;place-items:center;font-size:12px;flex:none}
+  .gi .lbl{color:var(--orange);font-weight:700;font-size:13px}
+  .gi p{margin:4px 0;font-size:14.5px}
+  .gi .en{font-family:var(--en);font-size:16px}
+  .ex{background:var(--soft);border-left:3px solid #A8BBD6;border-radius:0 8px 8px 0;padding:6px 12px;margin:6px 0;font-size:14px}
+  .ex .en{font-size:16.5px}
+
+  /* grammar check */
+  .gq{font-family:var(--en);font-size:clamp(17px,2.4vw,19px);line-height:2.4}
+  .gq p{margin:0 0 12px;text-indent:1.2em}
+  .blank{display:inline-flex;align-items:center;gap:3px;vertical-align:middle;line-height:1;background:var(--soft);border:1px solid var(--rule);border-radius:99px;padding:2px 3px 2px 8px;margin:0 2px;font-family:var(--jp)}
+  .blank .no{font-size:11px;color:var(--orange);font-weight:700;margin-right:2px}
+  .blank button{border:0;background:transparent;color:var(--ink-2);border-radius:99px;padding:3px 8px;font-size:13px;font-family:var(--en);font-weight:600}
+  .blank button:hover{background:var(--paper);color:var(--ink)}
+  .blank button.pick{background:var(--navy);color:var(--paper)}
+  .blank.ok{border-color:var(--green);background:var(--green-soft)}
+  .blank.ok button.pick{background:var(--green)}
+  .blank.ng{border-color:var(--red);background:var(--red-soft)}
+  .blank.ng button.pick{background:var(--red)}
+  .blank .mark{font-size:13px;font-weight:700;padding:0 4px}
+  .blank.ok .mark{color:var(--green)} .blank.ng .mark{color:var(--red)}
+  .gbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0 14px}
+  .score{font-weight:700;font-size:14px}
+  .score b{color:var(--orange);font-size:18px;font-family:var(--en)}
+  .btn{border:1px solid var(--rule);background:var(--paper);color:var(--ink-2);border-radius:99px;padding:6px 14px;font-size:13px;font-weight:700}
+  .btn:hover{color:var(--ink);border-color:var(--ink-3)}
+  .btn.primary{background:var(--orange);border-color:var(--orange);color:#fff}
+  .alist{margin:6px 0 0;padding:0;list-style:none}
+  .alist li{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;padding:10px 0;border-top:1px dashed var(--rule)}
+  .alist .num{width:26px;height:22px;border-radius:5px;background:var(--gold);color:#3b2f10;font-size:12px;font-weight:700;display:grid;place-items:center;margin-top:2px}
+  .alist .ans{font-weight:700;color:var(--navy)}
+  .alist .ans .res{font-size:12px;margin-left:8px;font-weight:700}
+  .alist .res.ok{color:var(--green)} .alist .res.ng{color:var(--red)}
+  .alist .exp{grid-column:2;font-size:13.5px;color:var(--ink-2);margin:0}
+  .alist li[hidden]{display:none}
+  .golink{border:0;background:none;color:var(--orange);font-weight:700;padding:0;text-decoration:underline;text-underline-offset:2px;font-size:13.5px}
+  .jt{margin-top:14px;font-size:14px;color:var(--ink-2)}
+  .jt p{margin:0 0 8px;text-indent:1em}
+
+  /* reading quiz */
+  .rq{border-top:1px solid var(--rule);padding:20px 0 6px}
+  .rq:first-of-type{border-top:0;padding-top:4px}
+  .rq .qh{display:flex;gap:10px;align-items:flex-start}
+  .rq .qn{flex:none;background:var(--navy);color:var(--paper);border-radius:6px;font-weight:700;font-size:13px;padding:2px 9px;margin-top:4px}
+  .rq .qtext{font-family:var(--en);font-size:clamp(17px,2.3vw,18.5px);line-height:1.6;margin:0}
+  .rq .qja{font-size:12.5px;color:var(--ink-3);margin:2px 0 0}
+  .opts{display:grid;gap:8px;margin:12px 0 0;padding:0;list-style:none}
+  .opt{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;border:1.5px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:12px;padding:10px 14px;font-family:var(--en);font-size:clamp(16px,2.2vw,17.5px);line-height:1.5;transition:border-color .15s,background .15s}
+  .opt:hover:not([disabled]){border-color:var(--ink-3)}
+  .opt .k{flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--ink-3);display:grid;place-items:center;font-size:12px;font-family:var(--jp);font-weight:700;margin-top:2px}
+  .opt[disabled]{cursor:default}
+  .opt.correct{border-color:var(--green);background:var(--green-soft)}
+  .opt.correct .k{background:var(--green);border-color:var(--green);color:#fff}
+  .opt.wrong{border-color:var(--red);background:var(--red-soft)}
+  .opt.wrong .k{background:var(--red);border-color:var(--red);color:#fff}
+  .fb{margin-top:12px;border-radius:12px;padding:14px 16px;background:var(--soft);font-size:14px}
+  .fb[hidden]{display:none}
+  .fb .v{font-weight:700;font-size:15px;margin:0 0 6px}
+  .fb .v.ok{color:var(--green)} .fb .v.ng{color:var(--red)}
+  .fb .evid{border-left:3px solid var(--gold);padding:4px 0 4px 12px;margin:8px 0}
+  .fb .evid .en{font-family:var(--en);font-size:16.5px;line-height:1.55}
+  .fb .evid .ja{font-size:13px;color:var(--ink-2);display:block;margin-top:2px}
+  .fb ul{margin:8px 0 0;padding-left:0;list-style:none}
+  .fb li{margin:5px 0;padding-left:28px;position:relative}
+  .fb li .k{position:absolute;left:0;top:2px;width:20px;height:20px;border-radius:50%;background:var(--paper);border:1px solid var(--rule);display:grid;place-items:center;font-size:11px;font-weight:700}
+  .fb li.right .k{background:var(--green);border-color:var(--green);color:#fff}
+  .tobody{margin-top:8px}
+  .rscore{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:16px 0 0;padding-top:14px;border-top:1px solid var(--rule)}
+
+  /* 読解クイズ：本文を横に並べる */
+  .wide{width:min(1180px,calc(100vw - 36px));margin-left:calc((100% - min(1180px,calc(100vw - 36px))) / 2)}
+  .rq-grid{display:grid;grid-template-columns:1fr;gap:24px;margin-top:10px}
+  .rq-pass{display:none}
+  .rp-h{margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--ink-3)}
+  .rp-para{display:flex;gap:10px;margin:0 0 14px;border-radius:10px;padding:6px 8px;transition:opacity .25s,background .25s}
+  .rp-para p{margin:0;font-family:var(--en);font-size:16.5px;line-height:1.65}
+  .rp-para .pno{margin-top:3px}
+  .rq-pass.focus .rp-para{opacity:.38}
+  .rq-pass.focus .rp-para.cur{opacity:1;background:var(--paper);box-shadow:0 0 0 1px var(--rule)}
+  .rq-ctx{margin:12px 0 0;background:var(--soft);border-radius:12px;border:1px solid var(--rule)}
+  .rq-ctx summary{list-style:none;cursor:pointer;padding:9px 14px;font-size:12.5px;font-weight:700;color:var(--ink-2);display:flex;gap:6px}
+  .rq-ctx summary::-webkit-details-marker{display:none}
+  .rq-ctx summary::after{content:"閉じる";margin-left:auto;font-weight:500;color:var(--ink-3)}
+  .rq-ctx:not([open]) summary::after{content:"開く"}
+  .rq-ctx .rp-para{padding:0 12px;margin:0 0 12px}
+  .hide-ja .qja{display:none}
+  @media (min-width:1000px){
+    .rq-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:start}
+    .rq-pass{display:block;position:sticky;top:64px;max-height:calc(100vh - 84px);overflow:auto;background:var(--soft);border-radius:14px;padding:14px 14px 4px;border:1px solid var(--rule)}
+    .rq-ctx{display:none}
+  }
+  footer{margin-top:40px;color:var(--ink-3);font-size:12px;text-align:center}
+  @media (max-width:560px){ .para{gap:8px} .card{border-radius:12px} }
+
+  /* ===== 共通（基本英文法アプリ） ===== */
+  :root{--ok:#2E7D57;--ok-soft:#E3F1EA;--pos-n:#2E5E9E;--pos-v:#2E7D57;--pos-adj:#A0661A;--pos-adv:#7A4FA8}
+  :root[data-theme="dark"]{--ok:#6CC49E;--ok-soft:#1C3229;--pos-n:#8DB6EA;--pos-v:#6CC49E;--pos-adj:#E3B066;--pos-adv:#C3A0EA}
+  .nav .mt{flex:none;border:0;background:none;color:var(--ink-2);font-size:13px;font-weight:700;padding:6px 14px;border-radius:99px;white-space:nowrap}
+  .nav .mt:hover{color:var(--ink);background:var(--soft)}
+  .nav .mt[aria-selected="true"]{background:var(--navy);color:var(--paper)}
+  .nav .mt .num{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;font-size:11px;margin-right:6px;background:var(--soft);color:var(--ink-2)}
+  .nav .mt[aria-selected="true"] .num{background:var(--orange);color:#fff}
+  .brand{font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--ink-3);padding:22px 0 0}
+  .brand b{color:var(--navy)}
+  header h1.jt{font-family:var(--jp);font-weight:700;font-size:clamp(24px,4.4vw,32px);letter-spacing:.02em}
+  .topics{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+  .topics span{font-size:12px;border:1px solid var(--rule);background:var(--soft);color:var(--ink-2);border-radius:99px;padding:2px 10px}
+  .topics span b{font-family:var(--en);color:var(--orange);margin-right:5px}
+  .mode{display:none}
+  .mode.on{display:block}
+  .btn.danger{border-color:var(--red);color:var(--red)}
+  .tbar{position:sticky;top:49px;z-index:10;display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(6px);padding:10px 0;margin-bottom:6px;border-bottom:1px solid var(--rule)}
+  .tbar .score{font-size:13px;color:var(--ink-2)}
+  .tbar .score b{font-family:var(--en);font-size:20px;color:var(--orange)}
+  .track{flex:1 1 120px;min-width:100px;height:6px;border-radius:99px;background:var(--soft);border:1px solid var(--rule);overflow:hidden}
+  .track span{display:block;height:100%;width:0;background:var(--green);transition:width .3s}
+  .tools{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+  .tools .btn{padding:5px 12px;font-size:12.5px}
+
+  /* ===== 文法理解度チェック ===== */
+  #m-check .item{background:var(--paper);border:1px solid var(--rule);border-radius:16px;margin:14px 0;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+  #m-check .item.ok{border-color:var(--green)}
+  #m-check .item.ng{border-color:var(--orange)}
+  #m-check .q{padding:18px 20px 16px;display:flex;flex-direction:column;gap:12px}
+  #m-check .q-head{display:flex;align-items:center;gap:10px}
+  #m-check .qn{flex:none;width:28px;height:28px;border-radius:50%;background:var(--navy);color:var(--paper);display:grid;place-items:center;font-family:var(--en);font-weight:700;font-size:15px}
+  #m-check .item.ok .qn{background:var(--green)}
+  #m-check .item.ng .qn{background:var(--orange)}
+  #m-check .secl{font-size:12px;font-weight:700;color:var(--ink-3);letter-spacing:.04em}
+  #m-check .prompt{margin:0;font-size:15px;line-height:2}
+  #m-check .blank{display:inline-block;min-width:2.4em;border-bottom:1px solid var(--ink-3);margin:0 .25em;padding:0;background:none;border-radius:0}
+  #m-check .ex{margin:0;padding:12px 16px;background:var(--soft);border-left:3px solid var(--navy);border-radius:0 10px 10px 0;display:flex;flex-direction:column;gap:6px}
+  #m-check .ex p{margin:0;font-family:var(--en);font-size:18px;line-height:1.7}
+  #m-check .ex .tg{font-family:var(--jp);font-size:12px;color:var(--ink-3);margin-right:.5em}
+  #m-check .ex .jp{font-family:var(--jp);font-size:13.5px;color:var(--ink-2)}
+  #m-check .tag{font-family:var(--jp);font-size:12px;font-weight:700;color:var(--ink-3);background:none;border:0;padding:0;margin-right:.4em}
+  #m-check .bk{font:inherit;color:var(--ink);background:var(--paper);border:0;border-bottom:2px solid var(--ink-3);border-radius:4px 4px 0 0;min-width:5.5em;width:6.5em;max-width:100%;padding:1px 6px;margin:0 .2em;vertical-align:baseline;outline:none;transition:background .15s,border-color .15s}
+  #m-check .ex .bk{font-family:var(--en);font-size:17px;background:var(--paper)}
+  #m-check .jp-bk{font-family:var(--jp);font-size:14px}
+  #m-check .bk:focus{border-bottom-color:var(--orange);background:var(--orange-soft)}
+  #m-check .bk.ok{border-bottom-color:var(--green);background:var(--green-soft);color:var(--green)}
+  #m-check .bk.ng{border-bottom-color:var(--red);background:var(--red-soft);color:var(--red)}
+  #m-check .pk{display:inline-flex;align-items:center;gap:4px;margin:0 .25em;vertical-align:baseline;flex-wrap:wrap}
+  #m-check .pk-s{color:var(--ink-3);font-size:12px}
+  #m-check .pk-o{font-family:var(--en);font-size:15px;font-weight:600;padding:1px 12px;border:1.5px solid var(--rule);background:var(--paper);color:var(--navy);border-radius:99px}
+  #m-check .pk-o:hover{border-color:var(--navy)}
+  #m-check .pk-o[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:var(--paper)}
+  #m-check .pk-o.ok{background:var(--green);border-color:var(--green);color:#fff}
+  #m-check .pk-o.ng{background:var(--red);border-color:var(--red);color:#fff}
+  #m-check .free{font:inherit;font-size:14px;width:100%;padding:10px 12px;border:1px solid var(--rule);border-radius:10px;background:var(--paper);color:var(--ink);resize:vertical}
+  #m-check .free:focus{outline:none;border-color:var(--orange)}
+  #m-check .actions{display:flex;gap:8px;flex-wrap:wrap}
+  #m-check .verdict{display:flex;align-items:center;gap:8px 10px;flex-wrap:wrap;font-size:13.5px}
+  #m-check .verdict:empty{display:none}
+  #m-check .v-ok{color:var(--green);font-weight:700}
+  #m-check .v-ng{color:var(--orange);font-weight:700}
+  #m-check .v-msg{color:var(--ink-2)}
+  #m-check .self{padding:4px 12px;font-size:12.5px;border:1px solid var(--rule);background:var(--paper);color:var(--ink-2);border-radius:99px}
+  #m-check .self.ok:hover{border-color:var(--green);color:var(--green)}
+  #m-check .self.ng:hover{border-color:var(--red);color:var(--red)}
+  #m-check .a{border-top:1px dashed var(--rule);background:var(--green-soft);padding:14px 20px 16px}
+  #m-check .a[hidden]{display:none}
+  #m-check .a-label{font-family:var(--en);font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--green);margin:0 0 8px}
+  #m-check .rows{display:flex;flex-direction:column;gap:6px;margin:0}
+  #m-check .row{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr);gap:2px 14px;align-items:baseline}
+  #m-check .row dt{font-size:12.5px;color:var(--ink-3)}
+  #m-check .row dd{margin:0;font-size:15px;font-weight:700;color:var(--ink)}
+  #m-check .row dd .en,#m-check .en{font-family:var(--en);font-size:17px}
+  #m-check .anote{margin:10px 0 0;padding-top:10px;border-top:1px solid var(--rule);font-size:13px;line-height:1.85;color:var(--ink-2)}
+  #m-check .pos{border-bottom:2px solid currentColor;padding-bottom:1px;font-family:var(--en);font-weight:700}
+  #m-check .n{color:var(--pos-n)} #m-check .v{color:var(--pos-v)} #m-check .adj{color:var(--pos-adj)} #m-check .adv{color:var(--pos-adv)}
+  #m-check .chip{display:inline-block;font-family:var(--jp);font-size:11px;font-weight:700;padding:0 7px;border-radius:99px;border:1px solid currentColor;margin-left:6px;vertical-align:2px}
+  .legend{margin-top:20px;font-size:12.5px;color:var(--ink-2)}
+  .legend ul{display:flex;flex-wrap:wrap;gap:6px 18px;margin:6px 0 0;padding:0;list-style:none}
+  .legend .sw{display:inline-block;width:16px;height:3px;border-radius:99px;vertical-align:middle;margin-right:6px}
+
+  /* ===== 入れ替えドリル / 瞬間英作 共通 ===== */
+  .secs{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:4px 0 14px}
+  .secs .lbl2{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--ink-3);margin-right:4px}
+  .secs button{border:1px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:999px;min-width:42px;height:34px;padding:0 12px;font-weight:700;font-family:var(--en);font-size:15px}
+  .secs button span{font-family:var(--jp);font-size:11px;color:var(--ink-3);margin-left:4px;font-weight:500}
+  .secs button[aria-pressed="true"]{background:var(--orange);border-color:var(--orange);color:#fff}
+  .secs button[aria-pressed="true"] span{color:#fff}
+  .stage{background:var(--paper);border:1px solid var(--rule);border-radius:18px;padding:22px 22px 18px;position:relative;overflow:hidden}
+  .stage .top{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--ink-3);font-weight:700;letter-spacing:.06em}
+  .stage .top .prog{font-family:var(--en);font-size:16px;color:var(--navy)}
+  .disp{min-height:170px;display:flex;flex-direction:column;justify-content:center;gap:10px;padding:12px 4px}
+  .disp .en{font-family:var(--en);font-size:clamp(24px,4.6vw,34px);line-height:1.3;font-weight:700;color:var(--navy)}
+  .disp .cue{font-family:var(--en);color:var(--orange);font-weight:700;white-space:nowrap}
+  .disp .ja{font-size:15px;color:var(--ink-2)}
+  .disp .qjp{font-size:clamp(17px,2.6vw,20px);line-height:1.9;color:var(--ink)}
+  .disp .qjp strong{background:linear-gradient(transparent 62%,var(--hl) 62%);font-weight:700}
+  .disp .ans{border-top:1px dashed var(--rule);padding-top:12px;margin-top:4px}
+  .disp .ans .en{font-size:clamp(22px,4vw,30px)}
+  .disp .ph{color:var(--ink-3);font-size:13px;letter-spacing:.06em}
+  .disp.fade{animation:fd .25s ease}
+  @keyframes fd{from{opacity:.2;transform:translateY(4px)}to{opacity:1;transform:none}}
+  .tmr{height:5px;border-radius:99px;background:var(--soft);overflow:hidden;margin:6px 0 0;visibility:hidden}
+  .tmr.on{visibility:visible}
+  .tmr i{display:block;height:100%;width:100%;background:var(--orange);transform-origin:left}
+  .ctrls{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+  .ctrls .btn{min-width:92px;justify-content:center}
+  .ctrls .btn.big{min-width:150px;font-size:15px;padding:10px 20px}
+  .ctrls .btn.stop{background:var(--red);border-color:var(--red);color:#fff}
+  .sets{margin-top:14px;background:var(--paper);border:1px solid var(--rule);border-radius:14px}
+  .sets summary{list-style:none;cursor:pointer;padding:12px 18px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px}
+  .sets summary::-webkit-details-marker{display:none}
+  .sets summary::after{content:"＋ 開く";margin-left:auto;font-size:12px;color:var(--ink-3);font-weight:500}
+  .sets[open] summary::after{content:"－ 閉じる"}
+  .sets .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px 16px;padding:0 18px 16px}
+  .sets label{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:700;color:var(--ink-3)}
+  .sets select{font:inherit;font-size:14px;font-weight:500;color:var(--ink);background:var(--soft);border:1px solid var(--rule);border-radius:10px;padding:7px 10px}
+  .seg{display:inline-flex;border:1px solid var(--rule);border-radius:99px;overflow:hidden;align-self:flex-start}
+  .seg button{border:0;background:var(--paper);color:var(--ink-2);padding:6px 14px;font-size:13px;font-weight:700}
+  .seg button[aria-pressed="true"]{background:var(--navy);color:var(--paper)}
+  .listcard{margin-top:16px}
+  .listcard .lh{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .listcard .lh h3{margin:0;font-size:14px}
+  .listcard .lh .btn{margin-left:auto;padding:4px 12px;font-size:12.5px}
+  .slist{list-style:none;margin:0;padding:0}
+  .slist li{display:grid;grid-template-columns:28px 1fr;gap:2px 8px;padding:10px 10px;border-radius:10px;cursor:pointer;border-bottom:1px solid var(--rule)}
+  .slist li:last-child{border-bottom:0}
+  .slist li:hover{background:var(--soft)}
+  .slist li.cur{background:var(--orange-soft)}
+  .slist .no{font-family:var(--en);font-weight:700;color:var(--ink-3);text-align:right}
+  .slist li.cur .no{color:var(--orange)}
+  .slist .e{font-family:var(--en);font-size:17px;line-height:1.5}
+  .slist .e .cue{color:var(--orange);font-weight:700;margin-left:6px}
+  .slist .j{grid-column:2;font-size:13px;color:var(--ink-2)}
+  .slist.hide-ja .j{display:none}
+  .slist.hide-en .e{display:none}
+  .slist li.done .no::before{content:"✓ ";color:var(--green)}
+  .done-card{text-align:center;padding:26px 10px}
+  .done-card b{display:block;font-size:22px;color:var(--green);margin-bottom:6px}
+  .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--navy);color:var(--paper);font-size:12.5px;padding:6px 14px;border-radius:99px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:50}
+  .toast.on{opacity:.95}
+  @media (max-width:640px){
+    .nav .mt{padding:6px 9px;font-size:12px}
+    .nav .mt .num{display:none}
+    .nav-in{gap:2px}
+    .stage{padding:16px 14px 14px}
+    .ctrls .btn{min-width:0;flex:1}
+    .ctrls .btn.big{flex-basis:100%}
+    .tbar{position:static}
+    .sec-h .note{display:none}
+  }
+
+  /* ===== タイトル＋表紙 ===== */
+  :root{--wine:#A3244A}
+  :root[data-theme="dark"]{--wine:#E2789A}
+  .mast{background:var(--paper);border-bottom:3px solid var(--wine)}
+  .mast-in{max-width:860px;margin:0 auto;padding:18px 18px 18px;display:flex;align-items:flex-start;gap:20px}
+  .mast-t{padding-top:18px}
+  .mast-h em{font-style:normal;white-space:nowrap}
+  .mast-t{flex:1;min-width:0}
+  .mast-en{margin:0 0 6px;font-family:var(--en);font-weight:700;font-size:14px;letter-spacing:.04em;color:var(--wine)}
+  .mast-h{margin:0;font-family:var(--jp);font-weight:700;color:var(--ink);font-size:clamp(28px,5.4vw,46px);line-height:1.2;letter-spacing:.02em}
+  .mast-h span{display:block;font-size:.5em;letter-spacing:.12em;color:var(--ink-2);margin-bottom:4px}
+  .mast-sub{margin:10px 0 0;font-size:13px;font-weight:700;color:var(--ink-3);letter-spacing:.06em}
+  .cover{flex:none;width:170px;height:auto;border-radius:4px;box-shadow:0 6px 18px -8px rgba(0,0,0,.45);border:1px solid var(--rule);background:#fff}
+  .chapbar{padding-top:18px}
+  @media (max-width:640px){
+    .mast-in{padding:14px 14px 12px;gap:12px}
+    .cover{width:112px}
+    .mast-t{padding-top:4px}
+    .mast-h{font-size:24px}
+    .mast-en{font-size:11px}
+    .mast-sub{font-size:11.5px}
+  }
+  #m-check .ex:empty{display:none}
+  #m-check .ex .tg{font-family:var(--jp);font-size:12px;color:var(--ink-3);margin:0 .3em 0 .6em}
+
+  .mast-et{margin:-2px 0 6px;font-family:var(--en);font-size:13px;font-weight:600;color:var(--ink-3);letter-spacing:.02em}
+
+  /* ===== 発音の難しい単語練習 ===== */
+  :root{--ipa:"Charis SIL","Doulos SIL","Gentium Plus","Lucida Sans Unicode","Arial Unicode MS",serif}
+  .mast-h{font-size:clamp(28px,5.4vw,46px)}
+  .nav .home{flex:none;border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:700;padding:6px 12px;border-radius:99px}
+  .nav .home[aria-current="page"]{background:var(--navy);color:var(--paper)}
+  .nav .home:hover:not([aria-current="page"]){background:var(--soft);color:var(--ink)}
+  .nav .lets{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;min-width:0}
+  .nav .lets::-webkit-scrollbar{display:none}
+  .nav .lets button{flex:none;width:23px;height:28px;padding:0;border:0;border-radius:8px;background:transparent;color:var(--ink-2);font-family:var(--en);font-weight:700;font-size:15px}
+  .nav .lets button[aria-current="true"]{background:var(--orange);color:#fff}
+  .nav .lets button:disabled{color:var(--rule);cursor:default}
+  .view{display:none}.view.on{display:block}
+  .home-lead{margin:22px 0 6px;color:var(--ink-2);font-size:14.5px}
+  .home-lead b{color:var(--ink)}
+  .lgrid{list-style:none;margin:16px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px}
+  .lgrid button{width:100%;aspect-ratio:1/1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:var(--paper);border:1px solid var(--rule);border-radius:16px;color:var(--ink);transition:border-color .15s,transform .15s}
+  .lgrid button:hover:not(:disabled){border-color:var(--orange);transform:translateY(-1px)}
+  .lgrid .L{font-family:var(--en);font-size:40px;font-weight:700;line-height:1;color:var(--navy)}
+  .lgrid .n{font-size:12px;font-weight:700;color:var(--ink-3)}
+  .lgrid li.done .L{color:var(--green)}
+  .lgrid button:disabled{opacity:.35;cursor:default}
+  .cathead{padding:24px 0 6px}
+  .cathead .kicker{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .cathead .jt{margin:12px 0 0;font-size:clamp(24px,4.4vw,34px);line-height:1.3;color:var(--navy)}
+  .catnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .wordbox{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px;min-height:210px;padding:12px 4px}
+  .wordbox .word{font-family:var(--en);font-weight:700;font-size:clamp(44px,10vw,76px);line-height:1.1;color:var(--navy);word-break:break-word}
+  .wordbox .ipa{font-family:var(--ipa);font-size:clamp(22px,4.6vw,30px);color:var(--orange);letter-spacing:.02em}
+  .wordbox .ipa .lab{font-family:var(--jp);font-size:12.5px;color:var(--ink-3);margin-left:4px;letter-spacing:0}
+  .wordbox .ipa .or{font-family:var(--jp);font-size:13px;color:var(--ink-3);margin:0 8px}
+  .wordbox .hint{font-size:13px;color:var(--ink-3);letter-spacing:.04em}
+  .ctrls .ipabtn{border-color:var(--orange);color:var(--orange)}
+  .ctrls .ipabtn[aria-pressed="true"]{background:var(--orange-soft)}
+  .wordbox.fade{animation:fd .25s ease}
+  .wlist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:6px 10px}
+  .wlist li{display:grid;grid-template-columns:24px 1fr auto;align-items:center;gap:2px 8px;padding:8px 10px;border-radius:10px;cursor:pointer;border:1px solid transparent}
+  .wlist li:hover{background:var(--soft)}
+  .wlist li.cur{background:var(--orange-soft);border-color:var(--orange-soft)}
+  .wlist .no{font-family:var(--en);font-weight:700;color:var(--ink-3);text-align:right;font-size:13px}
+  .wlist li.done .no::before{content:"✓";color:var(--green)}
+  .wlist li.done .no span{display:none}
+  .wlist .w{font-family:var(--en);font-size:18px;font-weight:700;color:var(--ink)}
+  .wlist .i{grid-column:2;font-family:var(--ipa);font-size:15px;color:var(--orange)}
+  .wlist.hide-ipa .i{visibility:hidden}
+  .wlist .pl{grid-column:3;grid-row:1/3;width:34px;height:34px;border-radius:50%;border:1px solid var(--rule);background:var(--paper);color:var(--navy);font-size:13px}
+  .wlist .pl:hover{border-color:var(--orange);color:var(--orange)}
+  @media (max-width:600px){
+    .ctrls .btn.ipabtn{flex-basis:100%}
+    .mast-in{padding:14px 14px 14px}
+    .mast-h{font-size:26px}
+    .lgrid{grid-template-columns:repeat(4,1fr);gap:8px}
+    .lgrid .L{font-size:30px}
+    .wlist{grid-template-columns:1fr}
+  }
+  /* ===== 埋め込み表示（完全マスター英文法アプリのタブ内） ===== */
+  html.embed body{background:var(--bg)}
+  html.embed .mast{display:none}
+  html.embed .nav{position:static;backdrop-filter:none;background:transparent;border-bottom:1px solid var(--rule)}
+  html.embed #themeBtn{display:none}
+  html.embed .wrap{padding-bottom:40px}
+</style>
+<script>
+const EMBED = window.parent !== window;
+if (EMBED) document.documentElement.classList.add("embed");
+</script>
+</head>
+<body>
+<header class="mast">
+  <div class="mast-in">
+    <div class="mast-t">
+      <p class="mast-en">Kodai Yonehara</p>
+      <p class="mast-et">Pronunciation Practice for Tricky Words</p>
+      <h1 class="mast-h">発音の難しい単語練習</h1>
+      <p class="mast-sub">A〜Z・米語の発音記号・音声つき</p>
+    </div>
+  </div>
+</header>
+<nav class="nav" aria-label="メニュー">
+  <div class="nav-in">
+    <button class="home" id="homeBtn" type="button" aria-current="page">A〜Z 一覧</button>
+    <div class="lets" id="lets" aria-label="アルファベットを選ぶ"></div>
+    <button class="theme" id="themeBtn" type="button" aria-pressed="false">ダーク</button>
+  </div>
+</nav>
+
+<div class="wrap">
+  <section class="view on" id="v-home" aria-label="アルファベット一覧">
+    <p class="home-lead">練習したいアルファベットを選んでください。<b>単語を見て自分で発音してから「音声を聞く」で確認</b>します。「発音記号を表示」を押すと、米語の発音記号が出ます。</p>
+    <ul class="lgrid" id="lgrid"></ul>
+  </section>
+
+  <section class="view" id="v-cat">
+    <header class="cathead" id="chead"></header>
+    <div class="sec-h"><span class="ic" style="background:var(--green)">P</span><h2>発音練習</h2><span class="note">単語を見て発音 → 音声で確認</span></div>
+    <div class="stage">
+      <div class="top"><span id="sLetter">A</span><span class="prog" id="sProg">1 / 1</span></div>
+      <div class="wordbox" id="wBox"></div>
+      <div class="tmr" id="sTmr"><i></i></div>
+      <div class="ctrls">
+        <button class="btn" id="sPrev" type="button">◀ 前へ</button>
+        <button class="btn primary big" id="sPlay" type="button">🔊 音声を聞く</button>
+        <button class="btn" id="sNext" type="button">次へ ▶</button>
+        <button class="btn" id="sAuto" type="button" aria-pressed="false">⏵ 自動モード</button>
+        <button class="btn ipabtn" id="ipaShow" type="button" aria-pressed="false">発音記号を表示</button>
+      </div>
+    </div>
+    <details class="sets" id="sSets">
+      <summary>⚙ 再生の設定</summary>
+      <div class="grid">
+        <label>自動モードの発音する時間<select id="sWait"><option value="1">1秒</option><option value="2">2秒</option><option value="3">3秒</option><option value="4">4秒</option><option value="5" selected>5秒</option><option value="6">6秒</option><option value="7">7秒</option><option value="8">8秒</option><option value="9">9秒</option><option value="10">10秒</option><option value="11">11秒</option><option value="12">12秒</option><option value="13">13秒</option></select></label>
+        <label>自動モードの読み上げ回数<select id="sRep"><option value="1">1回</option><option value="2" selected>2回</option><option value="3">3回</option></select></label>
+        <label>読み上げ速度<select id="sSpeed"><option value="0.5">0.5倍</option><option value="0.6">0.6倍</option><option value="0.7">0.7倍</option><option value="0.8">0.8倍</option><option value="0.9">0.9倍</option><option value="1.0" selected>1.0倍</option><option value="1.1">1.1倍</option><option value="1.2">1.2倍</option><option value="1.3">1.3倍</option><option value="1.4">1.4倍</option><option value="1.5">1.5倍</option></select></label>
+        <label>声<select id="sVoice"><option value="">（自動）</option></select></label>
+      </div>
+    </details>
+    <div class="card listcard">
+      <div class="lh"><h3 id="lTitle">単語一覧</h3><button class="btn" id="ipaBtn" type="button">発音記号を表示</button></div>
+      <ol class="wlist" id="wList"></ol>
+    </div>
+    <div class="nextpart" id="cfoot"></div>
+  </section>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const CATS = [{"letter": "A", "words": [{"w": "accident", "ipa": ["ǽksɪdənt"], "lab": null}, {"w": "act", "ipa": ["ǽkt"], "lab": null}, {"w": "address", "ipa": ["ədrɛ́s"], "lab": null}, {"w": "adorable", "ipa": ["ədɔ́ːrəbɫ̩"], "lab": null}, {"w": "Africa", "ipa": ["ǽfrɪkə"], "lab": null}, {"w": "African", "ipa": ["ǽfrɪkn̩"], "lab": null}, {"w": "aisle", "ipa": ["áɪɫ"], "lab": null}, {"w": "alcohol", "ipa": ["ǽlkəhɔ̀ːɫ"], "lab": null}, {"w": "allergic", "ipa": ["əlɚ́ːdʒɪk"], "lab": null}, {"w": "allergy", "ipa": ["ǽlɚdʒi"], "lab": null}, {"w": "amateur", "ipa": ["ǽmətʃʊ̀ɚ"], "lab": null}, {"w": "Amtrak", "ipa": ["ǽmtræ̀k"], "lab": null}, {"w": "anger", "ipa": ["ǽŋgɚ"], "lab": null}, {"w": "anxious", "ipa": ["ǽŋkʃəs"], "lab": null}, {"w": "apple", "ipa": ["ǽpɫ̩"], "lab": null}, {"w": "Arabia", "ipa": ["əréɪbɪə"], "lab": null}, {"w": "Arabic", "ipa": ["ǽrəbɪk"], "lab": null}, {"w": "Arizona", "ipa": ["æ̀rəzóʊnə"], "lab": null}, {"w": "Arkansas", "ipa": ["ɑ́ːrkənsɔ̀ː"], "lab": null}, {"w": "Asia", "ipa": ["éɪʒə", "éɪʃə"], "lab": null}, {"w": "Atlanta", "ipa": ["ətlǽnt̬ə"], "lab": null}, {"w": "Athens", "ipa": ["ǽθənz"], "lab": null}, {"w": "athlete", "ipa": ["ǽθliːt"], "lab": null}]}, {"letter": "B", "words": [{"w": "bad", "ipa": ["bǽd"], "lab": null}, {"w": "bag", "ipa": ["bǽg"], "lab": null}, {"w": "balance", "ipa": ["bǽləns"], "lab": null}, {"w": "balcony", "ipa": ["bǽlkəni"], "lab": null}, {"w": "bank", "ipa": ["bǽŋk"], "lab": null}, {"w": "bizarre", "ipa": ["bɪzɑ́r"], "lab": null}, {"w": "blonde", "ipa": ["blɑ́nd"], "lab": null}, {"w": "Bob", "ipa": ["bɑ́b"], "lab": null}, {"w": "boss", "ipa": ["bɔ́ːs"], "lab": null}, {"w": "bouquet", "ipa": ["buːkéɪ"], "lab": null}, {"w": "breathe", "ipa": ["bríːð"], "lab": null}, {"w": "button", "ipa": ["bʌ́tn̩"], "lab": null}]}, {"letter": "C", "words": [{"w": "café", "ipa": ["kæféɪ"], "lab": null}, {"w": "calcium", "ipa": ["kǽlsiəm"], "lab": null}, {"w": "calendar", "ipa": ["kǽləndɚ"], "lab": null}, {"w": "California", "ipa": ["kæ̀ləfɔ́ːrnjə"], "lab": null}, {"w": "calorie", "ipa": ["kǽlɚri"], "lab": null}, {"w": "camera", "ipa": ["kǽm(ə)rə"], "lab": null}, {"w": "Canada", "ipa": ["kǽnədə"], "lab": null}, {"w": "cancer", "ipa": ["kǽnsɚ"], "lab": null}, {"w": "candle", "ipa": ["kǽndɫ̩"], "lab": null}, {"w": "capital", "ipa": ["kǽpɪtɫ̩"], "lab": null}, {"w": "Capitol", "ipa": ["kǽpɪtɫ̩"], "lab": null}, {"w": "Carolina", "ipa": ["kæ̀rəláɪnə"], "lab": null}, {"w": "carried", "ipa": ["kǽrid"], "lab": null}, {"w": "casino", "ipa": ["kəsíːnoʊ"], "lab": null}, {"w": "castle", "ipa": ["kǽsɫ̩"], "lab": null}, {"w": "catch", "ipa": ["kǽtʃ"], "lab": null}, {"w": "Caucasian", "ipa": ["kɔːkéɪʒən"], "lab": null}, {"w": "challenge", "ipa": ["tʃǽlɪndʒ"], "lab": null}, {"w": "charisma", "ipa": ["kɚrɪ́zmə"], "lab": null}, {"w": "choir", "ipa": ["kwáɪɚ"], "lab": null}, {"w": "chopstick", "ipa": ["tʃɑ́pstɪ̀k"], "lab": null}, {"w": "cities", "ipa": ["sɪ́t̬iz"], "lab": null}, {"w": "class", "ipa": ["klǽs"], "lab": null}, {"w": "cloth", "ipa": ["klɔ́ːθ"], "lab": null}, {"w": "clothe", "ipa": ["klóʊð"], "lab": null}, {"w": "clothes", "ipa": ["klóʊ(ð)z"], "lab": null}, {"w": "cloths", "ipa": ["klɔ́ːθs"], "lab": null}, {"w": "coffee", "ipa": ["kɔ́ːfi", "kɑ́fi"], "lab": null}, {"w": "Colorado", "ipa": ["kɑ̀lɚrǽdoʊ"], "lab": null}, {"w": "Connecticut", "ipa": ["kənɛ́tɪkət"], "lab": null}, {"w": "consequently", "ipa": ["kɑ́nsəkwɛ̀ntli"], "lab": null}, {"w": "cool", "ipa": ["kúːɫ"], "lab": null}, {"w": "cop", "ipa": ["kɑ́p"], "lab": null}, {"w": "copy", "ipa": ["kɑ́pi"], "lab": null}, {"w": "cost", "ipa": ["kɔ́ːst"], "lab": null}, {"w": "cough", "ipa": ["kɔ́(ː)f"], "lab": null}, {"w": "crash", "ipa": ["krǽʃ"], "lab": null}, {"w": "crop", "ipa": ["krɑ́p"], "lab": null}, {"w": "crush", "ipa": ["krʌ́ʃ"], "lab": null}, {"w": "cupboard", "ipa": ["kʌ́bɚd"], "lab": null}]}, {"letter": "D", "words": [{"w": "daddy", "ipa": ["dǽdi"], "lab": null}, {"w": "Dakota", "ipa": ["dəkóʊtə"], "lab": null}, {"w": "damage", "ipa": ["dǽmɪdʒ"], "lab": null}, {"w": "data", "ipa": ["déɪtə"], "lab": null}, {"w": "daughter", "ipa": ["dɔ́ːtɚ"], "lab": null}, {"w": "decease", "ipa": ["dɪsíːs"], "lab": null}, {"w": "desert", "ipa": ["dɛ́zɚt"], "lab": null}, {"w": "dessert", "ipa": ["dɪzɚ́ːt"], "lab": null}, {"w": "devil", "ipa": ["dɛ́vɫ̩"], "lab": null}, {"w": "digital", "ipa": ["dɪ́dʒətɫ̩"], "lab": null}, {"w": "diner", "ipa": ["dáɪnɚ"], "lab": null}, {"w": "disease", "ipa": ["dɪzíːz"], "lab": null}, {"w": "Disneyland", "ipa": ["dɪ́znilǽnd"], "lab": null}, {"w": "doctor", "ipa": ["dɑ́ktɚ"], "lab": null}, {"w": "dog", "ipa": ["dɔ́ːg"], "lab": null}, {"w": "donate", "ipa": ["dóʊneɪt"], "lab": null}, {"w": "Dorothy", "ipa": ["dɔ́ːrəθi"], "lab": null}, {"w": "drank", "ipa": ["drǽŋk"], "lab": null}, {"w": "drought", "ipa": ["dráʊt"], "lab": null}]}, {"letter": "E", "words": [{"w": "energetic", "ipa": ["ɛ̀nɚdʒɛ́tɪk"], "lab": null}, {"w": "etiquette", "ipa": ["ɛ́t̬ɪkət"], "lab": null}]}, {"letter": "F", "words": [{"w": "factory", "ipa": ["fǽktəri"], "lab": null}, {"w": "Fahrenheit", "ipa": ["fǽrənhàɪt"], "lab": null}, {"w": "family", "ipa": ["fǽmli"], "lab": null}, {"w": "fare", "ipa": ["fɛ́ɚ"], "lab": null}, {"w": "fasten", "ipa": ["fǽsn̩"], "lab": null}, {"w": "feature", "ipa": ["fíːtʃɚ"], "lab": null}, {"w": "fragrance", "ipa": ["fréɪgrəns"], "lab": null}]}, {"letter": "G", "words": [{"w": "gallon", "ipa": ["gǽlən"], "lab": null}, {"w": "garage", "ipa": ["gərɑ́ːdʒ"], "lab": null}, {"w": "glad", "ipa": ["glǽd"], "lab": null}, {"w": "glass", "ipa": ["glǽs"], "lab": null}, {"w": "God", "ipa": ["gɑ́d"], "lab": null}, {"w": "gonna", "ipa": ["gənə", "gənʊ"], "lab": ["子音の前", "母音の前"]}, {"w": "gosh", "ipa": ["gɑ́ʃ"], "lab": null}, {"w": "got", "ipa": ["gɑ́t"], "lab": null}, {"w": "gotta", "ipa": ["gɑ́tə", "gɑ́tu"], "lab": ["子音の前", "母音の前"]}, {"w": "grass", "ipa": ["grǽs"], "lab": null}, {"w": "guitar", "ipa": ["gɪtɑ́r"], "lab": null}]}, {"letter": "H", "words": [{"w": "hamburger", "ipa": ["hǽmbɚ̀ːgɚ"], "lab": null}, {"w": "hand", "ipa": ["hǽnd"], "lab": null}, {"w": "hang", "ipa": ["hǽŋ"], "lab": null}, {"w": "hanger", "ipa": ["hʌ́ŋɚ"], "lab": null}, {"w": "happy", "ipa": ["hǽpi"], "lab": null}, {"w": "hat", "ipa": ["hǽt"], "lab": null}, {"w": "Hawaii", "ipa": ["həwɑ́ːiː"], "lab": null}, {"w": "hello", "ipa": ["həlóʊ", "hɛ́loʊ"], "lab": null}, {"w": "herbal", "ipa": ["(h)ɚ́ːbɫ̩"], "lab": null}, {"w": "Hiroshima", "ipa": ["hɪ̀roʊʃíːmə"], "lab": null}, {"w": "hose", "ipa": ["hóʊz"], "lab": null}, {"w": "host", "ipa": ["hóʊst"], "lab": null}, {"w": "hostess", "ipa": ["hóʊstəs"], "lab": null}, {"w": "hot", "ipa": ["hɑ́t"], "lab": null}, {"w": "huh uh", "ipa": ["hʌ́ʌ̀"], "lab": null}, {"w": "hush", "ipa": ["hʌ́ʃ"], "lab": null}]}, {"letter": "I", "words": [{"w": "iron", "ipa": ["áɪɚn"], "lab": null}, {"w": "island", "ipa": ["áɪlənd"], "lab": null}]}, {"letter": "J", "words": [{"w": "Japan", "ipa": ["dʒəpǽn"], "lab": null}, {"w": "Jesus", "ipa": ["dʒíːzəs"], "lab": null}, {"w": "Joan", "ipa": ["dʒóʊn"], "lab": null}, {"w": "job", "ipa": ["dʒɑ́b"], "lab": null}, {"w": "Jody", "ipa": ["dʒóʊdi"], "lab": null}, {"w": "John", "ipa": ["dʒɑ́n"], "lab": null}]}, {"letter": "K", "words": [{"w": "kilometer", "ipa": ["kəlɑ́mətɚ"], "lab": null}, {"w": "Kobe", "ipa": ["kóʊbiː"], "lab": null}, {"w": "Kyoto", "ipa": ["kiːóʊtoʊ"], "lab": null}]}, {"letter": "L", "words": [{"w": "label", "ipa": ["léɪbɫ̩"], "lab": null}, {"w": "lack", "ipa": ["lǽk"], "lab": null}, {"w": "landlord", "ipa": ["lǽndlɔ̀ɚd"], "lab": null}, {"w": "laptop", "ipa": ["lǽptɑ̀p"], "lab": null}, {"w": "last", "ipa": ["lǽst"], "lab": null}, {"w": "latter", "ipa": ["lǽtɚ"], "lab": null}, {"w": "laundry", "ipa": ["lɑ́ːndri"], "lab": null}, {"w": "lawn", "ipa": ["lɑ́ːn", "lɔ́ːn"], "lab": null}, {"w": "lead", "ipa": ["lɛ́d"], "lab": ["鉛筆の芯"]}, {"w": "lessen", "ipa": ["lɛ́s(ə)n̩"], "lab": null}, {"w": "lesson", "ipa": ["lɛ́s(ə)n̩"], "lab": null}, {"w": "liter", "ipa": ["líːtɚ"], "lab": null}, {"w": "loan", "ipa": ["lóʊn"], "lab": null}, {"w": "log", "ipa": ["lɑ́g"], "lab": null}, {"w": "loose", "ipa": ["lúːs"], "lab": null}, {"w": "lost", "ipa": ["lɔ́ːst", "lɑ́ːst"], "lab": null}]}, {"letter": "M", "words": [{"w": "mad", "ipa": ["mǽd"], "lab": null}, {"w": "makeup", "ipa": ["méɪkʌ̀p"], "lab": null}, {"w": "manager", "ipa": ["mǽnɪdʒɚ"], "lab": null}, {"w": "mania", "ipa": ["méɪniə"], "lab": null}, {"w": "manner", "ipa": ["mǽnɚ"], "lab": null}, {"w": "map", "ipa": ["mǽp"], "lab": null}, {"w": "masculine", "ipa": ["mǽskjələn"], "lab": null}, {"w": "math", "ipa": ["mǽθ"], "lab": null}, {"w": "McDonald’s", "ipa": ["məkdɑ́nəldz"], "lab": null}, {"w": "mechanism", "ipa": ["mɛ́kənɪ̀zm̩"], "lab": null}, {"w": "Mercedes", "ipa": ["mərséɪdiz"], "lab": null}, {"w": "Michael", "ipa": ["máɪkəɫ̩"], "lab": null}, {"w": "Missouri", "ipa": ["mɪzʊ́ɚri"], "lab": null}, {"w": "mommy", "ipa": ["mɑ́mi"], "lab": null}, {"w": "Montana", "ipa": ["mɑntǽnə"], "lab": null}, {"w": "motto", "ipa": ["mɑ́t̬oʊ"], "lab": null}, {"w": "Mrs", "ipa": ["mɪ́sɪz"], "lab": null}]}, {"letter": "N", "words": [{"w": "natural", "ipa": ["nǽtʃrəɫ"], "lab": null}, {"w": "new", "ipa": ["njúː"], "lab": null}, {"w": "news", "ipa": ["njúːz"], "lab": null}, {"w": "newspaper", "ipa": ["njúːzpèɪpɚ"], "lab": null}, {"w": "nickel", "ipa": ["nɪ́kɫ̩"], "lab": null}, {"w": "novel", "ipa": ["nɑ́vɫ̩"], "lab": null}]}, {"letter": "O", "words": [{"w": "OK", "ipa": ["óʊkéɪ"], "lab": null}, {"w": "oops", "ipa": ["úːps"], "lab": null}, {"w": "Osaka", "ipa": ["oʊsɑ́kə"], "lab": null}, {"w": "Ottawa", "ipa": ["ɑ́təwə"], "lab": null}]}, {"letter": "P", "words": [{"w": "pamphlet", "ipa": ["pǽmflət"], "lab": null}, {"w": "pan", "ipa": ["pǽn"], "lab": null}, {"w": "pasta", "ipa": ["pɑ́ːstə"], "lab": null}, {"w": "pen pal", "ipa": ["pɛ́npæ̀ɫ"], "lab": null}, {"w": "plan", "ipa": ["plǽn"], "lab": null}, {"w": "photographic", "ipa": ["fòʊtəgrǽfɪk"], "lab": null}, {"w": "poem", "ipa": ["póʊəm"], "lab": null}, {"w": "pond", "ipa": ["pɑ́nd"], "lab": null}, {"w": "post", "ipa": ["póʊst"], "lab": null}, {"w": "postpone", "ipa": ["poʊstpóʊn"], "lab": null}, {"w": "pot", "ipa": ["pɑ́t"], "lab": null}, {"w": "practical", "ipa": ["prǽktɪkɫ̩"], "lab": null}, {"w": "priest", "ipa": ["príːst"], "lab": null}]}, {"letter": "R", "words": [{"w": "rabbit", "ipa": ["rǽbɪt"], "lab": null}, {"w": "rapidly", "ipa": ["rǽpɪdli"], "lab": null}, {"w": "raw", "ipa": ["rɔ́ː"], "lab": null}, {"w": "restaurant", "ipa": ["rɛ́strənt"], "lab": null}, {"w": "righty", "ipa": ["ráɪti"], "lab": null}, {"w": "rock", "ipa": ["rɑ́k"], "lab": null}, {"w": "roe", "ipa": ["róʊ"], "lab": null}, {"w": "Rome", "ipa": ["róʊm"], "lab": null}, {"w": "route", "ipa": ["ráʊt"], "lab": null}]}, {"letter": "S", "words": [{"w": "sad", "ipa": ["sǽd"], "lab": null}, {"w": "salad", "ipa": ["sǽləd"], "lab": null}, {"w": "salary", "ipa": ["sǽləri"], "lab": null}, {"w": "salt", "ipa": ["sɔːlt"], "lab": null}, {"w": "sample", "ipa": ["sǽmpɫ̩"], "lab": null}, {"w": "Saturday", "ipa": ["sǽtɚdeɪ"], "lab": null}, {"w": "says", "ipa": ["sɛ́z"], "lab": null}, {"w": "Sean", "ipa": ["ʃɔ́ːn"], "lab": null}, {"w": "shock", "ipa": ["ʃɑ́k"], "lab": null}, {"w": "software", "ipa": ["sɑ́ftwɛ̀ɚ"], "lab": null}, {"w": "Spanish", "ipa": ["spǽnɪʃ"], "lab": null}, {"w": "squirrel", "ipa": ["skwɚ́ːrɫ̩"], "lab": null}, {"w": "staff", "ipa": ["stǽf"], "lab": null}, {"w": "stamina", "ipa": ["stǽmənə"], "lab": null}, {"w": "stamp", "ipa": ["stǽmp"], "lab": null}, {"w": "stew", "ipa": ["stjúː"], "lab": null}, {"w": "stop", "ipa": ["stɑ́p"], "lab": null}, {"w": "studio", "ipa": ["st(j)úːdiòʊ"], "lab": null}, {"w": "stuff", "ipa": ["stʌ́f"], "lab": null}, {"w": "suite", "ipa": ["swíːt"], "lab": null}, {"w": "sword", "ipa": ["sɔ́ɚd"], "lab": null}]}, {"letter": "T", "words": [{"w": "talent", "ipa": ["tǽlənt"], "lab": null}, {"w": "ticket", "ipa": ["tɪ́kət"], "lab": null}, {"w": "tip", "ipa": ["tɪ́p"], "lab": null}, {"w": "tobacco", "ipa": ["təbǽkoʊ"], "lab": null}, {"w": "tofu", "ipa": ["tóʊfuː"], "lab": null}, {"w": "Tokyo", "ipa": ["tóʊkɪòʊ"], "lab": null}, {"w": "Tom", "ipa": ["tɑ́m"], "lab": null}, {"w": "tour", "ipa": ["tʊ́ɚ"], "lab": null}, {"w": "towel", "ipa": ["táʊ(ə)ɫ"], "lab": null}, {"w": "travel", "ipa": ["trǽv(ə)ɫ̩"], "lab": null}, {"w": "trouble", "ipa": ["trʌ́bɫ̩"], "lab": null}, {"w": "tulip", "ipa": ["t(j)úləp"], "lab": null}, {"w": "tunnel", "ipa": ["tʌ́nɫ̩"], "lab": null}, {"w": "two", "ipa": ["túː"], "lab": null}]}, {"letter": "U", "words": [{"w": "ugh", "ipa": ["úː"], "lab": null}, {"w": "uh huh", "ipa": ["əhʌ́"], "lab": ["yes"]}, {"w": "uh-uh", "ipa": ["ʌ́ʌ̀"], "lab": ["no"]}, {"w": "upper", "ipa": ["ʌ́pɚ"], "lab": null}]}, {"letter": "V", "words": [{"w": "vanilla", "ipa": ["vənɪ́lə"], "lab": null}, {"w": "veranda", "ipa": ["vərǽndə"], "lab": null}, {"w": "veteran", "ipa": ["vɛ́tərən"], "lab": null}, {"w": "vinyl", "ipa": ["váɪnɫ̩"], "lab": null}, {"w": "violinist", "ipa": ["vàɪəlɪ́nɪst"], "lab": null}, {"w": "vitamin", "ipa": ["váɪtəmɪn"], "lab": null}]}, {"letter": "W", "words": [{"w": "walk", "ipa": ["wɔ́ːk", "wɑ́ːk"], "lab": null}, {"w": "wander", "ipa": ["wɑ́ndɚ"], "lab": null}, {"w": "wanna", "ipa": ["wɑ́nə"], "lab": null}, {"w": "wash", "ipa": ["wɔ́ːʃ"], "lab": null}, {"w": "weird", "ipa": ["wɪ́ɚd"], "lab": null}, {"w": "women", "ipa": ["wɪ́mɪn"], "lab": null}, {"w": "wonder", "ipa": ["wʌ́ndɚ"], "lab": null}, {"w": "wool", "ipa": ["wʊ́ɫ"], "lab": null}, {"w": "work", "ipa": ["wɚːk"], "lab": null}, {"w": "wrap", "ipa": ["rǽp"], "lab": null}]}, {"letter": "Y", "words": [{"w": "Yokohama", "ipa": ["jòʊkəhɑ́ːmə"], "lab": null}]}];
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+const ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+let CI = -1, sIdx = 0, sRun = null, hideIpa = true, ipaOpen = false;
+
+/* ===== 合成音声 ===== */
+const AUD = (() => {
+  let voices = [];
+  const load = () => {
+    voices = (window.speechSynthesis ? speechSynthesis.getVoices() : []).filter(v => /^en/.test(v.lang));
+    const s = $("sVoice"), cur = s.value;
+    const us = voices.filter(v => v.lang === "en-US"), rest = voices.filter(v => v.lang !== "en-US");
+    s.innerHTML = '<option value="">（自動・米語）</option>' + us.concat(rest).slice(0, 24).map(v => '<option value="' + esc(v.voiceURI) + '">' + esc(v.name + " (" + v.lang + ")") + '</option>').join("");
+    s.value = cur;
+  };
+  if (window.speechSynthesis) { load(); speechSynthesis.onvoiceschanged = load; }
+  return {
+    play(text){
+      return new Promise(res => {
+        if (!window.speechSynthesis) { toast("このブラウザは音声読み上げに対応していません"); return res(); }
+        speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        const v = voices.find(v => v.voiceURI === $("sVoice").value) || voices.find(v => v.lang === "en-US" && /Google US English|Samantha|Ava|Allison|Aria|Jenny|Alex/.test(v.name)) || voices.find(v => v.lang === "en-US") || voices[0];
+        if (v) u.voice = v;
+        u.lang = "en-US"; u.rate = Number($("sSpeed").value); u.onend = u.onerror = () => res();
+        speechSynthesis.speak(u);
+      });
+    },
+    stop(){ if (window.speechSynthesis) speechSynthesis.cancel(); }
+  };
+})();
+const sayText = w => w.w.replace(/’/g, "'").replace(/^Mrs$/, "Mrs.");
+function toast(m){ const t = $("toast"); t.textContent = m; t.classList.add("on"); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove("on"), 2600); }
+function sleep(ms, sig){ return new Promise((res, rej) => { const t = setTimeout(res, ms); if (sig) sig.addEventListener("abort", () => { clearTimeout(t); rej(new DOMException("Aborted", "AbortError")); }, { once: true }); }); }
+function timer(el, sec){
+  if (!sec) { el.classList.remove("on"); return; }
+  el.classList.add("on");
+  el.firstElementChild.animate([{ transform: "scaleX(1)" }, { transform: "scaleX(0)" }], { duration: sec * 1000, easing: "linear", fill: "forwards" });
+}
+
+/* ===== 進み具合 ===== */
+let SEEN = {};
+try { SEEN = JSON.parse(localStorage.getItem("hatsu-seen") || "{}"); } catch (e) {}
+const saveSeen = () => { try { localStorage.setItem("hatsu-seen", JSON.stringify(SEEN)); } catch (e) {} };
+const doneCount = c => Object.keys(SEEN[c.letter] || {}).length;
+
+/* ===== A〜Z ===== */
+const idxOf = L => CATS.findIndex(c => c.letter === L);
+function drawLets(){
+  $("lets").innerHTML = ABC.map(L => { const i = idxOf(L); return '<button type="button" data-l="' + L + '"' + (i < 0 ? ' disabled' : '') + (i >= 0 && i === CI ? ' aria-current="true"' : '') + '>' + L + '</button>'; }).join("");
+}
+function drawHome(){
+  $("lgrid").innerHTML = ABC.map(L => {
+    const i = idxOf(L);
+    if (i < 0) return '<li><button type="button" disabled><span class="L">' + L + '</span><span class="n">―</span></button></li>';
+    const c = CATS[i], d = doneCount(c);
+    return '<li' + (d >= c.words.length ? ' class="done"' : '') + '><button type="button" data-l="' + L + '"><span class="L">' + L + '</span><span class="n">' + c.words.length + ' 語' + (d ? '・' + d + ' 済' : '') + '</span></button></li>';
+  }).join("");
+}
+$("lgrid").addEventListener("click", e => { const b = e.target.closest("button[data-l]"); if (b) openCat(idxOf(b.dataset.l)); });
+$("lets").addEventListener("click", e => { const b = e.target.closest("button[data-l]"); if (b && !b.disabled) openCat(idxOf(b.dataset.l)); });
+
+function showHome(push){
+  sStop(); CI = -1;
+  $("v-home").classList.add("on"); $("v-cat").classList.remove("on");
+  $("homeBtn").setAttribute("aria-current", "page");
+  drawLets(); drawHome();
+  if (push) history.pushState(null, "", location.pathname + location.search);
+  try { localStorage.removeItem("hatsu-pos"); } catch (e) {}
+  toTop();
+}
+$("homeBtn").onclick = () => showHome(true);
+
+/* ===== 各アルファベット ===== */
+const C = () => CATS[CI];
+function ipaHTML(w){
+  return w.ipa.map((p, k) => '[' + esc(p) + ']' + (w.lab && w.lab[k] ? '<span class="lab">（' + esc(w.lab[k]) + '）</span>' : '')).join('<span class="or">または</span>');
+}
+function openCat(i, push = true, idx = 0){
+  sStop(); CI = i; sIdx = idx;
+  const c = C();
+  $("v-home").classList.remove("on"); $("v-cat").classList.add("on");
+  $("homeBtn").removeAttribute("aria-current"); drawLets();
+  $("chead").innerHTML = '<div class="kicker"><span class="badge"><small>LETTER</small><b>' + c.letter + '</b></span><span class="tag t1">発音の難しい単語</span><span class="tag t2">' + c.words.length + ' 語</span></div>' +
+    '<h1 class="jt">' + c.letter + ' で始まる単語</h1>' +
+    '<div class="catnav"><button class="btn" type="button" id="toHome">← A〜Z 一覧</button>' + (i > 0 ? '<button class="btn" type="button" id="toPrev">◀ ' + CATS[i - 1].letter + '</button>' : '') + '</div>';
+  $("toHome").onclick = () => showHome(true);
+  if ($("toPrev")) $("toPrev").onclick = () => openCat(i - 1);
+  $("sLetter").textContent = "LETTER " + c.letter;
+  $("lTitle").textContent = c.letter + " の単語一覧（" + c.words.length + " 語）";
+  $("cfoot").innerHTML = i < CATS.length - 1 ? '<button class="btn primary" type="button" id="toNext">次へ：' + CATS[i + 1].letter + ' ▶</button>' : '<button class="btn" type="button" id="toNext">A〜Z 一覧へ戻る</button>';
+  $("toNext").onclick = () => i < CATS.length - 1 ? openCat(i + 1) : showHome(true);
+  renderList(); show();
+  if (push) history.pushState(null, "", "#" + c.letter);
+  savePos(); toTop();
+}
+function savePos(){ try { localStorage.setItem("hatsu-pos", JSON.stringify({ c: CI, i: sIdx })); } catch (e) {} }
+function renderList(){
+  const c = C();
+  $("wList").innerHTML = c.words.map((w, i) =>
+    '<li data-i="' + i + '"' + ((SEEN[c.letter] || {})[i] ? ' class="done"' : '') + '><span class="no"><span>' + (i + 1) + '</span></span><span class="w">' + esc(w.w) + '</span>' +
+    '<button class="pl" type="button" data-p="' + i + '" aria-label="' + esc(w.w) + ' の音声">▶</button><span class="i">' + ipaHTML(w) + '</span></li>').join("");
+  $("wList").classList.toggle("hide-ipa", hideIpa);
+}
+function show(keep){
+  if (!keep) ipaOpen = false;
+  const ws = C().words, w = ws[sIdx];
+  $("sProg").textContent = (sIdx + 1) + " / " + ws.length;
+  $("wBox").innerHTML = '<div class="word">' + esc(w.w) + '</div>' +
+    (ipaOpen ? '<div class="ipa">' + ipaHTML(w) + '</div>' : '') +
+    '<p class="hint">まず自分で発音してから「音声を聞く」</p>';
+  $("ipaShow").setAttribute("aria-pressed", String(ipaOpen));
+  $("ipaShow").textContent = ipaOpen ? "発音記号を隠す" : "発音記号を表示";
+  if (!keep) { $("wBox").classList.remove("fade"); void $("wBox").offsetWidth; $("wBox").classList.add("fade"); }
+  $("sPrev").disabled = sIdx === 0;
+  $("sNext").textContent = sIdx >= ws.length - 1 ? "最初から ↺" : "次へ ▶";
+  document.querySelectorAll("#wList li").forEach(li => li.classList.toggle("cur", Number(li.dataset.i) === sIdx));
+}
+function mark(i){
+  const c = C(); (SEEN[c.letter] = SEEN[c.letter] || {})[i] = 1; saveSeen();
+  const li = document.querySelector('#wList li[data-i="' + i + '"]'); if (li) li.classList.add("done");
+}
+function playWord(i){ mark(i); return AUD.play(sayText(C().words[i])); }
+async function sFlow(){
+  const ac = new AbortController(); sRun = ac; const sig = ac.signal;
+  $("sAuto").setAttribute("aria-pressed", "true"); $("sAuto").textContent = "■ 自動モード停止"; $("sAuto").classList.add("stop");
+  try {
+    while (sIdx < C().words.length) {
+      show();
+      const wait = Number($("sWait").value);
+      timer($("sTmr"), wait); await sleep(wait * 1000, sig); timer($("sTmr"), 0);
+      const n = Number($("sRep").value);
+      for (let k = 0; k < n; k++) { await playWord(sIdx); if (sig.aborted) break; await sleep(700, sig); }
+      if (sIdx >= C().words.length - 1) break;
+      sIdx++; savePos();
+    }
+  } catch (e) { if (e.name !== "AbortError") console.error(e); }
+  timer($("sTmr"), 0);
+  if (sRun === ac) sStop();
+}
+function sStop(){ if (sRun) { sRun.abort(); sRun = null; } AUD.stop(); timer($("sTmr"), 0); const b = $("sAuto"); b.setAttribute("aria-pressed", "false"); b.textContent = "⏵ 自動モード"; b.classList.remove("stop"); }
+const go = i => { sStop(); sIdx = i; show(); savePos(); };
+$("sPlay").onclick = () => { if (sRun) sStop(); playWord(sIdx); };
+$("sPrev").onclick = () => { if (sIdx > 0) go(sIdx - 1); };
+$("sNext").onclick = () => go(sIdx >= C().words.length - 1 ? 0 : sIdx + 1);
+$("sAuto").onclick = () => { if (sRun) sStop(); else sFlow(); };
+$("ipaShow").onclick = () => { ipaOpen = !ipaOpen; show(true); };
+$("wList").addEventListener("click", e => {
+  const p = e.target.closest(".pl");
+  if (p) { sStop(); playWord(Number(p.dataset.p)); return; }
+  const li = e.target.closest("li"); if (!li) return;
+  go(Number(li.dataset.i));
+  document.querySelector("#v-cat .stage").scrollIntoView({ behavior: "smooth", block: "center" });
+});
+$("ipaBtn").onclick = () => { hideIpa = !hideIpa; $("ipaBtn").textContent = hideIpa ? "発音記号を表示" : "発音記号を隠す"; $("wList").classList.toggle("hide-ipa", hideIpa); };
+
+/* ===== ダークモード・キー操作・開始 ===== */
+$("themeBtn").onclick = () => {
+  const dark = document.documentElement.getAttribute("data-theme") !== "dark";
+  if (dark) document.documentElement.setAttribute("data-theme", "dark"); else document.documentElement.removeAttribute("data-theme");
+  $("themeBtn").textContent = dark ? "ライト" : "ダーク"; $("themeBtn").setAttribute("aria-pressed", String(dark));
+};
+document.addEventListener("keydown", e => {
+  if (CI < 0 || e.target.matches("input,textarea,select,button")) return;
+  if (e.key === " " || e.key === "Enter") { e.preventDefault(); $("sPlay").click(); }
+  if (e.key === "ArrowRight") $("sNext").click();
+  if (e.key === "ArrowLeft") $("sPrev").click();
+});
+function fromHash(push){
+  const m = location.hash.match(/^#([A-Z])$/);
+  const i = m ? idxOf(m[1]) : -1;
+  if (i >= 0) openCat(i, push); else showHome(false);
+}
+window.addEventListener("popstate", () => fromHash(false));
+(function(){
+  if (/^#[A-Z]$/.test(location.hash)) return fromHash(false);
+  let st = null; try { st = JSON.parse(localStorage.getItem("hatsu-pos") || "null"); } catch (e) {}
+  if (st && st.c >= 0 && st.c < CATS.length) { openCat(st.c, false, Math.min(st.i || 0, CATS[st.c].words.length - 1)); history.replaceState(null, "", "#" + CATS[st.c].letter); }
+  else showHome(false);
+})();
+/* ===== 埋め込み時：親ページと高さ・テーマ・スクロールをやりとり ===== */
+function toTop(){ if (EMBED) parent.postMessage({ sub: true, t: "top" }, "*"); else window.scrollTo({ top: 0 }); }
+if (EMBED) {
+  const post = () => parent.postMessage({ sub: true, t: "h", h: Math.ceil(document.documentElement.getBoundingClientRect().height) }, "*");
+  new ResizeObserver(post).observe(document.body); window.addEventListener("load", post); post();
+  window.addEventListener("message", e => {
+    const d = e.data || {};
+    if (d.t === "theme") { if (d.dark) document.documentElement.setAttribute("data-theme", "dark"); else document.documentElement.removeAttribute("data-theme"); }
+    if (d.t === "stop") { try { sStop(); } catch (er) {} }
+  });
+  parent.postMessage({ sub: true, t: "ready" }, "*");
+}
+</script>
+</body>
+</html>

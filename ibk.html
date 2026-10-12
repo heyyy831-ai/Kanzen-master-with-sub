@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>日英異文化コミュニケーション</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+
+  :root{
+    color-scheme:light;
+    --bg:#F4F1EA; --paper:#FFFFFF; --soft:#F8F5EE; --ink:#1E2A3A; --ink-2:#4A5568; --ink-3:#8A93A3;
+    --rule:#E2DCCF; --navy:#2B3F5C; --orange:#C8693E; --orange-soft:#F7E6DC; --green:#3E8A6A; --green-soft:#E3F1EA;
+    --red:#C0412F; --red-soft:#F9E3DF; --gold:#E9C46A; --hl:#FFF0B8; --hl-line:#E9C46A;
+    --en:"Crimson Pro","Georgia","Times New Roman",serif;
+    --jp:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+  }
+  :root[data-theme="dark"]{
+    color-scheme:dark;
+    --bg:#13171E; --paper:#1B212B; --soft:#202733; --ink:#E9EDF3; --ink-2:#B8C1CF; --ink-3:#7F8A9C;
+    --rule:#2F3846; --navy:#9CB8E0; --orange:#E89A72; --orange-soft:#3A2A22; --green:#6CC49E; --green-soft:#1C3229;
+    --red:#F08A78; --red-soft:#3A2220; --gold:#E9C46A; --hl:#4A3F17; --hl-line:#C9A443;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--jp);font-size:15.5px;line-height:1.85;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:0 18px 80px}
+  button{font:inherit;cursor:pointer}
+  :focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+
+  /* nav */
+  .nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--rule)}
+  .nav-in{max-width:860px;margin:0 auto;padding:8px 18px;display:flex;gap:6px;align-items:center;overflow-x:auto;scrollbar-width:none}
+  .nav-in::-webkit-scrollbar{display:none}
+  .nav a{flex:none;text-decoration:none;color:var(--ink-2);font-size:13px;font-weight:700;padding:6px 12px;border-radius:99px;white-space:nowrap}
+  .nav a:hover{color:var(--ink);background:var(--soft)}
+  .nav a.on{background:var(--navy);color:var(--paper)}
+  .theme{margin-left:auto;flex:none;border:1px solid var(--rule);background:var(--paper);color:var(--ink-2);border-radius:99px;padding:4px 12px;font-size:12.5px}
+
+  /* header */
+  header{padding:30px 0 14px}
+  .kicker{display:flex;align-items:center;gap:10px;flex-wrap:wrap;color:var(--ink-3);font-size:12.5px;letter-spacing:.04em}
+  .badge{background:var(--navy);color:#fff;border-radius:6px;padding:6px 12px;line-height:1.1;text-align:center;font-weight:700}
+  :root[data-theme="dark"] .badge{color:#13171E}
+  .badge small{display:block;font-size:9.5px;letter-spacing:.12em;opacity:.85}
+  .badge b{font-size:22px;font-family:var(--en)}
+  .tag{border-radius:99px;padding:2px 10px;font-size:12px;font-weight:700}
+  .tag.t1{background:var(--orange);color:#fff}
+  .tag.t2{background:var(--soft);color:var(--ink-2);border:1px solid var(--rule)}
+  h1{font-family:var(--en);font-weight:700;color:var(--navy);font-size:clamp(28px,5vw,38px);line-height:1.18;margin:14px 0 4px}
+  .sub{color:var(--ink-2);font-size:14px;margin:0}
+
+  .card{background:var(--paper);border:1px solid var(--rule);border-radius:16px;padding:22px clamp(16px,4vw,30px);margin-top:18px}
+  .illus{display:block;width:100%;height:auto;border-radius:12px}
+  :root[data-theme="dark"] .illus{filter:brightness(.92)}
+  section{scroll-margin-top:60px}
+  .sec-h{display:flex;align-items:center;gap:10px;margin:34px 0 6px}
+  .sec-h .ic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;color:#fff;font-weight:700;font-size:14px;flex:none}
+  .sec-h h2{margin:0;font-size:18px}
+  .sec-h .note{margin-left:auto;color:var(--ink-3);font-size:12px}
+  .lead{color:var(--ink-2);font-size:13.5px;margin:4px 0 0}
+
+  /* reading */
+  .toggle-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+  .switch{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2);background:none;border:0;padding:0}
+  .switch .knob{width:34px;height:20px;border-radius:99px;background:var(--rule);position:relative;transition:background .2s}
+  .switch .knob::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .2s}
+  .switch[aria-pressed="true"] .knob{background:var(--navy)}
+  .switch[aria-pressed="true"] .knob::after{left:16px}
+  .para{display:flex;gap:12px;margin:14px 0}
+  .pno{flex:none;width:22px;height:22px;border-radius:50%;background:var(--green);color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center;margin-top:6px}
+  .para p{margin:0;font-family:var(--en);font-size:clamp(17px,2.4vw,19.5px);line-height:1.75;text-align:justify;hyphens:auto}
+  .gp{font-weight:700}
+  .show-gp .gp{color:var(--navy);background:linear-gradient(var(--gold),var(--gold)) 0 100%/100% 2.5px no-repeat;padding-bottom:1px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+  .s{transition:background .3s;border-radius:3px}
+  .s.ev{background:var(--hl);box-shadow:0 0 0 2px var(--hl);animation:pulse 1.4s ease 1}
+  @keyframes pulse{0%{box-shadow:0 0 0 6px var(--hl-line)}100%{box-shadow:0 0 0 2px var(--hl)}}
+
+  /* media */
+  .media{display:grid;grid-template-columns:1fr;gap:16px}
+  .media h3{margin:0 0 8px;font-size:14px;color:var(--ink-2);display:flex;align-items:center;gap:6px}
+  audio{width:100%}
+  .rate{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .rate button{border:1px solid var(--rule);background:var(--soft);color:var(--ink-2);border-radius:99px;padding:3px 12px;font-size:12.5px}
+  .rate button[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:var(--paper)}
+  .video{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000}
+  .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .ytlink{display:inline-block;margin-top:6px;font-size:12.5px;color:var(--orange)}
+
+  /* translation */
+  details.tr{background:var(--soft);border-left:4px solid var(--green);border-radius:0 12px 12px 0;padding:0}
+  details.tr summary{list-style:none;cursor:pointer;padding:14px 18px;font-weight:700;display:flex;align-items:center;gap:8px}
+  details.tr summary::-webkit-details-marker{display:none}
+  details.tr summary::after{content:"＋ 開く";margin-left:auto;font-size:12px;color:var(--ink-3);font-weight:500}
+  details.tr[open] summary::after{content:"－ 閉じる"}
+  .tr-body{padding:0 18px 16px}
+  .tr-body p{margin:0 0 10px;text-indent:1em;font-size:14.5px;color:var(--ink-2)}
+
+  /* grammar items */
+  .gi{border-top:1px solid var(--rule);padding:18px 0 6px;scroll-margin-top:70px;transition:background .4s}
+  .gi:first-child{border-top:0;padding-top:4px}
+  .gi.flash{background:var(--orange-soft);border-radius:10px}
+  .gi h3{display:flex;align-items:center;gap:10px;margin:0 0 8px;font-size:16px;color:var(--navy)}
+  .gi h3 .n{width:24px;height:24px;border:1.5px solid var(--navy);border-radius:50%;display:grid;place-items:center;font-size:12px;flex:none}
+  .gi .lbl{color:var(--orange);font-weight:700;font-size:13px}
+  .gi p{margin:4px 0;font-size:14.5px}
+  .gi .en{font-family:var(--en);font-size:16px}
+  .ex{background:var(--soft);border-left:3px solid #A8BBD6;border-radius:0 8px 8px 0;padding:6px 12px;margin:6px 0;font-size:14px}
+  .ex .en{font-size:16.5px}
+
+  /* grammar check */
+  .gq{font-family:var(--en);font-size:clamp(17px,2.4vw,19px);line-height:2.4}
+  .gq p{margin:0 0 12px;text-indent:1.2em}
+  .blank{display:inline-flex;align-items:center;gap:3px;vertical-align:middle;line-height:1;background:var(--soft);border:1px solid var(--rule);border-radius:99px;padding:2px 3px 2px 8px;margin:0 2px;font-family:var(--jp)}
+  .blank .no{font-size:11px;color:var(--orange);font-weight:700;margin-right:2px}
+  .blank button{border:0;background:transparent;color:var(--ink-2);border-radius:99px;padding:3px 8px;font-size:13px;font-family:var(--en);font-weight:600}
+  .blank button:hover{background:var(--paper);color:var(--ink)}
+  .blank button.pick{background:var(--navy);color:var(--paper)}
+  .blank.ok{border-color:var(--green);background:var(--green-soft)}
+  .blank.ok button.pick{background:var(--green)}
+  .blank.ng{border-color:var(--red);background:var(--red-soft)}
+  .blank.ng button.pick{background:var(--red)}
+  .blank .mark{font-size:13px;font-weight:700;padding:0 4px}
+  .blank.ok .mark{color:var(--green)} .blank.ng .mark{color:var(--red)}
+  .gbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0 14px}
+  .score{font-weight:700;font-size:14px}
+  .score b{color:var(--orange);font-size:18px;font-family:var(--en)}
+  .btn{border:1px solid var(--rule);background:var(--paper);color:var(--ink-2);border-radius:99px;padding:6px 14px;font-size:13px;font-weight:700}
+  .btn:hover{color:var(--ink);border-color:var(--ink-3)}
+  .btn.primary{background:var(--orange);border-color:var(--orange);color:#fff}
+  .alist{margin:6px 0 0;padding:0;list-style:none}
+  .alist li{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;padding:10px 0;border-top:1px dashed var(--rule)}
+  .alist .num{width:26px;height:22px;border-radius:5px;background:var(--gold);color:#3b2f10;font-size:12px;font-weight:700;display:grid;place-items:center;margin-top:2px}
+  .alist .ans{font-weight:700;color:var(--navy)}
+  .alist .ans .res{font-size:12px;margin-left:8px;font-weight:700}
+  .alist .res.ok{color:var(--green)} .alist .res.ng{color:var(--red)}
+  .alist .exp{grid-column:2;font-size:13.5px;color:var(--ink-2);margin:0}
+  .alist li[hidden]{display:none}
+  .golink{border:0;background:none;color:var(--orange);font-weight:700;padding:0;text-decoration:underline;text-underline-offset:2px;font-size:13.5px}
+  .jt{margin-top:14px;font-size:14px;color:var(--ink-2)}
+  .jt p{margin:0 0 8px;text-indent:1em}
+
+  /* reading quiz */
+  .rq{border-top:1px solid var(--rule);padding:20px 0 6px}
+  .rq:first-of-type{border-top:0;padding-top:4px}
+  .rq .qh{display:flex;gap:10px;align-items:flex-start}
+  .rq .qn{flex:none;background:var(--navy);color:var(--paper);border-radius:6px;font-weight:700;font-size:13px;padding:2px 9px;margin-top:4px}
+  .rq .qtext{font-family:var(--en);font-size:clamp(17px,2.3vw,18.5px);line-height:1.6;margin:0}
+  .rq .qja{font-size:12.5px;color:var(--ink-3);margin:2px 0 0}
+  .opts{display:grid;gap:8px;margin:12px 0 0;padding:0;list-style:none}
+  .opt{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;border:1.5px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:12px;padding:10px 14px;font-family:var(--en);font-size:clamp(16px,2.2vw,17.5px);line-height:1.5;transition:border-color .15s,background .15s}
+  .opt:hover:not([disabled]){border-color:var(--ink-3)}
+  .opt .k{flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--ink-3);display:grid;place-items:center;font-size:12px;font-family:var(--jp);font-weight:700;margin-top:2px}
+  .opt[disabled]{cursor:default}
+  .opt.correct{border-color:var(--green);background:var(--green-soft)}
+  .opt.correct .k{background:var(--green);border-color:var(--green);color:#fff}
+  .opt.wrong{border-color:var(--red);background:var(--red-soft)}
+  .opt.wrong .k{background:var(--red);border-color:var(--red);color:#fff}
+  .fb{margin-top:12px;border-radius:12px;padding:14px 16px;background:var(--soft);font-size:14px}
+  .fb[hidden]{display:none}
+  .fb .v{font-weight:700;font-size:15px;margin:0 0 6px}
+  .fb .v.ok{color:var(--green)} .fb .v.ng{color:var(--red)}
+  .fb .evid{border-left:3px solid var(--gold);padding:4px 0 4px 12px;margin:8px 0}
+  .fb .evid .en{font-family:var(--en);font-size:16.5px;line-height:1.55}
+  .fb .evid .ja{font-size:13px;color:var(--ink-2);display:block;margin-top:2px}
+  .fb ul{margin:8px 0 0;padding-left:0;list-style:none}
+  .fb li{margin:5px 0;padding-left:28px;position:relative}
+  .fb li .k{position:absolute;left:0;top:2px;width:20px;height:20px;border-radius:50%;background:var(--paper);border:1px solid var(--rule);display:grid;place-items:center;font-size:11px;font-weight:700}
+  .fb li.right .k{background:var(--green);border-color:var(--green);color:#fff}
+  .tobody{margin-top:8px}
+  .rscore{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:16px 0 0;padding-top:14px;border-top:1px solid var(--rule)}
+
+  /* 読解クイズ：本文を横に並べる */
+  .wide{width:min(1180px,calc(100vw - 36px));margin-left:calc((100% - min(1180px,calc(100vw - 36px))) / 2)}
+  .rq-grid{display:grid;grid-template-columns:1fr;gap:24px;margin-top:10px}
+  .rq-pass{display:none}
+  .rp-h{margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--ink-3)}
+  .rp-para{display:flex;gap:10px;margin:0 0 14px;border-radius:10px;padding:6px 8px;transition:opacity .25s,background .25s}
+  .rp-para p{margin:0;font-family:var(--en);font-size:16.5px;line-height:1.65}
+  .rp-para .pno{margin-top:3px}
+  .rq-pass.focus .rp-para{opacity:.38}
+  .rq-pass.focus .rp-para.cur{opacity:1;background:var(--paper);box-shadow:0 0 0 1px var(--rule)}
+  .rq-ctx{margin:12px 0 0;background:var(--soft);border-radius:12px;border:1px solid var(--rule)}
+  .rq-ctx summary{list-style:none;cursor:pointer;padding:9px 14px;font-size:12.5px;font-weight:700;color:var(--ink-2);display:flex;gap:6px}
+  .rq-ctx summary::-webkit-details-marker{display:none}
+  .rq-ctx summary::after{content:"閉じる";margin-left:auto;font-weight:500;color:var(--ink-3)}
+  .rq-ctx:not([open]) summary::after{content:"開く"}
+  .rq-ctx .rp-para{padding:0 12px;margin:0 0 12px}
+  .hide-ja .qja{display:none}
+  @media (min-width:1000px){
+    .rq-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:start}
+    .rq-pass{display:block;position:sticky;top:64px;max-height:calc(100vh - 84px);overflow:auto;background:var(--soft);border-radius:14px;padding:14px 14px 4px;border:1px solid var(--rule)}
+    .rq-ctx{display:none}
+  }
+  footer{margin-top:40px;color:var(--ink-3);font-size:12px;text-align:center}
+  @media (max-width:560px){ .para{gap:8px} .card{border-radius:12px} }
+
+  /* ===== 共通（基本英文法アプリ） ===== */
+  :root{--ok:#2E7D57;--ok-soft:#E3F1EA;--pos-n:#2E5E9E;--pos-v:#2E7D57;--pos-adj:#A0661A;--pos-adv:#7A4FA8}
+  :root[data-theme="dark"]{--ok:#6CC49E;--ok-soft:#1C3229;--pos-n:#8DB6EA;--pos-v:#6CC49E;--pos-adj:#E3B066;--pos-adv:#C3A0EA}
+  .nav .mt{flex:none;border:0;background:none;color:var(--ink-2);font-size:13px;font-weight:700;padding:6px 14px;border-radius:99px;white-space:nowrap}
+  .nav .mt:hover{color:var(--ink);background:var(--soft)}
+  .nav .mt[aria-selected="true"]{background:var(--navy);color:var(--paper)}
+  .nav .mt .num{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;font-size:11px;margin-right:6px;background:var(--soft);color:var(--ink-2)}
+  .nav .mt[aria-selected="true"] .num{background:var(--orange);color:#fff}
+  .brand{font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--ink-3);padding:22px 0 0}
+  .brand b{color:var(--navy)}
+  header h1.jt{font-family:var(--jp);font-weight:700;font-size:clamp(24px,4.4vw,32px);letter-spacing:.02em}
+  .topics{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+  .topics span{font-size:12px;border:1px solid var(--rule);background:var(--soft);color:var(--ink-2);border-radius:99px;padding:2px 10px}
+  .topics span b{font-family:var(--en);color:var(--orange);margin-right:5px}
+  .mode{display:none}
+  .mode.on{display:block}
+  .btn.danger{border-color:var(--red);color:var(--red)}
+  .tbar{position:sticky;top:49px;z-index:10;display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(6px);padding:10px 0;margin-bottom:6px;border-bottom:1px solid var(--rule)}
+  .tbar .score{font-size:13px;color:var(--ink-2)}
+  .tbar .score b{font-family:var(--en);font-size:20px;color:var(--orange)}
+  .track{flex:1 1 120px;min-width:100px;height:6px;border-radius:99px;background:var(--soft);border:1px solid var(--rule);overflow:hidden}
+  .track span{display:block;height:100%;width:0;background:var(--green);transition:width .3s}
+  .tools{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+  .tools .btn{padding:5px 12px;font-size:12.5px}
+
+  /* ===== 文法理解度チェック ===== */
+  #m-check .item{background:var(--paper);border:1px solid var(--rule);border-radius:16px;margin:14px 0;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+  #m-check .item.ok{border-color:var(--green)}
+  #m-check .item.ng{border-color:var(--orange)}
+  #m-check .q{padding:18px 20px 16px;display:flex;flex-direction:column;gap:12px}
+  #m-check .q-head{display:flex;align-items:center;gap:10px}
+  #m-check .qn{flex:none;width:28px;height:28px;border-radius:50%;background:var(--navy);color:var(--paper);display:grid;place-items:center;font-family:var(--en);font-weight:700;font-size:15px}
+  #m-check .item.ok .qn{background:var(--green)}
+  #m-check .item.ng .qn{background:var(--orange)}
+  #m-check .secl{font-size:12px;font-weight:700;color:var(--ink-3);letter-spacing:.04em}
+  #m-check .prompt{margin:0;font-size:15px;line-height:2}
+  #m-check .blank{display:inline-block;min-width:2.4em;border-bottom:1px solid var(--ink-3);margin:0 .25em;padding:0;background:none;border-radius:0}
+  #m-check .ex{margin:0;padding:12px 16px;background:var(--soft);border-left:3px solid var(--navy);border-radius:0 10px 10px 0;display:flex;flex-direction:column;gap:6px}
+  #m-check .ex p{margin:0;font-family:var(--en);font-size:18px;line-height:1.7}
+  #m-check .ex .tg{font-family:var(--jp);font-size:12px;color:var(--ink-3);margin-right:.5em}
+  #m-check .ex .jp{font-family:var(--jp);font-size:13.5px;color:var(--ink-2)}
+  #m-check .tag{font-family:var(--jp);font-size:12px;font-weight:700;color:var(--ink-3);background:none;border:0;padding:0;margin-right:.4em}
+  #m-check .bk{font:inherit;color:var(--ink);background:var(--paper);border:0;border-bottom:2px solid var(--ink-3);border-radius:4px 4px 0 0;min-width:5.5em;width:6.5em;max-width:100%;padding:1px 6px;margin:0 .2em;vertical-align:baseline;outline:none;transition:background .15s,border-color .15s}
+  #m-check .ex .bk{font-family:var(--en);font-size:17px;background:var(--paper)}
+  #m-check .jp-bk{font-family:var(--jp);font-size:14px}
+  #m-check .bk:focus{border-bottom-color:var(--orange);background:var(--orange-soft)}
+  #m-check .bk.ok{border-bottom-color:var(--green);background:var(--green-soft);color:var(--green)}
+  #m-check .bk.ng{border-bottom-color:var(--red);background:var(--red-soft);color:var(--red)}
+  #m-check .pk{display:inline-flex;align-items:center;gap:4px;margin:0 .25em;vertical-align:baseline;flex-wrap:wrap}
+  #m-check .pk-s{color:var(--ink-3);font-size:12px}
+  #m-check .pk-o{font-family:var(--en);font-size:15px;font-weight:600;padding:1px 12px;border:1.5px solid var(--rule);background:var(--paper);color:var(--navy);border-radius:99px}
+  #m-check .pk-o:hover{border-color:var(--navy)}
+  #m-check .pk-o[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:var(--paper)}
+  #m-check .pk-o.ok{background:var(--green);border-color:var(--green);color:#fff}
+  #m-check .pk-o.ng{background:var(--red);border-color:var(--red);color:#fff}
+  #m-check .free{font:inherit;font-size:14px;width:100%;padding:10px 12px;border:1px solid var(--rule);border-radius:10px;background:var(--paper);color:var(--ink);resize:vertical}
+  #m-check .free:focus{outline:none;border-color:var(--orange)}
+  #m-check .actions{display:flex;gap:8px;flex-wrap:wrap}
+  #m-check .verdict{display:flex;align-items:center;gap:8px 10px;flex-wrap:wrap;font-size:13.5px}
+  #m-check .verdict:empty{display:none}
+  #m-check .v-ok{color:var(--green);font-weight:700}
+  #m-check .v-ng{color:var(--orange);font-weight:700}
+  #m-check .v-msg{color:var(--ink-2)}
+  #m-check .self{padding:4px 12px;font-size:12.5px;border:1px solid var(--rule);background:var(--paper);color:var(--ink-2);border-radius:99px}
+  #m-check .self.ok:hover{border-color:var(--green);color:var(--green)}
+  #m-check .self.ng:hover{border-color:var(--red);color:var(--red)}
+  #m-check .a{border-top:1px dashed var(--rule);background:var(--green-soft);padding:14px 20px 16px}
+  #m-check .a[hidden]{display:none}
+  #m-check .a-label{font-family:var(--en);font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--green);margin:0 0 8px}
+  #m-check .rows{display:flex;flex-direction:column;gap:6px;margin:0}
+  #m-check .row{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr);gap:2px 14px;align-items:baseline}
+  #m-check .row dt{font-size:12.5px;color:var(--ink-3)}
+  #m-check .row dd{margin:0;font-size:15px;font-weight:700;color:var(--ink)}
+  #m-check .row dd .en,#m-check .en{font-family:var(--en);font-size:17px}
+  #m-check .anote{margin:10px 0 0;padding-top:10px;border-top:1px solid var(--rule);font-size:13px;line-height:1.85;color:var(--ink-2)}
+  #m-check .pos{border-bottom:2px solid currentColor;padding-bottom:1px;font-family:var(--en);font-weight:700}
+  #m-check .n{color:var(--pos-n)} #m-check .v{color:var(--pos-v)} #m-check .adj{color:var(--pos-adj)} #m-check .adv{color:var(--pos-adv)}
+  #m-check .chip{display:inline-block;font-family:var(--jp);font-size:11px;font-weight:700;padding:0 7px;border-radius:99px;border:1px solid currentColor;margin-left:6px;vertical-align:2px}
+  .legend{margin-top:20px;font-size:12.5px;color:var(--ink-2)}
+  .legend ul{display:flex;flex-wrap:wrap;gap:6px 18px;margin:6px 0 0;padding:0;list-style:none}
+  .legend .sw{display:inline-block;width:16px;height:3px;border-radius:99px;vertical-align:middle;margin-right:6px}
+
+  /* ===== 入れ替えドリル / 瞬間英作 共通 ===== */
+  .secs{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:4px 0 14px}
+  .secs .lbl2{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--ink-3);margin-right:4px}
+  .secs button{border:1px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:999px;min-width:42px;height:34px;padding:0 12px;font-weight:700;font-family:var(--en);font-size:15px}
+  .secs button span{font-family:var(--jp);font-size:11px;color:var(--ink-3);margin-left:4px;font-weight:500}
+  .secs button[aria-pressed="true"]{background:var(--orange);border-color:var(--orange);color:#fff}
+  .secs button[aria-pressed="true"] span{color:#fff}
+  .stage{background:var(--paper);border:1px solid var(--rule);border-radius:18px;padding:22px 22px 18px;position:relative;overflow:hidden}
+  .stage .top{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--ink-3);font-weight:700;letter-spacing:.06em}
+  .stage .top .prog{font-family:var(--en);font-size:16px;color:var(--navy)}
+  .disp{min-height:170px;display:flex;flex-direction:column;justify-content:center;gap:10px;padding:12px 4px}
+  .disp .en{font-family:var(--en);font-size:clamp(24px,4.6vw,34px);line-height:1.3;font-weight:700;color:var(--navy)}
+  .disp .cue{font-family:var(--en);color:var(--orange);font-weight:700;white-space:nowrap}
+  .disp .ja{font-size:15px;color:var(--ink-2)}
+  .disp .qjp{font-size:clamp(17px,2.6vw,20px);line-height:1.9;color:var(--ink)}
+  .disp .qjp strong{background:linear-gradient(transparent 62%,var(--hl) 62%);font-weight:700}
+  .disp .ans{border-top:1px dashed var(--rule);padding-top:12px;margin-top:4px}
+  .disp .ans .en{font-size:clamp(22px,4vw,30px)}
+  .disp .ph{color:var(--ink-3);font-size:13px;letter-spacing:.06em}
+  .disp.fade{animation:fd .25s ease}
+  @keyframes fd{from{opacity:.2;transform:translateY(4px)}to{opacity:1;transform:none}}
+  .tmr{height:5px;border-radius:99px;background:var(--soft);overflow:hidden;margin:6px 0 0;visibility:hidden}
+  .tmr.on{visibility:visible}
+  .tmr i{display:block;height:100%;width:100%;background:var(--orange);transform-origin:left}
+  .ctrls{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+  .ctrls .btn{min-width:92px;justify-content:center}
+  .ctrls .btn.big{min-width:150px;font-size:15px;padding:10px 20px}
+  .ctrls .btn.stop{background:var(--red);border-color:var(--red);color:#fff}
+  .sets{margin-top:14px;background:var(--paper);border:1px solid var(--rule);border-radius:14px}
+  .sets summary{list-style:none;cursor:pointer;padding:12px 18px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px}
+  .sets summary::-webkit-details-marker{display:none}
+  .sets summary::after{content:"＋ 開く";margin-left:auto;font-size:12px;color:var(--ink-3);font-weight:500}
+  .sets[open] summary::after{content:"－ 閉じる"}
+  .sets .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px 16px;padding:0 18px 16px}
+  .sets label{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:700;color:var(--ink-3)}
+  .sets select{font:inherit;font-size:14px;font-weight:500;color:var(--ink);background:var(--soft);border:1px solid var(--rule);border-radius:10px;padding:7px 10px}
+  .seg{display:inline-flex;border:1px solid var(--rule);border-radius:99px;overflow:hidden;align-self:flex-start}
+  .seg button{border:0;background:var(--paper);color:var(--ink-2);padding:6px 14px;font-size:13px;font-weight:700}
+  .seg button[aria-pressed="true"]{background:var(--navy);color:var(--paper)}
+  .listcard{margin-top:16px}
+  .listcard .lh{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .listcard .lh h3{margin:0;font-size:14px}
+  .listcard .lh .btn{margin-left:auto;padding:4px 12px;font-size:12.5px}
+  .slist{list-style:none;margin:0;padding:0}
+  .slist li{display:grid;grid-template-columns:28px 1fr;gap:2px 8px;padding:10px 10px;border-radius:10px;cursor:pointer;border-bottom:1px solid var(--rule)}
+  .slist li:last-child{border-bottom:0}
+  .slist li:hover{background:var(--soft)}
+  .slist li.cur{background:var(--orange-soft)}
+  .slist .no{font-family:var(--en);font-weight:700;color:var(--ink-3);text-align:right}
+  .slist li.cur .no{color:var(--orange)}
+  .slist .e{font-family:var(--en);font-size:17px;line-height:1.5}
+  .slist .e .cue{color:var(--orange);font-weight:700;margin-left:6px}
+  .slist .j{grid-column:2;font-size:13px;color:var(--ink-2)}
+  .slist.hide-ja .j{display:none}
+  .slist.hide-en .e{display:none}
+  .slist li.done .no::before{content:"✓ ";color:var(--green)}
+  .done-card{text-align:center;padding:26px 10px}
+  .done-card b{display:block;font-size:22px;color:var(--green);margin-bottom:6px}
+  .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--navy);color:var(--paper);font-size:12.5px;padding:6px 14px;border-radius:99px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:50}
+  .toast.on{opacity:.95}
+  @media (max-width:640px){
+    .nav .mt{padding:6px 9px;font-size:12px}
+    .nav .mt .num{display:none}
+    .nav-in{gap:2px}
+    .stage{padding:16px 14px 14px}
+    .ctrls .btn{min-width:0;flex:1}
+    .ctrls .btn.big{flex-basis:100%}
+    .tbar{position:static}
+    .sec-h .note{display:none}
+  }
+
+  /* ===== タイトル＋表紙 ===== */
+  :root{--wine:#A3244A}
+  :root[data-theme="dark"]{--wine:#E2789A}
+  .mast{background:var(--paper);border-bottom:3px solid var(--wine)}
+  .mast-in{max-width:860px;margin:0 auto;padding:18px 18px 18px;display:flex;align-items:flex-start;gap:20px}
+  .mast-t{padding-top:18px}
+  .mast-h em{font-style:normal;white-space:nowrap}
+  .mast-t{flex:1;min-width:0}
+  .mast-en{margin:0 0 6px;font-family:var(--en);font-weight:700;font-size:14px;letter-spacing:.04em;color:var(--wine)}
+  .mast-h{margin:0;font-family:var(--jp);font-weight:700;color:var(--ink);font-size:clamp(28px,5.4vw,46px);line-height:1.2;letter-spacing:.02em}
+  .mast-h span{display:block;font-size:.5em;letter-spacing:.12em;color:var(--ink-2);margin-bottom:4px}
+  .mast-sub{margin:10px 0 0;font-size:13px;font-weight:700;color:var(--ink-3);letter-spacing:.06em}
+  .cover{flex:none;width:170px;height:auto;border-radius:4px;box-shadow:0 6px 18px -8px rgba(0,0,0,.45);border:1px solid var(--rule);background:#fff}
+  .chapbar{padding-top:18px}
+  @media (max-width:640px){
+    .mast-in{padding:14px 14px 12px;gap:12px}
+    .cover{width:112px}
+    .mast-t{padding-top:4px}
+    .mast-h{font-size:24px}
+    .mast-en{font-size:11px}
+    .mast-sub{font-size:11.5px}
+  }
+  #m-check .ex:empty{display:none}
+  #m-check .ex .tg{font-family:var(--jp);font-size:12px;color:var(--ink-3);margin:0 .3em 0 .6em}
+
+  .mast-et{margin:-2px 0 6px;font-family:var(--en);font-size:13px;font-weight:600;color:var(--ink-3);letter-spacing:.02em}
+
+  /* ===== 日英異文化コミュニケーション ===== */
+  .mast-h{font-size:clamp(28px,5.4vw,46px)}
+  .mast-h span{display:block}
+  .nav .home{flex:none;border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:700;padding:6px 12px;border-radius:99px}
+  .nav .home[aria-current="page"]{background:var(--navy);color:var(--paper)}
+  .nav .home:hover:not([aria-current="page"]){background:var(--soft);color:var(--ink)}
+  .nav .cur-cat{font-size:13px;font-weight:700;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .view{display:none}.view.on{display:block}
+  .home-lead{margin:22px 0 6px;color:var(--ink-2);font-size:14.5px}
+  .home-lead b{color:var(--ink)}
+  .cgrid{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+  .cgrid button{width:100%;display:grid;grid-template-columns:44px 1fr;align-items:center;gap:4px 10px;text-align:left;background:var(--paper);border:1px solid var(--rule);border-radius:14px;padding:12px 14px;color:var(--ink);transition:border-color .15s,transform .15s}
+  .cgrid button:hover{border-color:var(--orange);transform:translateY(-1px)}
+  .cgrid .cn{grid-row:1/3;width:40px;height:40px;border-radius:12px;background:var(--navy);color:var(--paper);display:flex;align-items:center;justify-content:center;font-family:var(--en);font-weight:700;font-size:19px}
+  .cgrid .ct{font-weight:700;font-size:15px;line-height:1.4}
+  .cgrid .cc{font-size:12px;color:var(--ink-3);font-weight:700;letter-spacing:.03em}
+  .cgrid li.seen .cn{background:var(--green)}
+  .cathead{padding:24px 0 6px}
+  .cathead .kicker{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .cathead .jt{margin:12px 0 0;font-size:clamp(24px,4.4vw,34px);line-height:1.3;color:var(--navy)}
+  .catnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .intro{background:var(--paper);border:1px solid var(--rule);border-left:4px solid var(--orange);border-radius:12px;padding:14px 18px;margin:16px 0 18px}
+  .intro h3,.column h3{margin:0 0 6px;font-size:13px;letter-spacing:.08em;color:var(--orange)}
+  .intro p,.column p{margin:0 0 8px;font-size:14.5px;line-height:1.9;color:var(--ink)}
+  .intro p:last-child,.column p:last-child{margin-bottom:0}
+  .column{background:var(--soft);border:1px solid var(--rule);border-radius:12px;padding:14px 18px;margin:18px 0 0}
+  .column h3{color:var(--navy)}
+  .disp .en .rep,.slist .e .rep{color:var(--ink-3);font-weight:600}
+  .ptbtn{align-self:flex-start;border:1px solid var(--orange);background:var(--paper);color:var(--orange);border-radius:99px;padding:5px 14px;font-size:13px;font-weight:700}
+  .ptbtn[aria-expanded="true"]{background:var(--orange);color:#fff}
+  .ptbox{background:var(--orange-soft);border-radius:12px;padding:12px 16px;font-size:14.5px;line-height:1.9;color:var(--ink)}
+  .ptbox p{margin:0 0 6px}.ptbox p:last-child{margin:0}
+  .ptbox[hidden]{display:none}
+  .slist li{grid-template-columns:28px 1fr auto}
+  .slist .j{grid-column:2}
+  .slist .e{grid-column:2}
+  .slist .lp{grid-column:3;grid-row:1/3;align-self:center;border:1px solid var(--rule);background:var(--paper);color:var(--orange);border-radius:99px;padding:3px 10px;font-size:12px;font-weight:700}
+  .slist .lp:hover{border-color:var(--orange)}
+  .slist .lnote{grid-column:2/4;margin-top:6px}
+  .noitems{color:var(--ink-3);font-size:14px;margin:6px 0 0}
+  @media (max-width:600px){
+    .mast-in{padding:14px 14px 14px}
+    .mast-h{font-size:26px}
+    .cgrid{grid-template-columns:1fr}
+    .nav .cur-cat{display:none}
+  }
+  /* ===== 埋め込み表示（完全マスター英文法アプリのタブ内） ===== */
+  html.embed body{background:var(--bg)}
+  html.embed .mast{display:none}
+  html.embed .nav{position:static;backdrop-filter:none;background:transparent;border-bottom:1px solid var(--rule)}
+  html.embed #themeBtn{display:none}
+  html.embed .wrap{padding-bottom:40px}
+</style>
+<script>
+const EMBED = window.parent !== window;
+if (EMBED) document.documentElement.classList.add("embed");
+</script>
+</head>
+<body>
+<header class="mast">
+  <div class="mast-in">
+    <div class="mast-t">
+      <p class="mast-en">Kodai Yonehara</p>
+      <p class="mast-et">Japanese-English Cross-Cultural Communication</p>
+      <h1 class="mast-h">日英異文化<wbr>コミュニケーション</h1>
+      <p class="mast-sub">29のカテゴリー・瞬間英作・音声・表現のポイント</p>
+    </div>
+  </div>
+</header>
+<nav class="nav" aria-label="メニュー">
+  <div class="nav-in">
+    <button class="home" id="homeBtn" type="button" aria-current="page">カテゴリー一覧</button>
+    <span class="cur-cat" id="curCat"></span>
+    <button class="theme" id="themeBtn" type="button" aria-pressed="false">ダーク</button>
+  </div>
+</nav>
+
+<div class="wrap">
+  <!-- フロントページ -->
+  <section class="view on" id="v-home" aria-label="カテゴリー一覧">
+    <p class="home-lead">学びたいカテゴリーを選んでください。<b>日本文を見て英語を言い、「英語を表示＆再生」で答えと音声を確認</b>します。「ポイント」を押すと、その英語表現の注意点が表示されます。</p>
+    <ul class="cgrid" id="cgrid"></ul>
+  </section>
+
+  <!-- カテゴリーページ -->
+  <section class="view" id="v-cat">
+    <header class="cathead" id="chead"></header>
+    <div id="cintro"></div>
+    <div id="cbody">
+      <div class="sec-h"><span class="ic" style="background:var(--green)">S</span><h2>瞬間英作</h2><span class="note">日本文を読んで、すぐに英語で言う</span></div>
+      <div class="stage">
+        <div class="top"><span>JAPANESE → ENGLISH</span><span class="prog" id="sProg">1 / 1</span></div>
+        <div class="disp" id="sDisp"></div>
+        <div class="tmr" id="sTmr"><i></i></div>
+        <div class="ctrls">
+          <button class="btn" id="sPrev" type="button">◀ 前へ</button>
+          <button class="btn primary big" id="sShow" type="button">英語を表示＆再生</button>
+          <button class="btn" id="sNext" type="button">次へ ▶</button>
+          <button class="btn" id="sAuto" type="button" aria-pressed="false">⏵ 自動モード</button>
+        </div>
+      </div>
+      <details class="sets" id="sSets">
+        <summary>⚙ 再生の設定</summary>
+        <div class="grid">
+          <label>自動モードの考える時間<select id="sWait"><option value="1">1秒</option><option value="2">2秒</option><option value="3">3秒</option><option value="4">4秒</option><option value="5" selected>5秒</option><option value="6">6秒</option><option value="7">7秒</option><option value="8">8秒</option><option value="9">9秒</option><option value="10">10秒</option><option value="11">11秒</option><option value="12">12秒</option><option value="13">13秒</option></select></label>
+          <label>読み上げ速度<select id="sSpeed"><option value="0.5">0.5倍</option><option value="0.6">0.6倍</option><option value="0.7">0.7倍</option><option value="0.8">0.8倍</option><option value="0.9">0.9倍</option><option value="1.0" selected>1.0倍</option><option value="1.1">1.1倍</option><option value="1.2">1.2倍</option><option value="1.3">1.3倍</option><option value="1.4">1.4倍</option><option value="1.5">1.5倍</option></select></label>
+          <label>声<select id="sVoice"><option value="">（自動）</option></select></label>
+        </div>
+      </details>
+      <div class="card listcard">
+        <div class="lh"><h3>このカテゴリーの文</h3><button class="btn" id="sEn" type="button">英文を隠す</button></div>
+        <ol class="slist" id="sList"></ol>
+      </div>
+    </div>
+    <div id="ccol"></div>
+    <div class="nextpart" id="cfoot"></div>
+  </section>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const CATS = [{"n": 1, "title": "基本的挨拶とそのルール", "intro": [], "items": [{"ja": "「こんにちは」", "en": "Hello. / Hi.", "note": ["挨拶として最も広く用いられています。「こんにちは」以外に、「やあ！」にも、電話での「もしもし」にもなります。日本語の「こんにちは」と異なり、朝昼晩の一日中使えます。また、身内・同居相手にも使える(Hi, Mom!)ところも日本語の「こんにちは」とは異なります。この表現の後に、Hi, Tom!のように名前を続けることも多いです。", "アメリカでは見知らぬ人と路上ですれ違うとき、スマイルと共にHi.と言われることがよくあります。この可能性は、アメリカ人が女性であれば、そしてコミュニティーが小さければそれだけ高くなります。"]}, {"ja": "「お父さんによろしく言っておいてください」", "en": "Please say hello to your father for me.", "note": ["Hi.に似た、よりインフォーマルな表現にHey.があります。「やあ」にも注意を喚起する「おい」「ちょっと」にもなりますが、喜びや驚きである「へー！」にも「おや！」にもなります（女性はこの表現は余り用いません）。"]}, {"ja": "「お～い、タクシー！」", "en": "Hey, taxi!", "note": []}, {"ja": "「おや！それと同じシャツ僕も持っているよ」", "en": "Hey! I have that same shirt.", "note": []}, {"ja": "「ほんと？いいね。俺たち同じ好みなんだなあ」", "en": "- Oh, that's nice. We have the same taste!", "note": []}, {"ja": "「おい、どうした？」", "en": "Hey, what’s wrong with you?", "note": []}, {"ja": "「おはよう」", "en": "Good morning.", "note": ["これよりくだけた言い方として、Morning.があります(言うまでもなく、一般に簡単な表現であればある程カジュアルな響きとなります)。日本語同様、家族・同居相手にも使えます。日本語の「おはよう」は、形容詞の‘早い’からできているのでそのイメージがありますが、英語のmorningは一応正午または昼食時までなので、遅い朝であってもこの表現が使えます。ちなみにmorningは午前零時からです。"]}, {"ja": "「今朝は午前２時まで起きていました」", "en": "I stayed awake until two this morning.", "note": ["またはこの文では、this morningの代わりにlast nightも可能ですが、前者の方が一般的です。"]}, {"ja": "「夜更かししてはダメよ」", "en": "You shouldn’t stay up late.", "note": []}, {"ja": "「こんにちは」", "en": "Good afternoon.", "note": ["日本語の「こんにちは」程は使われない、やや改まった表現です。基本的には、afternoonは正午から日没または夕食時までです。Hello. / Hi.を使う方が一般的ですが、Hello.と異なり、家族や同居相手にはGood afternoon.は使われません。"]}, {"ja": "「こんばんは」", "en": "Good evening.", "note": ["eveningは日没または夕食時から就寝時までを指します。日本語同様、家族や同居相手には使われません。「楽しい夜をお過ごしください」の意味もあります。"]}, {"ja": "「おやすみ」", "en": "Good night.", "note": ["仕事などが引けたときの同僚への別れの際の挨拶としても使え(「いい夜をお過ごしください」)、そのケースではHave a good night.という表現もあります。nightは、日没から日の出までの特に暗い時間帯を指します（つまりnightはeveningよりかなり長いです）。その逆はdayです。すなわち１日はmorning, afternoon, eveningの3分法とday, nightの2分法があるということになります（ただし、dayには「1日、1昼夜」の意味もあります）。"]}, {"ja": "「あなた、夜に働いているの？」", "en": "Do you work at night?", "note": []}, {"ja": "「場合によりけりよ。ときどき代わりに日中に働くこともあるわ」", "en": "- (It) depends. Sometimes I work during the day instead.", "note": []}, {"ja": "「いい週末をネ！」", "en": "Have a nice weekend!", "note": []}, {"ja": "「どお(元気)？」", "en": "How are you?", "note": ["日本語の「お元気ですか？」の場合、しょっちゅう会っているケースでは使えませんが、英語のHow are you?は毎日顔を合わせていても使えます。これへの返答は、Fine (thank you). / Not so good. / Not so well. / Pretty good! / Super. / Doing all right. / Great. / OK.などそのときの状況に応じて使えますが、How are you?は文字どおりに相手のコンディションを聞いていない場合が多いです。あまりにありきたりの挨拶で、インフォーマルにはそれに対して答えもしないで会話に入っていく場合もあります。", "親しい友人同士で、同様のシチュエーションにおいて、次の例文のようなやり取りもありますが、日本語には極めて訳しにくいものです。"]}, {"ja": "「何か新しい出来事でもある？」", "en": "What's going on?", "note": ["（または、文字通りに「どうなっているの？」）"]}, {"ja": "「いや、大してない」", "en": "- Not much.", "note": []}, {"ja": "「久しぶりねぇ」", "en": "Long time no see. / It's been a long time. (× Long time not see.)", "note": []}, {"ja": "「さようなら」", "en": "Good-bye. / Bye.", "note": ["これも日本語と違い、身内や同居人に対しても使えます。もう１点日本語と違う点は、日本語の「さよなら」は、しばらく会わないこと(例えば翌朝まで)が前提ですが、Bye.はSee you (later).やLater.のように、用事でちょっと出かけて帰って来る場合にも使えることです。"]}, {"ja": "「気をつけてね。じゃあまた」", "en": "Take care. See you.", "note": ["See you.は、「さよなら」の機能として使えます。その表現に続けて、See you tomorrow. / See you at the station.のように、時と場所を示した表現も使えます。", "Bye-bye.はいくぶん子供的な言葉で、大人同士では避ける方が無難だと考えるネイティブもいます。", "Take care.は別れの挨拶時によく使われます。"]}, {"ja": "「お体を大切に」", "en": "Take good care of yourself.", "note": []}, {"ja": "「ありがとう/どうも」", "en": "Thank you. / Thanks.", "note": ["Thank you.のyouにストレスがくると、「いえいえ、お礼を言うのはこちらです」の意味になります。", "Thank you.は言うまでもなく感謝を表す言葉ですが、日本語の「ありがとう」より幅広い使われ方をします。日本語の感謝のつもりで発せられる「すいません」は、英語ではThank you.でよい場合が多いです。スピーチやアナウンスの最後も「以上」の感じでThank you.が使われます。"]}, {"ja": "「いえ、けっこうです」", "en": "No, thank you.", "note": []}, {"ja": "「どうぞよろしくおねがいします」", "en": "Thank you in advance.", "note": ["文字どおりには「あらかじめ感謝を述べておきたいと思います」で、依頼状の末尾などによく使われる表現です。"]}, {"ja": "「有難う」", "en": "That's very nice of you.", "note": ["Thank you.に対する返事の「どういたしまして」は、Sure.がよく使われています。(You are) welcome. / Uh huh. / No problem. / You bet.なども使えます。You bet.はかなりカジュアルな表現で、この表現には状況により「そのとおり」「もちろんいいとも」などの意味もあります。"]}, {"ja": "「ビーチに行くの？」", "en": "Are you going to the beach?", "note": []}, {"ja": "「もちろん」", "en": "- You bet!", "note": []}, {"ja": "「すいません」", "en": "(I am) sorry.", "note": ["(同じような意味のPlease accept my apologies.はかなり丁寧な表現)", "日本語の「すいません」は、I'm sorry.とExcuse me.(またはPardon me.)を兼ねています。心より気の毒に思っている場合はI'm sorry.を使い、それ以外で、例えば人にちょっとぶつかったとき、話の途中で席を離れるとき、咳やゲップをしたときなどの軽い「すいません」はExcuse me.でいい場合が多いのですが、これらの使い分けの一般化は難しいです。", "日本人は‘すまない’感情を頻繁に経験する民族で、例えば「有難う」の代わりとしてさえも「すいません」がよく使われるので、英語のI'm sorry.をむやみに使い過ぎないように注意する必要があります(アメリカ人学生のバレーボールチームと日本人留学生のバレーボールチームが試合したとき、ボールがとんでもない方向によく飛んだりしたケースで、日本人学生はついI'm sorry.と言いやすく、試合全体としては、日本人学生からのI'm sorry.の大合唱があったような印象があります)。", "I'm sorry.やPardon me.に対する返事で、That's all right. / That's O.K. / No problem.もいいです(all right = alright)。"]}, {"ja": "「失礼」", "en": "Pardon me.", "note": []}, {"ja": "「いえ」", "en": "- That's O.K.", "note": []}, {"ja": "「彼らは、何の用でここに来たのかしら」", "en": "What brings them here?", "note": ["(What are they doing here?も可)"]}, {"ja": "「えっ？(今何て言ったんですか?)」", "en": "- Sorry? / (Beg your) pardon? / Excuse me?", "note": ["この「えっ？」に相当する、さらにカジュアルな表現は、Huh? / What? / What's that?などです。", "相手に不幸があったとき、気の毒に思っていれば日本語の「すいません」は変に響きますが、I'm (so) sorry (to hear that).は使えるという違いもあります。つまり、I’m sorryが「すいません」ではなく「残念です」の意味で使われることもあります。"]}, {"ja": "「旅行がほとんど終わりで残念です」", "en": "I'm sorry that my trip is about to end.", "note": []}, {"ja": "「なんて言っていいのか分からないわ」", "en": "I don’t know what to say.", "note": ["(相手の不幸を聞いたときなど)", "また(That's) too bad.やHow awful.が「良くないですね」か「気の毒です」の感じで使えます。"]}, {"ja": "「はじめまして」", "en": "Nice to meet you.", "note": ["How do you do?はよりフォーマルな表現で、普通はNice to meet you.の方が使われます。"]}, {"ja": "「お目にかかれてうれしいです」", "en": "Glad to see you. / (I'm) pleased to meet you.", "note": ["cf.「お会いできてうれしかったです」It was very nice meeting you. (初対面の人との別れ際での表現)", "人をほかの人に紹介するときは、２人のうち女性や年長者や社会的に地位の高い方に向いて、ほかの一方を紹介するのが一般的です。初対面で明らかな年長者には、Mr./Mrs./Ms.プラス姓で呼ぶのが無難で、それ以外は単にファーストネームを使います。", "一般にアメリカは、すぐにファーストネームで呼び合い始める社会です。ファーストネームで呼ぶことによって、カジュアルでリラックスした雰囲気をつくろうとするかのようです。", "名前の順は、given name (first name) + middle name + family name (last name)で、middle nameは日常的には使いません。女性が結婚してfamily nameが変わると、かつてのfamily nameをmiddle nameとして使う傾向があります。", "握手は特に男性対男性の場合、弱過ぎないように注意しましょう。このとき相手の目を見ることとスマイルが大事です。お辞儀は深過ぎないようにしましょう。浅いお辞儀でいいです。"]}, {"ja": "「人の目を見るようにしないといけない」", "en": "You should look people in the eyes.", "note": ["日本文化では、相手の目を見て会話を行うと、相手の心が落ち着かなくなり失礼に思われることもありますが、アメリカでは日本的に相手の目を見るのを避け続けると、自信の無さの表れととられる恐れがあります。"]}, {"ja": "「自己紹介させて頂きます」", "en": "Let me introduce myself.", "note": []}, {"ja": "「こちらはトムです。トムはシカゴから来ました」", "en": "This is Tom. Tom is from Chicago.", "note": ["目の前にトムがいる場合、He is from ~.ではなく名前を使い続けます。"]}, {"ja": "「こちらは、ジョディーです」", "en": "This is Jody.", "note": []}, {"ja": "「ええ、前に１度会っています」", "en": "- Yes, I've met her once before.", "note": []}, {"ja": "「お宅のご家族の皆さんどうですか？(お元気ですか？)」", "en": "How is your family doing?", "note": []}, {"ja": "「どちらにお出かけですか？」", "en": "Which way are you heading?", "note": ["(Where are you going?という表現も可)", "日本では「これからどちらに？」といった問いが軽い挨拶程度に使われるケースがあり、「ちょっとそこまで」といった返事で足りることが多いです。日本に住んでいる英語圏からの外国人が出かけるとき、近所の人にこう軽く聞かれた場合、質問を文字どおりに解釈してしまって、どうしてそんなプライベートなことを一々聞くのだろうといぶかることがよくあるそうです。"]}, {"ja": "「(クシャミをした人に)お大事に！」", "en": "(God) bless you!", "note": ["これは、クシャミをすれば見ず知らずの人からも言われることがよくあります。それへの返事は、Thanks.で足ります。「お大事に」は便宜的な意訳で、訳しようがないと言っておいた方がいいのかもしれません。"]}], "column": []}, {"n": 2, "title": "‘曖昧さ’について", "intro": ["日本語では「～時頃に会いましょう」とか、「あれ５つほどください」といったふうに曖昧にすることで丁寧な響きを添えることができますが、英語ではこの場合のこういった曖昧さは避ける方が無難です。"], "items": [{"ja": "「５時にここで会おうよ」", "en": "Let's meet here at 5:00.", "note": []}, {"ja": "「あれ５つください」", "en": "Can I have five of those?", "note": []}], "column": []}, {"n": 3, "title": "日米のQA(質問と答え方)のパターンの違い", "intro": ["日米のQAパターンの違いは顕著です。米語では最初に結論を言って、必要があれば説明を付け足す感じが一般的です。一方日本語の場合、説明から結論に行く場合が多く見られ、この違いが日本人とアメリカ人のコミュニケーションギャップの一因となることもあります。実際、日本語母語者にTOEFLのスピーキングのセクションを教えていて感じるのは、やはり日本語的ロジックで説明しようとする学生が少なからずいることです。"], "items": [{"ja": "（コミュニティー内の犯罪について聞かれて）「私たちのコミュニティーにはそんなに犯罪はありません」", "en": "We don't have much crime in our community.", "note": ["英語的ロジックでの答え方です（結論的で直接的）。", "日本語的ロジックでは Our community is pretty close-knit, so we help each other.（説明的・婉曲表現的。close-knit「緊密に結びついた」）のように答えがちです。"]}, {"ja": "「トイレットペーパー以外の物を便器に流さないでください」", "en": "Please do not flush anything other than toilet paper down the toilet.", "note": ["JRの新幹線内での乗客への注意書きです。英語は結論（してほしいこと）から入ります。", "日本語版：「故障となりますので、便器には備え付け以外の物を捨てないでください。」（理由から入る）"], "added": true}], "column": []}, {"n": 4, "title": "謙譲", "intro": ["謙譲的な言い回しというのは、日本社会では普通に見られます。謙譲というのは、自分または自己の属するグループをへりくだることです。平等に重きをおくアメリカ社会においては、その日本的謙遜が自己の自信の無さや誠実さの欠如のように響く可能性があるので、注意が必要です。"], "items": [{"ja": "「息子さん、とても頭がいいですね」「そう言っていただけてうれしいです」", "en": "Your son is very intelligent. - I'm glad you think so.", "note": ["日本式のやり取り：「お宅の息子さん、頭がいいですねェ」「いえいえ、とんでもありません」", "アメリカでは、ほめ言葉は否定せずに受け取るのが自然です。"], "added": true}, {"ja": "（ゲストとの食卓で）「とてもおいしいです」「気に入っていただけてうれしいです」", "en": "This is very good. - I'm glad you like it.", "note": ["日本式のやり取り：「お料理お上手ですねェ」「いえいえ、Aさん程では、、。まあ、何もございませんがどうぞ」", "アメリカのように平等を建前とする社会では、こういった比較の表現は避ける方が無難です。また、日本語の「何もございませんが、どうぞ」はもちろん何もないわけではなく、かなりのご馳走が出てくることすらあります。"], "added": true}], "column": []}, {"n": 5, "title": "年齢について", "intro": ["日本社会において、話し相手の年齢を知ることは、より適切な言葉使いを選ぶ上で重要である場合が多いです。英語は話し相手によって、日本語ほど頻繁に丁寧さの度合いを変化させる必要はありません。よってアメリカでは、むやみに相手の年齢を聞くことはしない方が無難です。", "ついでに言えば、米国では年配の人が若い人のような服装をしたり振る舞いをしたりすることは珍しいことではありません。子供からおじいちゃんまでの普段の服装が、同じようにジーンズにＴシャツといった感じであっても驚くにはあたらないのです。"], "items": [], "column": []}, {"n": 6, "title": "家族内での呼び方", "intro": ["兄弟姉妹同士の呼称は、年齢差に関係なくファーストネームが主です。日本語では、兄弟姉妹という言葉があるように長幼の別は重要ですが、英語ではa big sister, a little brother (× a small brother)といった長幼をハッキリさせる表現はあるにはあるものの、一般にはbrotherかsisterかの二分法がよく使われます。", "また、子は親をDad, Mom(書く場合は、最初の文字を固有名詞的に大文字にしてもいいし、dad, momのように小文字にしてもいいです)と呼びますが、親は子をファーストネームで呼ぶか、父親は息子にsonを使うこともよくあります(見ず知らずの男性が、男の子にSon.と呼びかけることもあります)。叔父や叔母には、大文字から始めるUncle またはAunt + ファーストネームが一般的です。Honey.(短いバージョンはHon)、Darling.という呼びかけも夫婦間でよく使われます。親が子に対する呼びかけで、Sweetheart(短いバージョンはSweetie)も使われます。"], "items": [{"ja": "「兄は、私が１２のときに自転車を買ってくれた」", "en": "My brother bought me a bicycle when I was twelve.", "note": []}, {"ja": "「何て優しいの（または「何て親切なの」）」", "en": "That's so sweet!", "note": ["(女性言葉的)"]}, {"ja": "（父親が息子に）「やあ、息子よ…父さんだよ」", "en": "Hey son . . . it's me, Dad.", "note": ["(It's your Dad.も可)"], "added": true}, {"ja": "「こんにちは、ジョージおじさん！」", "en": "Hi, Uncle George!", "note": ["おじ・おばには Uncle / Aunt ＋ファーストネームが一般的です。"], "added": true}, {"ja": "（夫婦間で）「ただいま！」", "en": "Honey, I'm home!", "note": ["Honey（短いバージョンは Hon）は夫婦間でよく使われる呼びかけです。"], "added": true}, {"ja": "（夫婦間で）「ねえ、缶ビールを1本持ってきてくれる？」", "en": "Darling, can you bring me a can of beer?", "note": ["Darling も夫婦間でよく使われる呼びかけです。"], "added": true}, {"ja": "（親が子に）「ねえ、元気？」", "en": "Sweetheart, how are you?", "note": ["Sweetheart は親が子に対してよく使う呼びかけです。"], "added": true}, {"ja": "（親が子に）「ねえ、ローンを申し込むときは気をつけてね」", "en": "Sweetie, be careful when applying for loans.", "note": ["Sweetie は Sweetheart の短いバージョンです。"], "added": true}], "column": []}, {"n": 7, "title": "天気", "intro": ["日本は天候の移り変わりが激しいからでしょうが、天気のことが話題にのぼるのは日本語でのコミュニケーションでよく見られる現象です(特に手紙や会話の始まりに)。米語では、日本語ほどは天気のことには触れられません。"], "items": [{"ja": "「いい天気ですね」", "en": "(It's a) beautiful day, isn't it?", "note": []}, {"ja": "「ええ、本当に」", "en": "- Yes, it is!", "note": []}, {"ja": "「暑いですね」", "en": "(It's ) hot, isn't it?", "note": []}, {"ja": "「涼しくていいですね」", "en": "(It's) nice and cool, isn't it?", "note": []}, {"ja": "「今日は、天気がいい/曇り空/寒い/雨びより/暖かいですね」", "en": "It's clear/cloudy/cold/rainy/warm today.", "note": ["アメリカは広いので一概に言えませんが、梅雨というのはありません。一方、台風と同じであるハリケーンはメキシコ湾沿いや東海岸沿いにやって来ます。日本では台風は「～号」と呼びますが、アメリカでは主に女性名です。"]}], "column": []}, {"n": 8, "title": "甘え", "intro": ["子供が小さいとき、子供を甘やかす度合いは日本の方が大きいです。日本では子供が小さければ小さい程、そして年を取って体が動かなくなればなる程‘自由’が与えられる傾向にあります。そしてそれらの中間期間は、かなり‘自由’が制限される傾向があります。つまり‘自由’が規制され‘責任’の重い期間と言えます。", "一方アメリカではその逆で、子供が小さければ小さい程、そして年を取って体が動かなくなればなる程、他から‘コントロール’の手が伸びてくる可能性があります。その中間期間は、日本と逆に‘自由’の度合いが大きいです。よってアメリカ人はこの期間、いい意味でも悪い意味でも思い切った‘自由なこと’ができやすいのです。"], "items": [{"ja": "「彼女は子供を甘やかしてダメにした」", "en": "She spoiled her child.", "note": []}, {"ja": "「きみ、また甘えっ子みたいに振舞っているね」", "en": "You are behaving like a spoiled child again.", "note": []}], "column": []}, {"n": 9, "title": "ドアでのエチケット", "intro": ["ドアを開けて入るとき、後に続く人がいれば、続く人の目の前でドアが閉まらないようにドアを押さえてあげるのも重要なエチケットです。逆に、前の人がドアを開けて先に入れてくれたらThank you.と礼を言うのも大切なエチケットです。"], "items": [{"ja": "「(ドアのところで)ありがとうございます」", "en": "Thank you.", "note": []}, {"ja": "「どう致しまして」", "en": "- You're welcome.", "note": ["(Sure.やUh huh.も可)"]}, {"ja": "「どういたしまして」", "en": "It’s nothing.", "note": ["ちなみに、日本でのドアのノックは２度トントンとたたく場合が多いですが、アメリカではその倍前後が一般的で、２度だけのノックでは不自然に響きます。"]}], "column": []}, {"n": 10, "title": "リラックスに関しての注意", "intro": ["ホストは、客に対してなるべく堅苦しい状況を作らないようにし、客をリラックスさせるためにできるだけカジュアルな状況を作ろうとする傾向が見られます。"], "items": [{"ja": "「飲み物は冷蔵庫に入っているから、勝手に飲んで。すぐ(あなたのところに)行きますので」", "en": "The drinks are in the fridge. Help yourself. I'll be with you in a minute.", "note": ["日本語でよく使われるフレーズ「頑張って！」は、Work hard.ぐらいの意味で、アメリカ人は逆に、Don't work too hard.とか、Take it easy.と言います。これらの表現も、人はリラックスをし余裕が生まれればよりいい結果を生むと考えられているからです。", "英語流の「頑張って！」は、状況に応じていろいろな表現があり得ますが、実際に目の前で行われていることであれば、Come on! / Hang in there!などがあります。日本語の「ファイト！」は「頑張れ！」や「闘志を燃やせ！」的な掛け声のつもりで発せられますが、英語のFight!とすると「戦え！」とか「喧嘩しろ！」といった感じになります。", "アメリカ人が日本に来たとき、路上で歩きタバコをしている日本人が非常に多いのに気づきます。アメリカでは喫煙は肉体と精神のリラックスのときであり、歩くという‘運動’と喫煙がどうしてもうまく結びつきにくいのです。２つの相反するようなことを同時に行う日本人は、喫煙にかかる時間さえ惜しんで何事かを行いたい‘働き者’とも言えるし、余裕なく‘セカセカ’しているとも言えます。アメリカでは、路上での喫煙者はほとんど見かけることはありませんし、仮にそれを行えば周りからかなり疎んじられるので注意が必要です。"]}, {"ja": "「リラックスして！万事うまくいっているよ。ほら、もう半分済んでいるよ」", "en": "Relax! Everything's under control. See, we're halfway through already.", "note": ["この文は、アメリカにある日系企業のアメリカ人と日本からの出向者の‘リラックス’に対する考え方の違いを如実に表しています。", "日本からの出向者の受け止め方：「怠け者で無責任なアメリカ人。この仕事がどれほどシリアスなものか分からないのか？」"]}], "column": []}, {"n": 11, "title": "学校での英会話とそのルール", "intro": ["日本の中学、高校であれば、クラスは全員が全く同じクラスを１年間履修し続ける傾向がありますが、アメリカでは高学年になればなる程、選択できるクラスの数が増えてきます。また、アメリカのテレビドラマ・映画を見ても分かるように、生徒は個々人にロッカーがあてがわれており、自分の所有物をキープしておけます。"], "items": [{"ja": "「あなたは何処の大学の学生さんですか」", "en": "Which/What university do you go to?", "note": ["(collegeももちろん可)"]}, {"ja": "「コーネル大学に行っています」", "en": "- I go to Cornell (University).", "note": []}, {"ja": "「私はコーネル大学出身です」", "en": "I have been to Cornell.", "note": []}, {"ja": "「大学はどちらで学ばれました？」", "en": "Which university did you study at?", "note": []}, {"ja": "「まず、コミュニティーカレッジ(地域短大)に行きたい」", "en": "I'd like to go to a community college first.", "note": ["Community collegeは公立の短大で、授業料が安く、特に夜のクラスでは社会人を非常に多く見かけます。"]}, {"ja": "「それから後で４年制の大学に転校したい」", "en": "Then I want to transfer to a four-year college later.", "note": ["アメリカでは大学レベルの転校は多いです。"]}, {"ja": "「私は、1998年にコンピュータ・サイエンスの学士号をとりました」", "en": "I got a Bachelor's degree in Computer Science in 1998.", "note": []}, {"ja": "「ニューヨークの大学院に行きたい」", "en": "I want to go to a graduate school in New York.", "note": []}, {"ja": "「私は心理学専攻の大学院生です」", "en": "I'm a graduate student in psychology.", "note": []}, {"ja": "「文学士」", "en": "BA (Bachelor of Arts)", "note": []}, {"ja": "「理学士」", "en": "BS (Bachelor of Science)", "note": []}, {"ja": "「文学修士」", "en": "MA (Master of Arts)", "note": []}, {"ja": "「理学修士」", "en": "MS (Master of Science)", "note": []}, {"ja": "「修士号」", "en": "master's degree", "note": []}, {"ja": "「博士号」", "en": "doctorate", "note": []}, {"ja": "「医学部はどちらですか？」", "en": "Where's the medical school?", "note": ["schoolやcollegeが集まってuniversityを形成しています。そして、medical schoolをmedical collegeとはできません。また、ロースクール、ビジネススクールといった大学院を表す言葉は日本語としても馴染みがありますが、このスクールは日本語では学部と訳した方がいいでしょう。"]}, {"ja": "「英語を毎日かなり勉強しています」", "en": "I study English very hard every day.", "note": ["studyは‘努力して学ぶ過程’を指し、learnは‘学んで身に付ける’時に使います。よって上の文はstudyをlearnに変えることはできません。I'm learning English.はいいです。また、I work very hard.のworkは「仕事する」以外に「勉強する」時にも使えます。"]}, {"ja": "「私はテレビゲームでゴルフのやり方を学んだ」", "en": "I learned how to play golf from video games.", "note": []}, {"ja": "「彼女は大学に登録した」", "en": "She enrolled in college.", "note": ["enrollは「入学」と訳すより、「登録」の方がいいケースがあります。取るクラスを選択し、授業料を払えばenrollなので、毎学期enrollはできるからです。Over 1000 students were newly enrolled in the school.のenrollはnewlyとなっているので、明らかに「入学」です。", "近年(2008年現在)、アメリカの大学の授業料はうなぎ登りです。私立であれば、日本の相場の３倍以上というところが珍しくありません。その代わり、生徒数に対する先生の数はかなり多いなど質の面で大きく違い、奨学金も得やすくなっています。"]}, {"ja": "「私の大学の授業料は毎年上がっている」", "en": "The tuition at my university is increasing every year.", "note": []}, {"ja": "「日本では、学校は４月に始まります」", "en": "School starts in April in Japan.", "note": []}, {"ja": "「日本では大学は入るのが難しく、出るのはやさしい」", "en": "In Japan it's hard to get into college but easy to get out.", "note": []}, {"ja": "「この大学の生徒数は何人ですか」", "en": "How many students are there at this university?", "note": []}, {"ja": "「あなたの１番得意な学科は何ですか」", "en": "What is your favorite subject?", "note": ["favoriteにはすでに最上級的な意味合いがあり、この文でmost favoriteとするといくぶん不自然になります。"]}, {"ja": "「その期末テストは中止されたの？」", "en": "Was the final called off?", "note": ["the finalsではテストが複数ある場合か、「最終戦は中止されたの？」の意味となります。"]}, {"ja": "「ペーパーテスト」", "en": "a written examination/test", "note": []}, {"ja": "「中間テスト」", "en": "midterms", "note": []}, {"ja": "「決勝戦でプレーする」", "en": "play in the finals", "note": []}, {"ja": "「うん。明日に延期されたよ」", "en": "- Yes. It was postponed until tomorrow.", "note": []}, {"ja": "「それは、来週の今日に延期されました」", "en": "It was postponed until a week from now.", "note": []}, {"ja": "「私たちの卒業式は５月１０日に行われます」", "en": "Our commencement/graduation ceremony will be held on May 10.", "note": ["(このwillは‘強い予想’。また、10の発音はtenth)", "（「卒業式」はほかにgraduation ceremonyも可）"]}, {"ja": "「ドイツ語は大学では選択でした」", "en": "German was an elective at college.", "note": []}, {"ja": "「必修科目」", "en": "required course/subject", "note": ["英米は日本のような縦社会とは異なるので、日本語の目下・目上を含む言葉はあまり使いません。あえて例を挙げれば、「上級生」はupperclassman、「大学での先輩だった人」はa graduate of my university(文字どおりには「私の大学の卒業生」)などといった具合です。"]}, {"ja": "「スージーは上級生と付き合っている」", "en": "Susie is dating an upperclassman.", "note": []}, {"ja": "「彼女は私の大学の卒業生だ」", "en": "She is a graduate of my university.", "note": []}, {"ja": "「彼はコロンビア大学の１年先輩でした」", "en": "He was at Columbia (University) one year before me.", "note": ["(one year after meで「１年後輩」)"]}], "column": []}, {"n": 12, "title": "仕事での英会話とそのルール", "intro": [], "items": [{"ja": "「(将来)何になりたい？」", "en": "What would you like to be someday?", "note": ["(What do you want to do someday?も可)"]}, {"ja": "「より給料のいい仕事を得たい」", "en": "I want to get a better-paying job.", "note": ["日本では、夏と冬にボーナスが出るところが多いですが、アメリカでは年俸制で、それを１２か月に割り振って支給するケースが多いので、日本で定期的にもらえるボーナスといったようなものはありません。"]}, {"ja": "「マネージャーさんにお会いしたいのですが」", "en": "I'd like to see your manager.", "note": ["学校などのクラブ活動での「マネージャー」は、a managerではなくa caretaker（「世話人、介護者、ヘルパー」）を使います。"]}, {"ja": "「(あなたの)お名前お願いします」", "en": "- May I have your name, please.", "note": ["(- May I ask your name, please.も可)"]}, {"ja": "「あなたと話したいことがあるのですが」", "en": "I have something to talk over with you.", "note": ["(I have something to talk to/with you about.も可)"]}, {"ja": "「そうですか。じゃあ私のオフィスに来てください」", "en": "- Do you? Then come to my office.", "note": []}, {"ja": "「アンダーソン(さん)は今席を外していますが」", "en": "Mr. Anderson isn't at his desk now.", "note": []}, {"ja": "「いつ頃帰って来ますか？」", "en": "- When do you expect him back?", "note": []}, {"ja": "「景気はどうですか？」", "en": "How's business?", "note": []}, {"ja": "「あなたが先日話していた問題の件はどうなりましたか」", "en": "What has become of the problem you talked about the other day?", "note": []}, {"ja": "「課長は私たちの計画に対してネガティブだけど」", "en": "Our boss is negative about our plan.", "note": ["(negative to our planも一応可)"]}, {"ja": "「何が課長をそんなにネガティブにしていると思う？」", "en": "- What do you think makes him so negative?", "note": ["日本では「長い物には巻かれろ」という言葉があるように、目上の者または権威者に対しては、あちらが悪くてもランクの下の者が謝ってことが丸く収まるということがよくあります。アメリカではそういった傾向は日本よりかなり低いです。", "また、アメリカでは、自分の意見を言わなければ意見のない人だと思われる傾向にあります。"]}, {"ja": "「これは必要経費で落としましょう」", "en": "Let's write this off as a necessary expense.", "note": []}, {"ja": "「どんな関係のお仕事ですか」", "en": "What do you do?", "note": ["(またはWhat's your line of business?)"]}, {"ja": "「お仕事は何ですか？」", "en": "What is your profession/occupation?", "note": []}, {"ja": "「彼はビジネスマンです」", "en": "He is an office worker.", "note": ["日本語の‘ビジネスマン’と英語のbusinessmanにはズレがあります。英語のbusinessmanは企業の経営者、管理者の意味で使われる場合が多いです。上の例文では、a white-collar workerでもよいです。性差を意識させない表現としてはbusiness personがあります。", "cf.「サラリーマン」salaried/office worker"]}], "column": []}, {"n": 13, "title": "訪問時の英会話とそのルール", "intro": [], "items": [{"ja": "「是非いつか会いに来てね」", "en": "(Do) come (and) see us sometime.", "note": ["動詞が３つ続いているような文ですが、Doは強調の助動詞doです。"]}, {"ja": "「いつでもいらしてくださいね」", "en": "Please come any time you like.", "note": []}, {"ja": "「次の土曜日おいでよ」", "en": "Come over next Saturday.", "note": []}, {"ja": "「必ず私の家に来てね」", "en": "Be sure to come to my house.", "note": []}, {"ja": "「必ず行くわ」", "en": "- I sure will.", "note": []}, {"ja": "「明日夕飯食べにこない？」", "en": "Will you come for dinner tomorrow?", "note": []}, {"ja": "「それは素晴らしい！」", "en": "- That would be wonderful!", "note": ["日本語の語感ではgoを使ってしまいそうなところに、英語ではcomeを使うケースの例も挙げておきます。"]}, {"ja": "「来て手伝って！」", "en": "Come and give me a hand!", "note": []}, {"ja": "「今行くところよ」", "en": "- I am coming.", "note": ["人Ａと人Ｂがいて、どちらかが相手の居るところに行く場合はcomeを使い、goは使いません。goを使うケースは、ＡとＢから離れた第３のところに行くケースです。"]}, {"ja": "「その映画に行こう」", "en": "Let's go to the movie.", "note": ["ところが、そういった第３の場所であっても、‘意識をその場所に持って行き’goではなくcomeを使う例も見られます。"]}, {"ja": "「その公園へ俺と一緒に来なよ」", "en": "Come with me to the park.", "note": []}, {"ja": "「この道を行けば、駅に出ます」", "en": "If you follow this road, you'll come to the station.", "note": []}, {"ja": "「ようこそお出でくださいました」", "en": "It's so/very nice of you to come.", "note": []}, {"ja": "「お招き有難うございます」", "en": "- Thank you for inviting me.", "note": []}, {"ja": "「家に入る前に、靴を脱いでください」", "en": "Please take off your shoes before you enter our house.", "note": ["一般に、アメリカの家庭では家の中で靴は脱ぎませんが、アメリカの日本人・日系人の家庭では靴を脱ぐようにしているところが多いです。"]}, {"ja": "「コートをお預かりしましょう」", "en": "Let me take your coat.", "note": []}, {"ja": "「どうぞ、お座りになって」", "en": "Please have a seat.", "note": []}, {"ja": "「お飲み物はいかがですか？」", "en": "Would you like something to drink?", "note": []}, {"ja": "「どうぞお構いなく」", "en": "- Please don't bother.", "note": []}, {"ja": "「コーヒーを作りましょうか」", "en": "Would you like me to make some coffee for you?", "note": []}, {"ja": "「あなたのコーヒーはどういうふうにしますか」", "en": "How do/would you like your coffee?", "note": []}, {"ja": "「コーヒーにクリームと砂糖は入れますか」", "en": "Do you want cream and/or sugar in your coffee?", "note": []}, {"ja": "「クリームをちょっとだけお願いします」", "en": "- Just a little cream, please.", "note": []}, {"ja": "「電話を使っていいですか」", "en": "May I use your phone?", "note": []}, {"ja": "「どうぞ」", "en": "- Go ahead.", "note": ["ほかに、- Please. / Sure. / Yes, it's over there. / Of course. / Help yourself.なども使えます。"]}, {"ja": "「トイレ拝借していいですか？」", "en": "May I use the bathroom?", "note": []}, {"ja": "「入っていいですか？」", "en": "May I come in?", "note": []}, {"ja": "「お好きなものを召し上がってください」", "en": "Please help yourself.", "note": []}, {"ja": "「ありがとう。そうします」", "en": "- Thank you, I will.", "note": []}, {"ja": "「コーヒーのお代わりは？」", "en": "How about another (cup of) coffee?", "note": ["アメリカ人家庭で何かを勧められたとします。日本人的メンタリティーであれば、すぐに受けるのはちょっとはしたないと思い、最初はやんわり断る可能性があります。日本では、ホストもそういった呼吸を知っているので、また「遠慮なさらずどうぞどうぞ」と勧め、それでゲストが「そうですか？じゃあいただきます」といった感じで受ける‘儀式’が行われることが少なくないからです。アメリカではyesはyesで、noはnoなので、最初に断って再度勧めてくれるのを待っていると失望することになります。"]}, {"ja": "「ちょうどチョコレートチップクッキーを作ったんですが、食べませんか？」", "en": "We just made some chocolate chip cookies. Would you like some?", "note": []}, {"ja": "「いえ、結構です」", "en": "- No, thank you.", "note": []}, {"ja": "「じゃあ、気が変わったら仰しゃってくださいね」", "en": "O.K. Tell me if you change your mind.", "note": []}, {"ja": "「チョコレートはほとんど皆が喜んで食べている甘菓子だ」", "en": "Chocolate is a candy that almost everyone enjoys.", "note": ["例文のように、candyはアメのみならず、チョコレートなどの砂糖菓子も含みます。"]}, {"ja": "「帰らなければなりません。遅くなって来ましたので」", "en": "I'm afraid I have to leave now. It's getting late.", "note": []}, {"ja": "「さて、そろそろ失礼しなければ」", "en": "Well, it's about time to leave.", "note": []}, {"ja": "「おもてなし有難うございます/ました」", "en": "Thank you for your warm hospitality.", "note": ["(フォーマルな表現)"]}, {"ja": "「本当に楽しかったです」", "en": "I had a very good time.", "note": []}], "column": []}, {"n": 14, "title": "電話による英会話とそのルール", "intro": [], "items": [{"ja": "「(電話で)ビルいますか？」", "en": "Is Bill there?", "note": []}, {"ja": "「彼を(電話口に)お願いします」", "en": "May/Could I speak/talk to him?", "note": []}, {"ja": "「(電話で)ボブお願いします」", "en": "May I speak to Bob?", "note": []}, {"ja": "「(電話で)キングさんに繋いでください」", "en": "Please connect me with Mr. King.", "note": ["Mr./Mrs./Ms.は日本語の「~さん」と異なり、自身にもフォーマルに使うことが可能です。"]}, {"ja": "「どなたでいらっしゃいますか？」", "en": "May I ask who is speaking? (≒ May I tell him who’s calling?)", "note": []}, {"ja": "「スミスと申します」", "en": "- This is Mrs. Smith.", "note": []}, {"ja": "「(電話で)徹ですが、、。ジェイソンお願いします」", "en": "This is Toru. Would you put Jason on?", "note": []}, {"ja": "「今、ここにはいませんが」", "en": "- He is not in/here right now.", "note": []}, {"ja": "「そんな名前の人いませんが」", "en": "- There's no such person at this number.", "note": []}, {"ja": "「間違ってかけていますよ」", "en": "- You have the wrong number.", "note": ["(You have a wrong number.は不可)"]}, {"ja": "「(電話)誰だった？」", "en": "Who was calling?", "note": []}, {"ja": "「間違い電話だった」", "en": "- It was a wrong number.", "note": []}, {"ja": "「祖母はよく電話をかけ間違える」", "en": "My grandmother often dials the wrong number.", "note": ["今日ダイヤル式の電話はほとんど全くないにもかかわらず、dialが‘惰性的’に使われています。"]}, {"ja": "「すいませんが、もっとゆっくり話してくださいませんか」", "en": "Excuse me, could you speak more slowly?", "note": []}, {"ja": "「どなた様ですか？」", "en": "Who is calling, please?", "note": ["(Who is this?はかなりカジュアルな表現)"]}, {"ja": "「すいません。まだ家には帰ってないのですが。何時に帰って来るか分かりません」", "en": "Sorry, he isn't home yet. I don't know what time he'll return.", "note": ["(he'll be backも可）"]}, {"ja": "「ジョンソンさんにメッセージお残しになりますか？」", "en": "Would you like to leave a message for Mr. Johnson?", "note": ["（leave a message to Mr. Johnsonは不可だが、give a message to Mr. Johnsonは可）"]}, {"ja": "「(電話を)切らないで待っていてください」", "en": "Please hold.", "note": ["(主にビジネスで)", "Hold on. / Just a second. (主に家で)"]}, {"ja": "「(電話で)ペンと紙を取って来るまでちょっと待って」", "en": "Hang on for a minute while I go and get a pen and paper.", "note": ["日本語の「取って」「来る」が、英語ではgo and getとなっていることに注意しましょう。", "cf.「鍵を取って来ましょうか？」Shall I go (and) get the key? (shallは一般にフォーマル)", "(Do you want me to go (and) get the key?も可)"]}, {"ja": "「電話ありがとう」", "en": "Thank you for calling.", "note": []}, {"ja": "「もしもし、グランドホテルですか？」", "en": "Hello. Is this the Grand Hotel?", "note": []}, {"ja": "「あなたは彼女のルームメイトですか？」", "en": "Is this her roommate?", "note": ["電話の声が‘ここ’から聞こえてくるからでしょうが、thisを使い、thatは使えません。"]}, {"ja": "「私のフライトの確認をしたいのですが」", "en": "I want to confirm my flight.", "note": ["(叉は単に、Confirmation, please.)"]}, {"ja": "「ホテルの予約の確認をしたいのですが」", "en": "I'd like to confirm my reservation at your hotel.", "note": []}, {"ja": "「窓際の席を予約したいのですが」", "en": "I want to reserve a window seat.", "note": []}, {"ja": "「ダブルベッドの部屋はいくらですか？」", "en": "How much will/would it be for a room with a double bed?", "note": ["How much is it ~も使え、How much will/would it ~はより丁寧です。"]}, {"ja": "「彼に電話をかけようとしたが、彼は家にいなかった」", "en": "I tried to call him, but he wasn't (at) home.", "note": []}, {"ja": "「電話を切って彼は仕事に出かけた」", "en": "After he hung up the telephone, he left to go to work.", "note": []}, {"ja": "「あなたの外出中、ナンシーからあなたに電話があったよ」", "en": "Nancy gave you a call while you were out.", "note": []}, {"ja": "（自宅で電話に出て）「はい、鈴木です」", "en": "Hello.", "note": ["家庭で受話器をとったときの一般的な答え方の日米での違いです。日本語では「ハイ鈴木です」と名乗りますが、英語では Hello. と言うのが一般的です（さらにカジュアルには Yes. も可能です）。"], "added": true}], "column": []}, {"n": 15, "title": "空港や機内などで", "intro": [], "items": [{"ja": "「ニューヨークは何時ですか？」", "en": "What is the local time in New York?", "note": ["アメリカ(アラスカとハワイを除く)のタイムゾーンは４つあります。ニューヨーク(Eastern Time)が午後７時のときはシカゴ(Central Time)は６時で、デンバー(Mountain Time)とロサンゼルス(Pacific Time)はそれぞれ５時と４時といった具合です。よってアメリカ国内を旅行するときには、問題の時間がどこの時間帯のものであるのかを知る必要があります。"]}, {"ja": "「ニューヨークと東京の時差は何時間ですか？」", "en": "What is the time difference between New York and Tokyo?", "note": []}, {"ja": "「向こうにたくさん免税店がありますよ」", "en": "There are many duty-free shops over there.", "note": []}, {"ja": "「日本円をアメリカドルに換えてくれますか？」", "en": "Will you exchange Japanese yen for/to American dollars?", "note": ["もし銀行員に対して日本円を示した場合、Japanese yenとあえて言うとおかしくなります。旧情報(相手にもこちらにも分かる情報)を示す代名詞thisで足ります(Will you exchange this for American dollars/money?)。また、yenには複数形の-sがなく、dollarsには複数形の-sがあることにも注意しましょう。"]}, {"ja": "「彼は、航空券の値段を再確認した」", "en": "He double-checked the price of the airplane ticket.", "note": ["(the airline ticketは可だがthe air ticketは不可)"]}, {"ja": "「エコノミー・クラスで行きたい」", "en": "I want to go/fly economy class. (× go by economy class)", "note": []}, {"ja": "「私たちの目的地はハワイです」", "en": "Our destination is Hawaii.", "note": []}, {"ja": "「禁煙席をお願いします」", "en": "Non-smoking, please.", "note": []}, {"ja": "「持ち込みの荷物に規則はありますか？」", "en": "Are there any regulations about carry-on baggage/luggage?", "note": []}, {"ja": "「急いで。でないと飛行機に遅れるよ」", "en": "Hurry up, or you'll miss your plane.", "note": ["(このコンテクストではyou'll miss a plane.とはできない)"]}, {"ja": "「搭乗はもう始まっていますか？」", "en": "Has boarding started already?", "note": []}, {"ja": "「いいえ」", "en": "- No, sir.", "note": []}, {"ja": "「水１杯頂けます？飛行機酔いの薬を飲まなくてはいけないので」", "en": "Can I have a glass of water? I have to take a pill for airsickness.", "note": []}, {"ja": "「この入国カードを書くのを手伝ってくれませんか？」", "en": "Would you help me with this landing/entry card?", "note": ["入国審査で必要なものは、パスポートと機内で記入しておいた入国カードです。入国審査官には、入国の目的、滞在先やその期間、所持金などを尋ねられます。"]}, {"ja": "「この国にどの位いるつもりですか？」", "en": "How long are you going to stay in this country?", "note": []}, {"ja": "「２週間です」", "en": "- (For) two weeks.", "note": []}, {"ja": "「(入国の)目的は何ですか？」", "en": "What's the purpose of your visit? (× for your visit)", "note": []}, {"ja": "「観光です」", "en": "- (For) sightseeing.", "note": []}, {"ja": "「親戚への訪問です」", "en": "- Visiting relatives.", "note": []}, {"ja": "「ビジネスです」", "en": "- (On) business.", "note": ["税関審査では、税関の係官に申告する物があれば税関申告書を見せます。時に、荷物の中身を見せるように言われることもあります。"]}, {"ja": "「何か申告するものはありますか」", "en": "Do you have anything to declare?", "note": []}, {"ja": "「いや、ありません」", "en": "- No(, I've nothing to declare).", "note": []}], "column": []}, {"n": 16, "title": "乗り物", "intro": ["運転手が女性のタクシーもあります。チップはレストランと同様に払うことが多いです(チップは、勘定の10から15%が一般的ですが、15から20%位と考えるアメリカ人もいます)。"], "items": [{"ja": "「タクシーを呼んでください」", "en": "Get me a taxi, please.", "note": []}, {"ja": "「バス乗り場はどこでしょうか？」", "en": "Can you tell me where the bus stop is?", "note": []}, {"ja": "「タクシーはどこで乗れますか？」", "en": "Where can I get a taxi?", "note": []}, {"ja": "「ヒルトンホテルまでお願いします」", "en": "To the Hilton, please.", "note": []}, {"ja": "「(運転手さん、)ここで降ろして」", "en": "Let me out here.", "note": []}, {"ja": "「１８ドルですね？」", "en": "Is that eighteen dollars?", "note": []}, {"ja": "「ええ」", "en": "- Yes.", "note": []}, {"ja": "「はい、お釣はいいです」", "en": "Here, keep the change.", "note": []}, {"ja": "「彼は１人でアムトラックで南に行った」", "en": "He went south alone by Amtrak.", "note": ["アメリカの交通手段には、車と飛行機以外に、バスであるGreyhoundと鉄道であるAmtrakがあります。"]}, {"ja": "「Bツアーはディズニーランドに行きますか？」", "en": "Does Tour B take us to Disneyland?", "note": []}, {"ja": "「レンタカーを２週間借りたいのですが」", "en": "I'd like to rent a car for two weeks.", "note": []}, {"ja": "「私たちは、大きなレンタカーを借りた」", "en": "We rented a large car.", "note": []}, {"ja": "「レンタカーにいくら払わなければなりませんか？」", "en": "How much should I pay for a rental car?", "note": []}, {"ja": "「バスは、いつロサンゼルスを出るの？」", "en": "When does the bus leave (from) Los Angeles?", "note": []}, {"ja": "「ロサンゼルスまでいくらですか？」", "en": "What is the fare to Los Angeles?", "note": []}, {"ja": "「大人１枚、子供２枚お願いします」", "en": "One adult, two children, please.", "note": []}, {"ja": "「マイアミまで往復２枚ください」", "en": "Two round-trip tickets to Miami, please.", "note": []}], "column": []}, {"n": 17, "title": "宿泊", "intro": [], "items": [{"ja": "「チェックインしたいのですが」", "en": "I'd like to check in, please.", "note": []}, {"ja": "「(モーテルで)一晩いくらですか？」", "en": "How much is it for a/one night?", "note": ["motelはmotor hotelの略で、文字どおり主に車で旅する旅行者の宿泊場所で、ホテルより安めです。アメリカは極度に発達した車社会で、無料の高速道路が日本の一般道並みに縦横に走っています(あまりに一般的に存在するので、あるいは高速で走れる幹線道路と呼んだ方がいいのかもしれませんが)。メジャーな高速道はinterstateと呼ばれ、文字どおりに州間を貫いています。数は少ないですが、有料のinterstateもあります。有料であっても日本の高速道路の十分の一以下の料金です。ちなみに有料道路はtollwayとも呼ばれ、freewayはもちろん無料道路です。"]}, {"ja": "「予約はないのですが、今晩部屋はありますか？」", "en": "I don't have a reservation, but do you have a room available (for) tonight?", "note": []}, {"ja": "「(ホテルのカウンターで)田中健です。今晩予約を入れてありますが」", "en": "I'm Ken Tanaka. I booked for tonight. (≒ I have a reservation for tonight.)", "note": ["この[I’m＋名前]は、自己紹介のときも使え、[My name is + 名前]より一般的です。"]}, {"ja": "「東京に国際電話をかけたいのですが」", "en": "I want to make an overseas (phone) call to Tokyo.", "note": []}, {"ja": "「もしもし、(このホテルは)モーニングコールサービスがありますか？」", "en": "Hello, do you have a wake-up call service? (× a morning call service)", "note": ["cf.「モーニングサービス」breakfast special (morning serviceは「朝の礼拝」)"]}, {"ja": "「荷物は預けた方がいいですよ」", "en": "You'd better check your baggage.", "note": ["否定形はYou'd better not ~ .となります。had betterは忠告の感じがあるので、目上の人への使用には気をつける必要があります。"]}, {"ja": "「私たち、何時にホテルに帰って来るの？」", "en": "What time will we be back in/to the hotel?", "note": []}, {"ja": "「(ホテルの)フロントでお会いします」", "en": "I will meet you at the front desk.", "note": ["‘ホテルのフロント’はthe front deskです。建物か何かの前はin frontを使います。"]}, {"ja": "「ホテルのインフォメーションデスクにあなた宛のメッセージ残しておくわ」", "en": "I'll leave a message for you at the hotel's information desk.", "note": []}, {"ja": "「ホテルの前であなたを拾いますよ」", "en": "I'll pick you up in front of your hotel.", "note": []}, {"ja": "「このホテルは設備がとてもいい」", "en": "This hotel is very well-equipped.", "note": []}, {"ja": "「何時にここを出ようか？」", "en": "What time shall we leave here?", "note": ["shallは一般にフォーマルで、What time should we leave here?も使えます。"]}, {"ja": "「私は何時でもかまわないわ」", "en": "- Anytime is fine with me.", "note": []}, {"ja": "「出かける準備できた？」", "en": "Are you ready to go?", "note": []}, {"ja": "「うん、支度は全部できたよ」", "en": "- Yes, everything is ready.", "note": ["(- Yes, all set.も可)"]}, {"ja": "「チェックアウトしたいのですが」", "en": "I'd like to check out, please.", "note": []}], "column": []}, {"n": 18, "title": "レストランで", "intro": [], "items": [{"ja": "「(レストランで)５人ですが」", "en": "Could we have a table for five?", "note": []}, {"ja": "「窓側の席はありますか？」", "en": "Could we sit by the window?", "note": []}, {"ja": "「メニューお願いします」", "en": "May I see the menu?", "note": []}, {"ja": "「ロン、もう(何を注文するか)決めた？」", "en": "Ron, have you decided?", "note": []}, {"ja": "「うん、今夜は焼き魚食べる」", "en": "- Yes, I'm going to have the grilled fish tonight.", "note": []}, {"ja": "「これ注文したものとちがいますが」", "en": "This is not what I ordered, I'm afraid.", "note": []}, {"ja": "「追加注文したいのですが」", "en": "Can I order something else?", "note": ["cf.「オーダーメイドの」custom-made"]}, {"ja": "「チップはいくらあげようか？」", "en": "How much should I tip?", "note": []}, {"ja": "「５ドルでいいでしょう」", "en": "- Five dollars is fine.", "note": ["dollarsが複数で、それを単数isで受けていますが、これはfive dollarsを一塊として解釈しているからです。"]}, {"ja": "「割り勘にしませんか？」", "en": "Why don't we split the bill/check?", "note": ["何かをサジェスチョンするとき、[Why don't we + 動詞]で始まる文がよく使われます。weの代わりにyouが来れば、‘リクエスト’となります。"]}, {"ja": "「彼はレストランで夕食をおごってくれた」", "en": "He treated me to dinner at the restaurant.", "note": ["(× for dinner)"]}, {"ja": "「私のコートをレストランに忘れた」", "en": "I left my coat in/at the restaurant.", "note": []}, {"ja": "「勘定願います」", "en": "Check, please.", "note": []}, {"ja": "「別勘定で願います」", "en": "(Could we have) separate checks, please.", "note": []}, {"ja": "「あなたにいくら払わなければなりませんか？」", "en": "How much do I owe you?", "note": []}, {"ja": "「いや、いいですよ。私のおごりです」", "en": "- That's all right. You're my guest.", "note": ["以下の会話は、マクドナルドのようなファストフードレストランでのものです(「ファストフード」はfast foodで、first foodは誤りです)。"]}, {"ja": "「こちらで食べますか？テイクアウトですか？」", "en": "For here or to go?", "note": []}, {"ja": "「テイクアウトです」", "en": "- To go, please.", "note": []}, {"ja": "「持ち帰りのハンバーガーにしてください」", "en": "I want a hamburger to go, please.", "note": []}], "column": ["アジア系の食べ物について", "一般に、アメリカ人は日本人に比べてハイカロリーの食べ物を好みます。その結果、太り過ぎのアメリカ人はざらにいます。一方、ジョギング、エアロビクス、ジムでのいろいろな運動といったことも盛んに行われています。", "レストランでは、Chinese restaurantが近年特にポピュラーになりつつあります。小さい町でもある可能性が大いにある程です。", "Japanese restaurantの数は、Chinese restaurantの一桁ぐらい下です。レストランとしては、料金のいくぶん高めの部類に入ります。今では、箸を使って寿司や刺身を食べるアメリカ人は珍しくなくなっています。日本食は低カロリー食品として大衆に受け入れられつつあり、アジア系食料品店以外に一般のスーパーでさえ、わずかながら日本の食べ物を見付けることもできます。ちなみに、豆腐と醤油はすでにアメリカの市民権を得ていると言えます。"]}, {"n": 19, "title": "路上など", "intro": [], "items": [{"ja": "「この市の主な観光スポットはどこですか？」", "en": "What are the main tourist spots in this city?", "note": []}, {"ja": "「公衆電話はどちらでしょうか？」", "en": "Where can I find a pay phone?", "note": ["Where is a pay phone?ももちろん可能ですが、前者の方が直接的でない分、よりソフトに聞こえます。"]}, {"ja": "「この携帯電話、どう使うか分からない」", "en": "I don't know how to use this cell-phone.", "note": ["(mobile-phoneも可)"]}, {"ja": "「すみませんが駅はどちらか分かりますか？」", "en": "Excuse me, but do you know where the train station is?", "note": []}, {"ja": "「すいません。私も何処にあるか分かりません」", "en": "- I'm sorry, I don't know where it is either.", "note": []}, {"ja": "「どうも」", "en": "Thanks anyway.", "note": []}, {"ja": "「洗面所(トイレの婉曲表現でもある)はどこですか？」", "en": "Where can I wash my hands?", "note": ["toiletというふうに直接的に表現することはあまりありません。restroom, bathroom, men's room, lady's roomなど、さまざまな婉曲表現(roundabout expressions)があります。"]}, {"ja": "「案内所はどこですか？」", "en": "Where is the information counter/desk?", "note": []}, {"ja": "「たくさんのお金を持って町を歩いてはダメよ」", "en": "Don't walk around town with a lot of money on you.", "note": []}, {"ja": "「ダウンタウン区域はここから近いですか？」", "en": "Is the downtown area near here?", "note": []}, {"ja": "「すいません。分かりません」", "en": "- I'm sorry, I'm not sure.", "note": []}, {"ja": "「今日の午後、ビクトリア界隈をぶらつきました」", "en": "This afternoon, I wandered around Victoria.", "note": ["cf.「当然だ/道理で」It's no wonder."]}, {"ja": "「あの辺に喫茶店はありますか？」", "en": "Are there any coffee shops in that area?", "note": []}], "column": ["ストリート", "日本では番地は区画でなされますが、アメリカの住所は道を基準としています。例えば177 First Streetにある本屋に行きたい場合、道の両側の建物にはおおむね番号があるので、177まで辿って行けば分かるようになっています。番地は、右側が偶数であれば左側は全て奇数になっています。また、アメリカでは車は右側通行です。", "ちなみに、運転免許証の取得はごく簡単で、日本のように自動車学校に通う必要もありません。免許証の取得費用も数十ドルで済み、日本語で筆記試験を受けられる州もあります。"]}, {"n": 20, "title": "ギフト", "intro": ["ギフトはくれた本人の前で開けて見ることができます(日本では、お客さんの前でそのお客さんからもらったギフトを開けることはあまりありませんが)。ギフトを渡すとき、日本社会的に「これつまらないものですが、、、」のようなフレーズは使わないようにしましょう。もちろん受け取る側も、「あ、すいません」的な言い方は英語ではしません。"], "items": [{"ja": "「これ、あなたへのプレゼントです。気に入って頂けるといいのですが」", "en": "Here's a gift for you. I hope you like it.", "note": []}, {"ja": "「そんなことをされなくてよかったのに･･･」", "en": "- You shouldn’t have (done).", "note": []}, {"ja": "「そんなことなされなくてよかったのに」", "en": "- You shouldn’t have (done/bought).", "note": []}, {"ja": "「今、開けて見てもいいですか？」", "en": "May I open it now?", "note": []}, {"ja": "「プレゼント有難う」", "en": "Thanks for the present.", "note": []}, {"ja": "「あなたから、素晴らしい壷をもらってとてもうれしいわ」", "en": "I'm so glad you gave me this wonderful vase.", "note": []}, {"ja": "「私の妹はロサンゼルスで私へのお土産を買った」", "en": "My sister picked up a souvenir for me from LA.", "note": ["souvenirは‘おみやげ’以外に‘記念になるもの’で、人にあげるものとは限りません。"]}], "column": []}, {"n": 21, "title": "ショッピング時の英会話とそのルール", "intro": [], "items": [{"ja": "「書籍売り場は何階ですか？」", "en": "What/Which floor is the bookstore on?", "note": []}, {"ja": "「いくらですか？」", "en": "How much is it?", "note": []}, {"ja": "「全部でおいくら？」", "en": "How much is it altogether?", "note": []}, {"ja": "「このネックレスおいくら？」", "en": "How much does this necklace cost?", "note": ["(How much is this necklace?も可)"]}, {"ja": "「ブレスレット」", "en": "bracelet", "note": ["（片方だけの場合はもちろんan earringとなります）"]}, {"ja": "「イアリング」", "en": "earrings", "note": []}, {"ja": "「(店で店員に)これ壊れていますよ。ほかのと換えてくださいね」", "en": "This is broken. May I exchange it for another one?", "note": []}, {"ja": "「服を着て見てよ」", "en": "Try on this dress.", "note": ["try onは[動詞＋副詞]の群動詞で、２語で１語の動詞の働きがあり、副詞onの省略はできません。"]}, {"ja": "「新調した帽子を被って見て」", "en": "Try on a new hat.", "note": []}, {"ja": "「これらの服を試着したいのですが」", "en": "I'd like to try on these clothes.", "note": ["(I'd like to try these.またはI'd like to try these on.も可)"]}, {"ja": "「あっ、私のサイズにピッタリだわ」", "en": "Oh, it's just my size.", "note": []}, {"ja": "「このスーツ私に(サイズが)ピッタリです」", "en": "This suit fits me perfectly.", "note": []}, {"ja": "「このコートは私に(色・柄が)ピッタリね」", "en": "This coat suits me perfectly.", "note": []}, {"ja": "「あなた、赤がお似合いね」", "en": "You look great in red.", "note": []}, {"ja": "「あなたには、黄色は似合わないよ」", "en": "I don't think yellow suits you.", "note": []}, {"ja": "「(店内で店員が)御用はありませんか」", "en": "May I help you?", "note": []}, {"ja": "「ありがとう。見ているだけです」", "en": "- Thank you. I'm just looking.", "note": ["(No thank you.といった返事も可)"]}, {"ja": "「婦人服売り場はどこですか」", "en": "Where can I find women's clothing?", "note": []}, {"ja": "「これで黒色のはありますか」", "en": "Does this come in black?", "note": ["(またはDo you have any black ones?)"]}, {"ja": "「すいません。あるのはそれだけです」", "en": "- I'm sorry. That's all we have.", "note": []}, {"ja": "「お米は置いてありますか」", "en": "Do you carry rice?", "note": ["(またはDo you have any rice?)", "cf.「カレーライス」curried rice", "小さな専門店的な店にはstoreよりshopが好まれます(a toy shop, a coffee shop, a flower shop)。"]}, {"ja": "「これはどうでしょう？奥さん」", "en": "How about this one, ma'am?", "note": ["(ma'amはmadamの短縮形)"]}, {"ja": "「う～ん、ちょっと予算を超えているわ」", "en": "- Well, it’s a little over my budget.", "note": []}, {"ja": "「運動靴を見せてください」", "en": "Can you show me some jogging shoes?", "note": ["jogging shoesはジョギング用とは限らず、‘運動靴’と考えた方がいいでしょう(そのほかの‘運動靴’を表せる英語はtennis shoes, running shoes, sneakersです)。"]}, {"ja": "「これにします(これ買います)」", "en": "I'll take this one.", "note": []}, {"ja": "「別々に包んでください」", "en": "Please wrap them separately.", "note": []}, {"ja": "「どの位まけてくれますか」", "en": "How much of a discount can you give me?", "note": []}, {"ja": "「この時計とても気に入ったわ。これにします」", "en": "I like this watch very much. I'll take it.", "note": []}, {"ja": "「この小切手を現金に換えてください」", "en": "I’d like to cash this check, please.", "note": ["日本と異なり、アメリカ人は現金をあまり持ち歩きません。その代わり小切手(personal check)を使い、それが生活の必需品になっています(また、銀行のカードでも買い物ができます)。店での買い物のみならず、公共料金の支払いも一般に郵便を使って小切手を送付することが可能です。", "ついでに言えば、クレジットカードもかなり一般的です。州外では小切手は使えない場合が多いですが、クレジットカードは州外でも使える便利さがあります。日本と同様、クレジットカードを使ってのネットショッピングも盛んです。"]}, {"ja": "「小切手帳」", "en": "a checkbook", "note": []}, {"ja": "「インターネット」", "en": "the Internet, the Net", "note": []}, {"ja": "「小切手かクレジットカードは使えますか？」", "en": "Do you take checks or credit cards?", "note": []}, {"ja": "「この１ドル札、２５セント貨に両替して？」", "en": "Will you change this dollar bill for quarters, please?", "note": []}, {"ja": "「１セント硬貨」", "en": "penny", "note": ["紙幣は１ドル、５ドル、１０ドル、２０ドル紙幣が一般的に使われます(５０セントと１ドル硬貨、５０ドルと１００ドル紙幣もあるにはありますが、あまり見ることはありません)。"]}, {"ja": "「５セント硬貨」", "en": "nickel", "note": []}, {"ja": "「１０セント硬貨」", "en": "dime", "note": []}, {"ja": "「２５セント硬貨」", "en": "quarter", "note": []}], "column": ["買い物での注意事項", "①店で買い物をし、レジでお金を払った後で店員がThank you.と言ったとき、買い物客もThank you.と返すのが一般的です。", "②ときどき小銭(主に１セント硬貨)の入った物がレジの横に置いてあります。それはほかの客が後の客のために残して行った小銭で、例えば５ドル1セントの買い物のとき、1セントをピックアップして使うことができます。", "③アメリカではレジ係が買い物客につり銭を渡すとき、品物の値段に足し算しつつ買い物客に小さいお金から返すケースが少なからずあります。例えば、＄3.65の物を買い＄10払えば、10￠($3.75)、25￠($4)、$1 ($5)、$5 ($10)という順序で買い物客の手の平に乗せてくれます(￠の位置に注意)。"]}, {"n": 22, "title": "体の部位関連", "intro": [], "items": [{"ja": "「彼女は唇の上の方にホクロがあった」", "en": "She had a mole on her upper lip.", "note": ["体の部位は英語と日本語でズレがあるケースが多いです。例文で分かるように、lips(唇は複数あります)は唇の周りも含みます。"]}, {"ja": "「ウェイトレスは、手を腰にあてて私たちを見ていた」", "en": "The waitress was staring at us with her hands on her hips.", "note": ["hipは横の突き出した部分です(左右２つあるからhipsです)。日本語の「尻」に近いのはbuttocksです。waistは腰のくびれた部分です。"]}, {"ja": "「手の平」", "en": "palm", "note": []}, {"ja": "「腰が痛い」", "en": "My back hurts.", "note": []}, {"ja": "「腰が重い」", "en": "be slow to act", "note": []}, {"ja": "「腕が折れた」", "en": "I broke my arm.", "note": ["cf.「足(足首から下の部分)」foot、「脚」leg、「つま先/足指」toe、「膝」lap、「膝頭」knee、「手」hand、「ひじ」elbow、「腹」stomach/belly、「胸」chest、「背中」back、「肩」shoulder (２つが対象となれば複数で、shoulders)、「首」neck、「頭」head"]}, {"ja": "「彼は、いつもジェスチャーを使って話す」", "en": "He always talks with gestures.", "note": ["（この場合のジェスチャーは複数形が使われます）", "英語での‘肩をすくめる’動作は、日本での場合と動作・意味がいくぶん異なります。肩をすくめるのは同じですが、手のひらを話し手に見せるようにして、少し持ち上げ気味にします。英語ではI’m not sure. / I don't know. / Nothing can be done.などの意味を表します。"]}, {"ja": "「彼女はほっそりした女の子で、長くて細い足をしていた」", "en": "She was a slim girl, with long, skinny legs.", "note": ["slimはいい意味での「やせた」です。一方thinは「やせた」の最も一般的に使われる語で、不健康なイメージを表す場合もあります。"]}, {"ja": "「昨夜のデートどうだった？」", "en": "How was your date last night?", "note": []}, {"ja": "「まあまあだった」", "en": "- So-so.", "note": ["このSo-so.はジェスチャーを伴う場合が多いです。指を広げた手のひらを下に向け胸の辺りに持って来て、船が左右に揺れるように２度程動かします。So-so.抜きで、ジェスチャーのみの場合もあります。So-so.は文字どおりには「まあまあ」ですが、日本語と同じで、上のダイアローグではいくぶんデートに対する‘失望’が感じられます。", "ジェスチャーに関してついでに述べると、no/yesの頭の振り方はもちろん日米同じですが、人との会話でうなずく回数は、一般的に言って日本人の方がはるかに多いです。"]}, {"ja": "「頭を横/縦に振る」", "en": "shake/nod one's head", "note": []}], "column": []}, {"n": 23, "title": "出前の注文の仕方", "intro": ["アメリカでの電話での出前はピザが主です。たまにChinese restaurantに出前サービスがあったりします。"], "items": [{"ja": "（ピザ店に電話して）「こんにちは！マッシュルーム入りのペパロニピザを1枚お願いします」", "en": "A: Hi! I'd like to order a pepperoni pizza with mushrooms, please.", "note": [], "added": true}, {"ja": "「ピザのトッピングはそれだけでよろしいですか？」", "en": "B: Is that all you want on your pizza, sir?", "note": [], "added": true}, {"ja": "「はい。それをLサイズにして、ブレッドスティックも1つ付けてもらえますか？」", "en": "A: Yes, and could you make that a large with an order of breadsticks?", "note": [], "added": true}, {"ja": "「かしこまりました。では、マッシュルーム入りペパロニピザのLサイズとブレッドスティック1つですね？」", "en": "B: OK. So you ordered a large pepperoni pizza with mushrooms and an order of breadsticks?", "note": [], "added": true}, {"ja": "「はい」", "en": "A: Yes.", "note": ["これに加えて、名前・電話番号・住所を知らせることになります。"], "added": true}, {"ja": "「出前はありません」", "en": "There is no delivery service.", "note": []}], "column": []}, {"n": 24, "title": "タバコ", "intro": ["アメリカの喫煙率は日本に比べかなり低いです。そして建物内のほとんどが禁煙です。"], "items": [{"ja": "「(車の中で)タバコ吸っていいですか？」", "en": "Do you mind if I smoke?", "note": []}, {"ja": "「いやちょっとー。着くまで待って下さらない？」", "en": "- Actually, yes. Could you wait until we arrive?", "note": ["答えの部分は、日本語では「いや」ですが、英語ではyesになっていることに注意しましょう。「はい」は、質問に対して事実と合っているケースで使われ、yesは肯定的記述で使われます。つまり、「はい（気にします）、タバコを気にしてしまいますので控えてください」ということです。タバコを気にしない場合は、Not at all.やCertainly not.などと答えます。"]}], "column": []}, {"n": 25, "title": "ホームステイ", "intro": ["アメリカ人の家にホームステイなどをしたときは、家族の一員として皿を洗ったり、掃除を手伝ったりということはよくあります。"], "items": [{"ja": "「アキコ、テーブルの上を片付けて」", "en": "Akiko, would you mind clearing the table.", "note": []}, {"ja": "「分かった」", "en": "- Sure.", "note": []}, {"ja": "「何かお手伝いできることある？」", "en": "Is there anything I can do to help?", "note": []}, {"ja": "「あなたのアメリカ人ホストファミリーに対してどんな印象持っている？」", "en": "What's your impression of your American host family?", "note": []}], "column": []}, {"n": 26, "title": "食事", "intro": ["一般に日本人の食べ物に対する情熱は、世界のトップレベルではないでしょうか？夕食などの準備にかなりの時間を割いたり、味だけでなく見た目も重視したりする傾向さえあります。また、食べ物がよく会話のネタになるのも日本人ならではのことです。", "日本人と比較した場合のアメリカ人の食べ物に対する淡白さ、つまりある意味合理的な、質より量重視の傾向は明らかです。日本人が仕事または留学などでアメリカに住む場合、慣れない言葉と社会化の難しさの問題以外に、食べ物で苦労する場合が多くあるくらいです。", "食事中のマナーとして一番気をつけるべきことは、スープを飲んだり麺類を食べたりするとき、ズルズル音をたてないことです。"], "items": [{"ja": "「彼は、ラーメンを食べ、コカコーラを飲んだ」", "en": "He ate ramen (noodles) and drank coke.", "note": ["麺が複数形になっていることに注意しましょう。また、cokeはコーラの会社の１つであるコカコーラの製品ですが、コーラ一般を表すこともあります。ちなみに、麺とコーラは日本ではあまり見られない取り合わせですが、アメリカではこのコンビネーションはあり得ます。"]}, {"ja": "「私はこのスープを飲みたくない」", "en": "I don't want to eat/have this soup.", "note": ["「スープを飲む」の「飲む」はeatが一般的です。また、食べ物一般にはmealが使われます(cook a meal, fix a meal, each meal)。"]}, {"ja": "「私の祖母は愛情を込めて料理をする」", "en": "My grandmother prepares each meal with love.", "note": []}, {"ja": "「この寮は食べ物がいい」", "en": "This dorm(itory) serves good food.", "note": []}, {"ja": "「料理はしますか」", "en": "Do you cook for yourself?", "note": []}, {"ja": "「お箸は使いますか」", "en": "Do you use chopsticks?", "note": []}, {"ja": "「寿司は食べますか」", "en": "Do you eat sushi?", "note": []}, {"ja": "「夕食に連れて行ってくれて有難う」", "en": "Thank you for taking me to dinner.", "note": []}, {"ja": "「どういたしまして/こちらこそ」", "en": "- My pleasure. / The pleasure is mine.", "note": []}, {"ja": "「普通、朝食はパンですか？」", "en": "Do you usually have toast for breakfast?", "note": ["焼きパンは、bread(数え方はa loaf of breadなど)でなくtoast (two pieces of toastなど)を使う方がいいです。"]}], "column": []}, {"n": 27, "title": "嗜好", "intro": ["英語の‘趣味’には幾つかあります。楽器を弾いたり、切手収集をしたりすることはhobbyですが、テレビで野球などを見たりするのは、pastimeを使います。hobbyもpastimeも‘好きなことに時間を費やす’ことに共通点がありますが、hobbyは長期に渡って追求する、いくぶん知的・専門化した楽しみや興味のあることで、pastimeは‘時間を潰す’感じです。"], "items": [{"ja": "「切手収集が私の趣味です」", "en": "Stamp collecting is my hobby.", "note": ["初対面の人に‘趣味’を聞くのは日本語ではよくあることですが、英語でWhat is your hobby?といきなり聞くのは、趣味があることを前提としているのでいくぶん不自然です。以下の質問の方がより一般的です。"]}, {"ja": "「趣味をお持ちですか？」", "en": "Do you have any hobbies?", "note": []}, {"ja": "「あなたの興味のあるものは何ですか」", "en": "What are some of your interests?", "note": []}, {"ja": "「テレビでフットボールを見て楽しんでいます」", "en": "- I enjoy watching football on TV.", "note": []}, {"ja": "「彼女の好きな時間の過ごし方はテレビを見ることです」", "en": "Her favorite pastime is watching TV.", "note": []}, {"ja": "「どんな音楽がお好きですか？」", "en": "What kind of music do you like?", "note": []}, {"ja": "「彼は狂人のように運転する」", "en": "He drives like a maniac.", "note": []}, {"ja": "「その少年は切手収集に熱中している」", "en": "The boy has a mania for collecting stamps.", "note": ["maniacは‘人’として使われますが、maniaは「躁病、熱狂」であって、‘人’の意味はありません。"]}, {"ja": "「私たちの息子は２歳と６ヶ月だが、恐竜マニアだ」", "en": "Our son, two and a half years old, is a dinosaur maniac.", "note": []}, {"ja": "「何がそんなに面白いの？」", "en": "What's so funny?", "note": []}, {"ja": "「この物語は、私にはとても面白い」", "en": "The story is very interesting to me.", "note": ["英語の「面白い」には、‘こっけいで面白い’場合(funny)のほかに、‘知的に興味を引く’場合(interesting)があり、それぞれ異なった単語を使い分けます。ちなみにfunnyは、‘変’という意味も表せます。"]}, {"ja": "「あなたがそういったふうに聞くのは変だ」", "en": "It's funny that you should ask like that.", "note": ["この文でshouldは必要です。‘驚き’のニュアンスが感じられます。"]}, {"ja": "「彼は、ほかの芸術家が何をしているのかに関して好奇心がある」", "en": "He is curious about what other artists are doing.", "note": []}, {"ja": "「彼は大変なスポーツマンです」", "en": "He is very athletic. (= He is very good at sports.)", "note": ["日本語の「スポーツマン」の意味では、上の例文のように言います。英語のsportsmanは狩猟・魚釣りなどの野外活動を好む人です。"]}, {"ja": "「ロンは古典音楽が好きだ」", "en": "Ron loves classical music.", "note": ["classical musicはバッハなどの古典音楽で、classic musicはビートルズなど少し古い音楽という使い分けがあります。ただし、classic musicというフレーズはあまり使われず、classic rock, classic movieといったコンビネーションで使われます。"]}, {"ja": "「私は６０年代のクラッシック・ロックが好きだ」", "en": "I love the classic rock from the 60s.", "note": []}], "column": []}, {"n": 28, "title": "‘誘い’と‘断る’パターン", "intro": ["日本語母語者は、‘誘い’と‘断り’の英語のシチュエーションで非常に苦労する傾向があります。"], "items": [{"ja": "「この日曜日空いていますか？」", "en": "Are you free this Sunday?", "note": []}, {"ja": "「来週の月曜日はご都合はいかがですか？」", "en": "Is next Monday convenient for you?", "note": []}, {"ja": "「この週末お忙しいですか？」", "en": "Are you busy this weekend?", "note": []}, {"ja": "「ドライブに行きませんか？」", "en": "Would you like to go for a drive?", "note": []}, {"ja": "「休憩しようよ」", "en": "Let’s take a break.", "note": []}, {"ja": "「喫茶店に寄っていかない？」", "en": "Shall we drop in at the coffee shop?", "note": []}, {"ja": "「どこか食べて話せるところに行こうよ」", "en": "Why don't we go somewhere to eat and talk?", "note": []}, {"ja": "「仕事の後一杯やらない？」", "en": "Let's stop for a drink after work.", "note": []}, {"ja": "「すいません、今夜はダメです」", "en": "- Sorry, I can't go tonight.", "note": ["(Tonight is bad for me.も可)"]}, {"ja": "「ほかに約束があるので、、」", "en": "- I have another appointment.", "note": []}, {"ja": "「ほんと？残念。じゃあ又ね」", "en": "Oh, really? That's too bad. Maybe next time.", "note": []}, {"ja": "「すいません、今忙しいので」", "en": "I’m sorry, I’m busy right now.", "note": []}, {"ja": "「夕食、私たちとご一緒しない？」", "en": "Why don't you join us for dinner?", "note": []}, {"ja": "「ありがとう、でもいま行かなくてはだめなの」", "en": "- Thanks, but I have to go now.", "note": []}, {"ja": "「後でかけ直してくれませんか？」", "en": "May I ask you to call me back later?", "note": []}, {"ja": "「もっとビール飲む？」", "en": "Would you like more beer?", "note": ["(Would you like some more beer?も可)"]}, {"ja": "「いや。もうたくさん頂きました」", "en": "- No, thank you. I've had enough.", "note": []}, {"ja": "「車で家まで送りましょうか」", "en": "Shall I drive you home?", "note": []}, {"ja": "「いえ、どうかお気遣いなく」", "en": "- No, please don't bother.", "note": []}, {"ja": "「木曜日にスキーに行きたいですか」", "en": "Do you wanna go skiing (on) Thursday? (wanna = want to)", "note": []}, {"ja": "「その日は約束があります」", "en": "- I have an appointment on that day.", "note": []}], "column": []}, {"n": 29, "title": "その他", "intro": [], "items": [{"ja": "「２年でテッドは成年に達する」", "en": "Two more years and Ted will come of age.", "note": ["アメリカでは、日本ほど‘成年’の年齢がハッキリしません(州毎に異なるので)。ちなみに選挙権に関しては１８才からで、酒は２１才からとなっています。"]}, {"ja": "「私、風邪をひいてしまったみたい」", "en": "I'm afraid I've got a cold.", "note": ["アメリカでは、風邪をひいてもマスク(mask)をする人はいません。もしすれば、怪訝な顔で見られる可能性があります。"]}, {"ja": "「あなたが真実を言ったことを、私は誇りに思う」", "en": "I'm proud of you for telling the truth.", "note": ["英語のbe proud of ~「~を誇りに思う」は、日本語程大袈裟な響きがなく使われることが多いです。例えば、裏庭の一角にある野菜畑の一部の雑草を抜くのを私が手伝って、その部分がきれいになったとき、ホストファミリーのアメリカ人の婦人が、I’m proud of how it looks now.と言ったのを覚えています。この場合、「菜園がきれいになったので誇りに思う」といった大袈裟な日本語訳では、やはりうまくニュアンスが伝わりません（「満足している」の日本語訳のほうが意味的に近いです）。"]}, {"ja": "「ウッソー」", "en": "No kidding.", "note": ["ほかに、You're kidding/joking.やYou('ve) got to be kidding me. / You can't be serious.があります。日本語の「嘘でしょう？」は「冗談でしょ？」で、No kidding.の意味です。日本語から直訳的にYou're lying.と言えば、相手を怒らせることになります（have got toはhave toの代用で、一般に強意的です）。"]}, {"ja": "「署名お願いします」", "en": "May I have your signature?", "note": ["英語のsignは主に身振り手振りの‘合図’です(動詞では「署名する」)。signalは予め意味が決められている音や光などを用いた‘合図’を指します。ちなみに有名人のサインはautographです。"]}, {"ja": "「どこに署名しましょうか？」", "en": "Where do I sign?", "note": ["（Where should I sign?も可）"]}, {"ja": "「彼は私に止まれの合図をした」", "en": "He made a sign for me to stop.", "note": []}, {"ja": "「彼女は十字を切った」", "en": "She made the sign of the cross.", "note": []}, {"ja": "「テレビタレントが私のＴシャツにサインをしてくれた」", "en": "The TV star autographed my T-shirt.", "note": ["（TV talentとしないこと）"]}, {"ja": "「こういうふうに使って。分かった？」", "en": "Use it this way, O.K?", "note": []}, {"ja": "「わかった」", "en": "- Gotcha.", "note": ["((I've) got you.からで、かなりカジュアルな表現)"]}, {"ja": "「やあ！」", "en": "Hi, dude!", "note": ["日本語には訳しにくいですが、「兄弟！」「相棒！」といったような、親しみを込めたカジュアルな呼びかけ語です。"]}, {"ja": "「彼と結婚することに心を決めた」", "en": "I made up my mind to marry him.", "note": ["大まかに言って、heartは‘感情を司る心’で、mindは‘意思・思考を司る心’と言えます (Today her heart is warm, and her mind is open.「今日彼女は思いやりがあり、心が広い」)。"]}, {"ja": "「行って髪を刈ってもらいなさい」", "en": "Go get your hair cut.", "note": ["コーヒーなどをアメリカ人家庭でいれてもらうとき、日本と違い、ブラックであるとか砂糖だけ入れるとか、その砂糖をどの位入れるとか、一々細かく聞かれる傾向にあります。散髪も同様で、細かい指示を聞かれもするし、それをハッキリ知らせる必要がありますが、説明がなかなか難しいので、かなり厄介な状況になる可能性が大いにあります。大雑把な指示で阿吽(あうん)の呼吸でやってくれる日本の理髪店と異なり、ハッキリと説明しておかないと、アメリカではとんでもない髪型にされる恐れもあります。一番いい方法は、理想に近い髪型が写っている自分の写真を見せることです。それが自分の免許証にあれば話は簡単ですが･･･。"]}, {"ja": "「古着はチャリティーにあげなさい。それらはもう着ないでしょうから」", "en": "Give your old clothes to charity. You're not gonna wear them anymore. (gonna = going to)", "note": ["古着などはチャリティーに出すことも少なからずあり、ガレージセールで売ることもあります。ガレージセールは、溜まった不用な物をガレージの中や外に並べて売る方法です。ちなみにアメリカは高度な寄付社会です。", "寄付をしないで、自分の子孫に莫大な財産を残すのを恥と感じる風潮さえあります。ちなみに、世界一のお金持ちと言われたビル･ゲイツも寄付財団を立ち上げています。"]}, {"ja": "「彼は、本棚を作り、家にペンキを塗り、屋根を直した」", "en": "He built a bookshelf, painted the house, and repaired the roof.", "note": []}, {"ja": "「ペンキ」", "en": "paint", "note": ["アメリカでは、日曜大工や自分の家のペンキ塗りはまれではありません。車の修理もできるだけ自分でする傾向にあります。"]}, {"ja": "「ペンキ塗りたて」", "en": "Wet Paint!", "note": []}, {"ja": "「(トイレで)入っていますか？」", "en": "Somebody/Anyone in there?", "note": ["トイレは、人が入っていない場合、ドアがまず開いています。ドアをノックして確かめるやり方はあまり普通ではありませんし、ドアの下部が空いていて、屈めば入っている人の足が見えます。"]}, {"ja": "「連絡を取り合おうね、ケイト！」", "en": "Keep in touch, Kate!", "note": ["日本語にはうまく訳しようがありませんが、touchは、直接会えなくても電話なりメールなりでコンタクトをとり合い続けることを指します。"]}, {"ja": "「彼女のだんなは料理と買い物をする」", "en": "Her husband cooks and does the shopping.", "note": ["アメリカでは、夫が料理したり買い物をしたりするのは、日本よりかなり一般的に行われています。"]}, {"ja": "「貸しアパート/マンションはありますか？」", "en": "Do you have apartments for rent?", "note": ["日本語ではアパートとマンションの区別がありますが、英語では両方apartmentでいいです。英語のmansionは「大邸宅」です。"]}, {"ja": "「あのビル(またはマンション)には幾つ世帯がありますか？」", "en": "How many apartments are there in that building?", "note": []}, {"ja": "「この辺では冬でもストーブは要りません」", "en": "A heater is not necessary even in winter in this area.", "note": ["「ストーブ」の英語はheaterで、stoveは台所のレンジ、コンロを指し、電気の場合が多いです。", "アメリカは電気代が日本と比べかなり安く、セントラルヒーティングやセントラルエアーコンディショニングが日本より普及しているので、石油ストーブといったものを見ることはほとんどありません。ちなみに、アメリカ人の１人当たりのエネルギー消費量は日本人の倍くらいです。ガソリン代も比較的安いです。アメリカの大型車は日本の大型車より大きく、ガソリンをがぶ飲みします。同様に、服は日本でLサイズであれば、アメリカではMサイズくらいです。"]}, {"ja": "「彼はエアコンをつけた」", "en": "He turned on the air conditioner.", "note": []}, {"ja": "「家の中では帽子を取りなさい」", "en": "Take off your hat in the house.", "note": ["アメリカでは、日本よりかなり自由に家の中で帽子を被っています。"]}, {"ja": "「私は地下にある部屋の一部をオフィスとして使っている」", "en": "I use part of a room in the basement for my home office.", "note": ["居住用の建物(個人の家やアパート)にはbasementがあることが多いです。全部が地下にある場合もありますが、下半分くらいが地下のケースも少なからずあります。冬はより暖かく、夏はより涼しく感じます。風通しはよくありませんが、日本より湿気がないので住みやすいです。"]}, {"ja": "「私は、熱い風呂と冷たいシャワーが好きだ」", "en": "I like hot baths and cold showers.", "note": ["アメリカ人は一般に熱い風呂は好みません。"]}, {"ja": "「日本人は熱い風呂が好きである」", "en": "(The) Japanese people like hot baths.", "note": ["(bathと単数にするのは不可)"]}, {"ja": "「洗濯物を外に干して乾かさないで」", "en": "Don't hang laundry outside to dry.", "note": ["アメリカでは、洗濯物をベランダや家の前などの人目につくところには干しません。"]}, {"ja": "「メリッサはストレートの金髪のきれいな女の子だ」", "en": "Melissa is a pretty girl with straight blonde hair.", "note": ["人に関して、beautifulは‘優雅で気品のある美しさ’で、男性にはhandsome‘顔立ちがいい’を使います(handsomeを女性に使う場合は、「（中年以上の女性で態度や体格などの点で）威厳のある、目鼻立ちのきりっとした」の意味で使われます)。lovelyは愛情を誘う‘愛くるしさ’です。prettyはbeautifulとlovelyの間にあるような語です。その他good-lookingもあり、この語は男女の区別なく使えます。"]}, {"ja": "「彼女はとてもかわいらしく親切だ」", "en": "She is so lovely and kind.", "note": []}, {"ja": "「彼は見栄えが良く、頭が切れ、非常に才能がある」", "en": "He is good-looking, smart and very talented.", "note": []}, {"ja": "「私は母が恋しい」", "en": "I miss my mother.", "note": ["適切な訳語がなくて「恋しい」としましたが、‘母親がいなくて寂しい’感じです。"]}, {"ja": "「あなたを愛しています」", "en": "I love you.", "note": ["日本語の‘愛する’は、異性に対してさえあまり使われません。アメリカでは、I love you.はよく使われ、特に恋人同士ではI love you.を頻繁に言う必要があるくらいです。", "loveは身内、友人関係、物事への好みといったふうに実に幅広く使えるところが日本語と異なります。要するに、日本語と異なるカルチャーであるがゆえに、アメリカではよくあるI love you, son. / I love you, Dad.といったやりとりや、同性の友人にI love you.を使うケースは、日本語には訳しようがないのです。こういった表現の内容は、‘あなたは私にとって大事な人で、私はあなたのことをいつも気にかけているよ’といった感じです。よって、相手が‘気にかけてくれていないのでは？’と疑心暗鬼になっているときなどは特に、I love you.と言って相手を安心させる必要がある場面も多いようです。", "‘物事への好み’に関してloveが使われる例も、下に挙げておきます。"]}, {"ja": "「ご一緒しませんか？」", "en": "Will you join us?", "note": []}, {"ja": "「喜んで」", "en": "- I'd love to. ('d = would)", "note": []}, {"ja": "「彼女は犬をとても可愛がっている」", "en": "She loves her dog very much.", "note": []}], "column": []}];
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+let CI = -1;
+
+/* ===== 英文の表示・読み上げ用テキスト ===== */
+function enHTML(en){
+  // 応答の "- " をダッシュに、話者 A:/B: を薄く
+  let s = esc(en).replace(/^- /, "— ").replace(/ - /g, " — ");
+  s = s.replace(/^([AB]):\s/, '<span class="rep">$1:</span> ');
+  return s;
+}
+function speakText(en){
+  let s = en.replace(/^[AB]:\s*/, "").replace(/^-\s*/, "").replace(/\s-\s/g, " ");
+  s = s.replace(/\((?:×|≒|=)[^)]*\)/g, "").replace(/\([^)]*=[^)]*\)/g, "");
+  s = s.replace(/(\w)\/(\w+)/g, "$1");              // or-alternatives: read the first
+  s = s.replace(/\s\/\s/g, " ");                     // "Hello. / Hi." -> both
+  s = s.replace(/[()]/g, "").replace(/\.\s\.\s\./g, "...").replace(/~/g, "").replace(/\s{2,}/g, " ").trim();
+  return s;
+}
+
+/* ===== 合成音声 ===== */
+const AUD = (() => {
+  let voices = [];
+  const load = () => {
+    voices = (window.speechSynthesis ? speechSynthesis.getVoices() : []).filter(v => /^en/.test(v.lang));
+    const s = $("sVoice"), cur = s.value;
+    s.innerHTML = '<option value="">（自動）</option>' + voices.slice(0, 24).map(v => '<option value="' + esc(v.voiceURI) + '">' + esc(v.name + " (" + v.lang + ")") + '</option>').join("");
+    s.value = cur;
+  };
+  if (window.speechSynthesis) { load(); speechSynthesis.onvoiceschanged = load; }
+  return {
+    play(text){
+      return new Promise(res => {
+        if (!window.speechSynthesis) { toast("このブラウザは音声読み上げに対応していません"); return res(); }
+        speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        const v = voices.find(v => v.voiceURI === $("sVoice").value) || voices.find(v => /Google US English|Samantha|Ava|Allison|Aria|Jenny/.test(v.name)) || voices.find(v => v.lang === "en-US") || voices[0];
+        if (v) u.voice = v;
+        u.lang = "en-US"; u.rate = Number($("sSpeed").value); u.onend = u.onerror = () => res();
+        speechSynthesis.speak(u);
+      });
+    },
+    stop(){ if (window.speechSynthesis) speechSynthesis.cancel(); }
+  };
+})();
+function toast(m){ const t = $("toast"); t.textContent = m; t.classList.add("on"); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove("on"), 2600); }
+function sleep(ms, sig){ return new Promise((res, rej) => { const t = setTimeout(res, ms); if (sig) sig.addEventListener("abort", () => { clearTimeout(t); rej(new DOMException("Aborted", "AbortError")); }, { once: true }); }); }
+function timer(el, sec){
+  if (!sec) { el.classList.remove("on"); return; }
+  el.classList.add("on");
+  el.firstElementChild.animate([{ transform: "scaleX(1)" }, { transform: "scaleX(0)" }], { duration: sec * 1000, easing: "linear", fill: "forwards" });
+}
+
+/* ===== 進み具合（このブラウザだけに保存） ===== */
+let SEEN = {};
+try { SEEN = JSON.parse(localStorage.getItem("ibk-seen") || "{}"); } catch (e) {}
+const saveSeen = () => { try { localStorage.setItem("ibk-seen", JSON.stringify(SEEN)); } catch (e) {} };
+
+/* ===== フロントページ ===== */
+function drawHome(){
+  $("cgrid").innerHTML = CATS.map((c, i) => {
+    const n = c.items.length, d = Object.keys(SEEN[c.n] || {}).length;
+    return '<li' + (n && d >= n ? ' class="seen"' : '') + '><button type="button" data-i="' + i + '"><span class="cn">' + c.n + '</span><span class="ct">' + esc(c.title) + '</span><span class="cc">' + (n ? n + ' 文' + (d ? '・' + d + ' 文練習済み' : '') : '解説') + '</span></button></li>';
+  }).join("");
+}
+$("cgrid").addEventListener("click", e => { const b = e.target.closest("button"); if (b) openCat(Number(b.dataset.i)); });
+
+function showHome(push){
+  sStop(); CI = -1;
+  $("v-home").classList.add("on"); $("v-cat").classList.remove("on");
+  $("homeBtn").setAttribute("aria-current", "page"); $("curCat").textContent = "";
+  drawHome();
+  if (push) history.pushState(null, "", location.pathname + location.search);
+  try { localStorage.removeItem("ibk-pos"); } catch (e) {}
+  toTop();
+}
+$("homeBtn").onclick = () => showHome(true);
+
+/* ===== カテゴリーページ ===== */
+let sIdx = 0, sOpen = false, sRun = null, sHideEn = false, sPt = false;
+const C = () => CATS[CI];
+function openCat(i, push = true, idx = 0){
+  sStop(); CI = i; sIdx = idx; sOpen = false; sPt = false;
+  const c = C();
+  $("v-home").classList.remove("on"); $("v-cat").classList.add("on");
+  $("homeBtn").removeAttribute("aria-current"); $("curCat").textContent = c.n + ". " + c.title;
+  $("chead").innerHTML = '<div class="kicker"><span class="badge"><small>CATEGORY</small><b>' + c.n + '</b></span><span class="tag t1">日英異文化コミュニケーション</span>' + (c.items.length ? '<span class="tag t2">' + c.items.length + ' 文</span>' : '') + '</div>' +
+    '<h1 class="jt">' + esc(c.title) + '</h1>' +
+    '<div class="catnav"><button class="btn" type="button" id="toHome">← カテゴリー一覧</button>' +
+    (i > 0 ? '<button class="btn" type="button" id="toPrev">◀ ' + CATS[i - 1].n + '. ' + esc(CATS[i - 1].title) + '</button>' : '') + '</div>';
+  $("toHome").onclick = () => showHome(true);
+  if ($("toPrev")) $("toPrev").onclick = () => openCat(i - 1);
+  $("cintro").innerHTML = c.intro.length ? '<div class="intro"><h3>解説</h3>' + c.intro.map(p => '<p>' + esc(p) + '</p>').join("") + '</div>' : '';
+  $("ccol").innerHTML = c.column.length ? '<div class="column"><h3>コラム</h3>' + c.column.map(p => '<p>' + esc(p) + '</p>').join("") + '</div>' : '';
+  $("cbody").hidden = !c.items.length;
+  $("cfoot").innerHTML = i < CATS.length - 1 ? '<button class="btn primary" type="button" id="toNext">次へ：' + CATS[i + 1].n + '. ' + esc(CATS[i + 1].title) + ' ▶</button>' : '<button class="btn" type="button" id="toNext">カテゴリー一覧へ戻る</button>';
+  $("toNext").onclick = () => i < CATS.length - 1 ? openCat(i + 1) : showHome(true);
+  renderList(); sShow();
+  if (push) history.pushState(null, "", "#c" + c.n);
+  savePos();
+  toTop();
+}
+function savePos(){ try { localStorage.setItem("ibk-pos", JSON.stringify({ c: CI, i: sIdx })); } catch (e) {} }
+function noteHTML(it){ return it.note.map(p => '<p>' + esc(p) + '</p>').join(""); }
+function renderList(){
+  const c = C();
+  $("sList").innerHTML = c.items.map((q, i) =>
+    '<li data-i="' + i + '"' + ((SEEN[c.n] || {})[i] ? ' class="done"' : '') + '><span class="no">' + (i + 1) + '</span>' +
+    '<span class="j" style="font-size:14px;color:var(--ink)">' + esc(q.ja) + '</span><span class="e">' + enHTML(q.en) + '</span>' +
+    (q.note.length ? '<button class="lp" type="button" data-p="' + i + '" aria-expanded="false">ポイント</button><div class="ptbox lnote" id="ln' + i + '" hidden>' + noteHTML(q) + '</div>' : '') + '</li>').join("");
+  $("sList").classList.toggle("hide-en", sHideEn);
+}
+function sShow(){
+  const qs = C().items, q = qs[sIdx];
+  if (!q) { $("sDisp").innerHTML = ''; return; }
+  $("sProg").textContent = (sIdx + 1) + " / " + qs.length;
+  let h = '<div class="qjp">' + esc(q.ja) + '</div>';
+  if (sOpen) {
+    h += '<div class="ans"><div class="en">' + enHTML(q.en) + '</div></div>';
+    if (q.note.length) h += '<button class="ptbtn" type="button" id="ptBtn" aria-expanded="' + sPt + '">ポイント</button><div class="ptbox" id="ptBox"' + (sPt ? '' : ' hidden') + '>' + noteHTML(q) + '</div>';
+  } else h += '<p class="ph">頭の中で英語にしてから「英語を表示＆再生」</p>';
+  $("sDisp").innerHTML = h;
+  $("sDisp").classList.remove("fade"); void $("sDisp").offsetWidth; $("sDisp").classList.add("fade");
+  if ($("ptBtn")) $("ptBtn").onclick = () => { sPt = !sPt; $("ptBtn").setAttribute("aria-expanded", String(sPt)); $("ptBox").hidden = !sPt; };
+  $("sPrev").disabled = sIdx === 0;
+  $("sNext").textContent = sIdx >= qs.length - 1 ? "最初から ↺" : "次へ ▶";
+  $("sShow").textContent = sOpen ? "↻ もう一度再生" : "英語を表示＆再生";
+  document.querySelectorAll("#sList li").forEach(li => li.classList.toggle("cur", Number(li.dataset.i) === sIdx));
+}
+function sReveal(){
+  const c = C(), q = c.items[sIdx]; if (!q) return Promise.resolve();
+  sOpen = true;
+  (SEEN[c.n] = SEEN[c.n] || {})[sIdx] = 1; saveSeen();
+  const li = document.querySelector('#sList li[data-i="' + sIdx + '"]'); if (li) li.classList.add("done");
+  sShow(); savePos();
+  return AUD.play(speakText(q.en));
+}
+async function sFlow(){
+  const ac = new AbortController(); sRun = ac; const sig = ac.signal;
+  $("sAuto").setAttribute("aria-pressed", "true"); $("sAuto").textContent = "■ 自動モード停止"; $("sAuto").classList.add("stop");
+  try {
+    while (sIdx < C().items.length) {
+      sOpen = false; sPt = false; sShow();
+      const w = Number($("sWait").value);
+      timer($("sTmr"), w); await sleep(w * 1000, sig); timer($("sTmr"), 0);
+      await sReveal(); if (sig.aborted) break;
+      await sleep(1500, sig);
+      if (sIdx >= C().items.length - 1) break;
+      sIdx++;
+    }
+  } catch (e) { if (e.name !== "AbortError") console.error(e); }
+  timer($("sTmr"), 0);
+  if (sRun === ac) sStop();
+}
+function sStop(){ if (sRun) { sRun.abort(); sRun = null; } AUD.stop(); timer($("sTmr"), 0); const b = $("sAuto"); b.setAttribute("aria-pressed", "false"); b.textContent = "⏵ 自動モード"; b.classList.remove("stop"); }
+const go = i => { sStop(); sIdx = i; sOpen = false; sPt = false; sShow(); savePos(); };
+$("sShow").onclick = () => { if (sRun) sStop(); sReveal(); };
+$("sPrev").onclick = () => { if (sIdx > 0) go(sIdx - 1); };
+$("sNext").onclick = () => go(sIdx >= C().items.length - 1 ? 0 : sIdx + 1);
+$("sAuto").onclick = () => { if (sRun) sStop(); else sFlow(); };
+$("sList").addEventListener("click", e => {
+  const p = e.target.closest(".lp");
+  if (p) { const box = $("ln" + p.dataset.p), open = box.hidden; box.hidden = !open; p.setAttribute("aria-expanded", String(open)); return; }
+  if (e.target.closest(".lnote")) return;
+  const li = e.target.closest("li"); if (!li) return;
+  go(Number(li.dataset.i));
+  document.querySelector("#v-cat .stage").scrollIntoView({ behavior: "smooth", block: "center" });
+});
+$("sEn").onclick = () => { sHideEn = !sHideEn; $("sList").classList.toggle("hide-en", sHideEn); $("sEn").textContent = sHideEn ? "英文を表示" : "英文を隠す"; };
+
+/* ===== ダークモード・キー操作・開始 ===== */
+$("themeBtn").onclick = () => {
+  const dark = document.documentElement.getAttribute("data-theme") !== "dark";
+  if (dark) document.documentElement.setAttribute("data-theme", "dark"); else document.documentElement.removeAttribute("data-theme");
+  $("themeBtn").textContent = dark ? "ライト" : "ダーク"; $("themeBtn").setAttribute("aria-pressed", String(dark));
+};
+document.addEventListener("keydown", e => {
+  if (CI < 0 || e.target.matches("input,textarea,select,button")) return;
+  if (e.key === " " || e.key === "Enter") { e.preventDefault(); $("sShow").click(); }
+  if (e.key === "ArrowRight") $("sNext").click();
+  if (e.key === "ArrowLeft") $("sPrev").click();
+});
+function fromHash(push){
+  const m = location.hash.match(/^#c(\d+)$/);
+  const i = m ? CATS.findIndex(c => c.n === Number(m[1])) : -1;
+  if (i >= 0) openCat(i, push); else showHome(false);
+}
+window.addEventListener("popstate", () => fromHash(false));
+(function(){
+  if (/^#c\d+$/.test(location.hash)) return fromHash(false);
+  let st = null; try { st = JSON.parse(localStorage.getItem("ibk-pos") || "null"); } catch (e) {}
+  if (st && st.c >= 0 && st.c < CATS.length) { openCat(st.c, false, Math.min(st.i || 0, Math.max(0, CATS[st.c].items.length - 1))); history.replaceState(null, "", "#c" + CATS[st.c].n); }
+  else showHome(false);
+})();
+/* ===== 埋め込み時：親ページと高さ・テーマ・スクロールをやりとり ===== */
+function toTop(){ if (EMBED) parent.postMessage({ sub: true, t: "top" }, "*"); else window.scrollTo({ top: 0 }); }
+if (EMBED) {
+  const post = () => parent.postMessage({ sub: true, t: "h", h: Math.ceil(document.documentElement.getBoundingClientRect().height) }, "*");
+  new ResizeObserver(post).observe(document.body); window.addEventListener("load", post); post();
+  window.addEventListener("message", e => {
+    const d = e.data || {};
+    if (d.t === "theme") { if (d.dark) document.documentElement.setAttribute("data-theme", "dark"); else document.documentElement.removeAttribute("data-theme"); }
+    if (d.t === "stop") { try { sStop(); } catch (er) {} }
+  });
+  parent.postMessage({ sub: true, t: "ready" }, "*");
+}
+</script>
+</body>
+</html>
