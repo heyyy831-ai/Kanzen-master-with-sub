@@ -432,19 +432,19 @@
     <div class="mast-t">
       <p class="mast-en">Kodai Yonehara</p>
       <h1 class="mast-h"><span>完全マスター</span>英文法</h1>
-      <p class="mast-sub">文法理解度チェック・瞬間英作・リンキング・入れ替えドリル・異文化コミュニケーション・難単語の発音練習</p>
+      <p class="mast-sub">瞬間英作・文法理解度チェック・異文化コミュニケーション・難単語の発音練習・リンキング・入れ替えドリル</p>
     </div>
     <img class="cover" src="cover.jpg" width="576" height="820" alt="『完全マスター英文法』（米原幸大 著・語研）の表紙">
   </div>
 </header>
 <nav class="nav" aria-label="練習の種類">
   <div class="nav-in" role="tablist">
-    <button class="mt" type="button" role="tab" data-m="check" aria-selected="true"><span class="num">1</span>文法理解度チェック</button>
-    <button class="mt" type="button" role="tab" data-m="speak" aria-selected="false"><span class="num">2</span>瞬間英作</button>
-    <button class="mt" type="button" role="tab" data-m="link" aria-selected="false"><span class="num">3</span>リンキング</button>
-    <button class="mt" type="button" role="tab" data-m="drill" aria-selected="false"><span class="num">4</span>入れ替えドリル</button>
-    <button class="mt" type="button" role="tab" data-m="ibk" aria-selected="false"><span class="num">5</span>異文化コミュ</button>
-    <button class="mt" type="button" role="tab" data-m="hatsu" aria-selected="false"><span class="num">6</span>難単語の発音</button>
+    <button class="mt" type="button" role="tab" data-m="speak" aria-selected="true"><span class="num">1</span>瞬間英作</button>
+    <button class="mt" type="button" role="tab" data-m="check" aria-selected="false"><span class="num">2</span>文法理解度チェック</button>
+    <button class="mt" type="button" role="tab" data-m="ibk" aria-selected="false"><span class="num">3</span>異文化コミュ</button>
+    <button class="mt" type="button" role="tab" data-m="hatsu" aria-selected="false"><span class="num">4</span>難単語の発音</button>
+    <button class="mt" type="button" role="tab" data-m="link" aria-selected="false"><span class="num">5</span>リンキング</button>
+    <button class="mt" type="button" role="tab" data-m="drill" aria-selected="false"><span class="num">6</span>入れ替えドリル</button>
     <button class="theme" id="themeBtn" type="button" aria-pressed="false">ダーク</button>
   </div>
 </nav>
@@ -455,7 +455,7 @@
   <header id="head"></header>
 
   <!-- 1. 文法理解度チェック -->
-  <div class="mode on" id="m-check">
+  <div class="mode" id="m-check">
     <div class="sec-h"><span class="ic" style="background:var(--navy)">G</span><h2>文法理解度チェック</h2><span class="note">空欄に入力 → Enter で答え合わせ</span></div>
     <div id="cWrap">
       <div class="tbar">
@@ -484,7 +484,7 @@
   </div>
 
   <!-- 2. 瞬間英作 -->
-  <div class="mode" id="m-speak">
+  <div class="mode on" id="m-speak">
     <div class="sec-h"><span class="ic" style="background:var(--green)">S</span><h2>瞬間英作</h2><span class="note">日本語を見て、すぐに英語で言う</span></div>
     <div class="secs"><span class="lbl2">レベル</span><span class="seg" id="sLevel"><button type="button" data-v="mid" aria-pressed="false">中級用</button><button type="button" data-v="adv" aria-pressed="true">上級用</button></span><span class="lvsum" id="sLvSum"></span></div>
     <div class="stage">
@@ -1239,7 +1239,7 @@ document.addEventListener("keydown", e => {
   if (chOf(LESSONS[cLI].id) !== CH) { const ci = LESSONS.findIndex(L => chOf(L.id) === CH); if (ci >= 0) cLI = ci; }
   if (SPK[sKI].ch !== CH) { const si = SPK.findIndex(s => s.ch === CH); if (si >= 0) sKI = si; }
   renderCheck(); renderSpeak(); renderLink(); renderDrill(); loadLinkPack(); loadPack(DRL[dLI].id);
-  setMode(MODE_NAME[st.m] ? st.m : "check");
+  setMode(MODE_NAME[st.m] ? st.m : "speak");
 })();
 </script>
 </body>
