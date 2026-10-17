@@ -514,8 +514,8 @@ function enHTML(en){
 function speakText(en){
   let s = en.replace(/^[AB]:\s*/, "").replace(/^-\s*/, "").replace(/\s-\s/g, " ");
   s = s.replace(/\((?:×|≒|=)[^)]*\)/g, "").replace(/\([^)]*=[^)]*\)/g, "");
-  s = s.replace(/(\w)\/(\w+)/g, "$1");              // or-alternatives: read the first
-  s = s.replace(/\s\/\s/g, " ");                     // "Hello. / Hi." -> both
+  s = s.replace(/([\w'’]+)(?:\/[\w'’]+)+/g, "$1"); // or-alternatives (A/B/C): read the first
+  s = s.split(/\s\/\s/)[0];                         // "Hello. / Hi." -> first sentence only
   s = s.replace(/[()]/g, "").replace(/\.\s\.\s\./g, "...").replace(/~/g, "").replace(/\s{2,}/g, " ").trim();
   return s;
 }
@@ -589,9 +589,11 @@ function openCat(i, push = true, idx = 0){
   $("chead").innerHTML = '<div class="kicker"><span class="badge"><small>CATEGORY</small><b>' + c.n + '</b></span><span class="tag t1">日英異文化コミュニケーション</span>' + (c.items.length ? '<span class="tag t2">' + c.items.length + ' 文</span>' : '') + '</div>' +
     '<h1 class="jt">' + esc(c.title) + '</h1>' +
     '<div class="catnav"><button class="btn" type="button" id="toHome">← カテゴリー一覧</button>' +
-    (i > 0 ? '<button class="btn" type="button" id="toPrev">◀ ' + CATS[i - 1].n + '. ' + esc(CATS[i - 1].title) + '</button>' : '') + '</div>';
+    (i > 0 ? '<button class="btn" type="button" id="toPrev">◀ ' + CATS[i - 1].n + '. ' + esc(CATS[i - 1].title) + '</button>' : '') +
+    (i < CATS.length - 1 ? '<button class="btn" type="button" id="toNextTop">' + CATS[i + 1].n + '. ' + esc(CATS[i + 1].title) + ' ▶</button>' : '') + '</div>';
   $("toHome").onclick = () => showHome(true);
   if ($("toPrev")) $("toPrev").onclick = () => openCat(i - 1);
+  if ($("toNextTop")) $("toNextTop").onclick = () => openCat(i + 1);
   $("cintro").innerHTML = c.intro.length ? '<div class="intro"><h3>解説</h3>' + c.intro.map(p => '<p>' + esc(p) + '</p>').join("") + '</div>' : '';
   $("ccol").innerHTML = c.column.length ? '<div class="column"><h3>コラム</h3>' + c.column.map(p => '<p>' + esc(p) + '</p>').join("") + '</div>' : '';
   $("cbody").hidden = !c.items.length;
