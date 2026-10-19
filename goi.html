@@ -82,6 +82,8 @@ h1{font-size:clamp(22px,5vw,30px);line-height:1.35;margin:12px 0 4px;letter-spac
 .btn:hover{border-color:var(--ink-3);color:var(--ink)}
 .btn.primary{background:var(--navy);border-color:var(--navy);color:var(--paper)}
 .btn[aria-pressed="true"]{background:var(--soft);color:var(--ink);border-color:var(--ink-3)}
+.vsel{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--ink-2)}
+.vsel select{max-width:220px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:8px;padding:5px 8px;font:inherit;font-weight:500}
 .cards{display:flex;flex-direction:column;gap:10px}
 .card{background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:12px 16px 12px}
 .card.playing{border-color:var(--orange);box-shadow:0 0 0 2px var(--orange-soft)}
@@ -223,6 +225,7 @@ function renderDetail(w){
       <button class="btn" type="button" id="allja" aria-pressed="false">日本語訳をすべて表示</button>
       <button class="btn primary" type="button" id="playall">▶ 連続読み上げ</button>
       <button class="btn" type="button" id="rate" aria-pressed="false">ゆっくり</button>
+      <label class="vsel">声<select id="vsel"></select></label>
     </div>
     <div class="cards">${order.map(({id,f},i)=>{const s=S[id];return `
       <div class="card" data-i="${i}">
@@ -241,6 +244,7 @@ function renderDetail(w){
   $('allja').onclick=e=>{const show=e.currentTarget.getAttribute('aria-pressed')!=='true';
     e.currentTarget.setAttribute('aria-pressed',show); e.currentTarget.textContent=show?'日本語訳をすべて隠す':'日本語訳をすべて表示';
     cards.forEach(c=>{c.querySelector('.ja').hidden=!show; const t=c.querySelector('.tj'); t.setAttribute('aria-pressed',show); t.textContent=show?'訳を隠す':'日本語訳';});};
+  fillVoices();
   $('rate').setAttribute('aria-pressed',slow); $('rate').onclick=e=>{slow=!slow; e.currentTarget.setAttribute('aria-pressed',slow);};
   $('playall').onclick=()=>{ if(playingAll){stop();return;} playingAll=true; $('playall').textContent='■ 停止'; let i=0;
     const next=()=>{ if(!playingAll||i>=cards.length){stop();return;} const c=cards[i]; c.scrollIntoView({block:'center',behavior:'smooth'}); speak(S[order[i].id][0],c,()=>{i++; setTimeout(next,600);}); };
@@ -249,10 +253,21 @@ function renderDetail(w){
 }
 // speech
 let slow=false, playingAll=false, voice=null;
+let enVoices=[];
 function pickVoice(){
-  const vs=speechSynthesis.getVoices().filter(v=>/^en[-_]US/i.test(v.lang));
+  enVoices=speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang));
+  const vs=enVoices.filter(v=>/^en[-_]US/i.test(v.lang));
   const pref=['Samantha','Google US English','Microsoft Aria','Microsoft Jenny','Alex'];
-  voice=vs.find(v=>pref.some(p=>v.name.includes(p)))||vs[0]||speechSynthesis.getVoices().find(v=>/^en/i.test(v.lang))||null;
+  const chosen=store.get('goi-voice');
+  voice=(chosen&&enVoices.find(v=>v.voiceURI===chosen))||vs.find(v=>pref.some(p=>v.name.includes(p)))||vs[0]||enVoices[0]||null;
+  fillVoices();
+}
+function fillVoices(){
+  const sel=$('vsel'); if(!sel) return;
+  const chosen=store.get('goi-voice')||'';
+  sel.innerHTML='<option value="">（自動）</option>'+enVoices.map(v=>`<option value="${esc(v.voiceURI)}">${esc(v.name+' ('+v.lang+')')}</option>`).join('');
+  sel.value=enVoices.some(v=>v.voiceURI===chosen)?chosen:'';
+  sel.onchange=()=>{store.set('goi-voice',sel.value); pickVoice(); stop();};
 }
 if('speechSynthesis' in window){pickVoice(); speechSynthesis.onvoiceschanged=pickVoice;}
 function speak(text,card,done){
