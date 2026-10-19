@@ -598,19 +598,28 @@ let MODE = "check", CH = "2", cLI = 0, sKI = 0, gI = 0;
 const AUD = (() => {
   const el = new Audio(); el.preload = "auto"; el.setAttribute("playsinline", "");
   let tok = 0, voices = [];
+  const VKEY = "goi-voice", VSEL = ["sVoice", "dVoice"];
+  const vGet = () => { try { return localStorage.getItem(VKEY) || ""; } catch (e) { return ""; } };
+  const vSet = v => { try { localStorage.setItem(VKEY, v); } catch (e) {} };
   const loadVoices = () => {
-    voices = (speechSynthesis.getVoices() || []).filter(v => /^en/.test(v.lang));
-    ["sVoice", "dVoice"].forEach(id => { const s = $(id); if (!s) return; const cur = s.value;
-    s.innerHTML = '<option value="">（自動）</option>' + voices.slice(0, 20).map(v => '<option value="' + esc(v.voiceURI) + '">' + esc(v.name + " (" + v.lang + ")") + '</option>').join("");
-    s.value = cur; });
+    voices = (speechSynthesis.getVoices() || []).filter(v => /^en/i.test(v.lang));
+    const chosen = vGet();
+    VSEL.forEach(id => { const s = $(id); if (!s) return;
+      s.innerHTML = '<option value="">（自動）</option>' + voices.map(v => '<option value="' + esc(v.voiceURI) + '">' + esc(v.name + " (" + v.lang + ")") + '</option>').join("");
+      s.value = voices.some(v => v.voiceURI === chosen) ? chosen : "";
+      s.onchange = () => { vSet(s.value); VSEL.forEach(o => { const t = $(o); if (t && t !== s) t.value = s.value; }); }; });
+  };
+  const autoVoice = () => {
+    const us = voices.filter(v => /^en[-_]US/i.test(v.lang)), pref = ["Samantha", "Google US English", "Microsoft Aria", "Microsoft Jenny", "Alex"];
+    return us.find(v => pref.some(n => v.name.includes(n))) || us[0] || voices[0];
   };
   if (window.speechSynthesis) { loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
   function tts(text, rate, voiceURI){
     return new Promise(res => {
       if (!window.speechSynthesis) return res();
       speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text);
-      const v = voices.find(v => v.voiceURI === voiceURI) || voices.find(v => /Google US English|Samantha|Ava|Allison/.test(v.name)) || voices[0];
+      const u = new SpeechSynthesisUtterance(String(text).replace(/[’‘]/g, "'").replace(/[“”]/g, '"').replace(/^[－—-]\s*/, ""));
+      const v = voices.find(v => v.voiceURI === (voiceURI || vGet())) || autoVoice();
       if (v) u.voice = v;
       u.lang = "en-US"; u.rate = rate; u.onend = u.onerror = () => res();
       speechSynthesis.speak(u);
