@@ -408,6 +408,8 @@
   .ipa-row .w{font-family:var(--en);font-weight:700;color:var(--navy);background:var(--soft);border:1px solid var(--rule);border-radius:8px;padding:0 10px}
   .ipa-row .arr{color:var(--ink-3)}
   .ipa-row .sym{font-weight:700;color:var(--orange);font-size:20px}
+  .ipa-off .ipa-row .arr,.ipa-off .ipa-row .sym,.ipa-off .slist .ipa{display:none}
+  #lIpa[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:var(--paper)}
   .card.empty{padding:22px;text-align:center;color:var(--ink-2);margin-top:12px}
   #m-check .bk.bkw2{width:13.5em}
   #m-check .bk.bkw3{width:20.5em}
@@ -522,6 +524,7 @@
       <div class="ctrls">
         <button class="btn" id="lPrev" type="button">◀ 前へ</button>
         <button class="btn primary big" id="lShow" type="button">英語を表示＆再生</button>
+        <button class="btn" id="lIpa" type="button" aria-pressed="false">発音記号表示</button>
         <button class="btn" id="lNext" type="button">次へ ▶</button>
         <button class="btn" id="lAuto" type="button">⏵ 自動モード</button>
       </div>
@@ -1202,6 +1205,8 @@ $("lPrev").onclick = () => { lStop(); AUD.stop(); if (lIdx > 0) lIdx--; lOpen = 
 $("lNext").onclick = () => { lStop(); AUD.stop(); lIdx = lIdx >= LNK[gI].items.length - 1 ? 0 : lIdx + 1; lOpen = false; lShow(); };
 $("lAuto").onclick = () => { if (lRun) { lStop(); AUD.stop(); } else lFlow(); };
 $("lList").addEventListener("click", e => { const li = e.target.closest("li"); if (!li) return; lStop(); AUD.stop(); lIdx = Number(li.dataset.i); lOpen = false; lShow(); $("m-link").querySelector(".stage").scrollIntoView({ behavior: "smooth", block: "center" }); });
+$("m-link").classList.add("ipa-off");
+$("lIpa").onclick = () => { const on = $("m-link").classList.toggle("ipa-off") === false; $("lIpa").setAttribute("aria-pressed", String(on)); $("lIpa").textContent = on ? "発音記号を隠す" : "発音記号表示"; };
 $("lEn").onclick = () => { lHideEn = !lHideEn; $("lList").classList.toggle("hide-en", lHideEn); $("lEn").textContent = lHideEn ? "英文を表示" : "英文を隠す"; };
 
 /* ===== ダークモード・キーボード・開始 ===== */
