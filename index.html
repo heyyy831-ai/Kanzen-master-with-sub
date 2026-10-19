@@ -447,6 +447,7 @@
     <button class="mt" type="button" role="tab" data-m="hatsu" aria-selected="false"><span class="num">4</span>難単語の発音</button>
     <button class="mt" type="button" role="tab" data-m="link" aria-selected="false"><span class="num">5</span>リンキング</button>
     <button class="mt" type="button" role="tab" data-m="drill" aria-selected="false"><span class="num">6</span>入れ替えドリル</button>
+    <button class="mt" type="button" role="tab" data-m="goi" aria-selected="false"><span class="num">7</span>語彙・熟語</button>
     <button class="theme" id="themeBtn" type="button" aria-pressed="false">ダーク</button>
   </div>
 </nav>
@@ -576,6 +577,7 @@
 </div>
 <div class="mode sub" id="m-ibk"><iframe class="subapp" data-src="ibk.html" title="日英異文化コミュニケーション" loading="lazy"></iframe></div>
 <div class="mode sub" id="m-hatsu"><iframe class="subapp" data-src="hatsu.html" title="発音の難しい単語練習" loading="lazy"></iframe></div>
+<div class="mode sub" id="m-goi"><iframe class="subapp" data-src="goi.html" title="単語・熟語・コロケーション索引" loading="lazy"></iframe></div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -737,7 +739,7 @@ function setChapter(ch){
   sIdx = 0;
   renderCheck(); renderSpeak(); drawBars(); drawHead(); savePos();
 }
-const MODE_NAME = { ibk: "異文化コミュニケーション", hatsu: "難単語の発音練習", check: "文法理解度チェック", speak: "瞬間英作", link: "リンキング", drill: "入れ替えドリル" };
+const MODE_NAME = { ibk: "異文化コミュニケーション", hatsu: "難単語の発音練習", goi: "単語・熟語・コロケーション", check: "文法理解度チェック", speak: "瞬間英作", link: "リンキング", drill: "入れ替えドリル" };
 function drawHead(){
   let badge, h1, sub = "";
   if (MODE === "drill") {
@@ -768,7 +770,7 @@ function setMode(m){
   stopAll(); MODE = m;
   document.querySelectorAll(".mt").forEach(b => b.setAttribute("aria-selected", String(b.dataset.m === m)));
   document.querySelectorAll(".mode").forEach(d => d.classList.toggle("on", d.id === "m-" + m));
-  const ext = m === "ibk" || m === "hatsu";
+  const ext = m === "ibk" || m === "hatsu" || m === "goi";
   document.querySelector(".wrap").classList.toggle("ext", ext);
   if (ext) { const f = document.querySelector("#m-" + m + " iframe"); if (!f.src) f.src = f.dataset.src; }
   drawBars(); drawHead(); savePos();
