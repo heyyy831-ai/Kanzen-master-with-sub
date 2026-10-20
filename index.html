@@ -440,7 +440,7 @@
     <div class="mast-t">
       <p class="mast-en">Kodai Yonehara</p>
       <h1 class="mast-h"><span>完全マスター</span>英文法</h1>
-      <p class="mast-sub">瞬間英作・文法理解度チェック・異文化コミュニケーション・入れ替えドリル・難発音の単語・リンキング・日本語英語・ことわざ</p>
+      <p class="mast-sub">瞬間英作・文法理解度チェック・異文化コミュニケーション・入れ替えドリル・難発音の単語・リンキング・日本語英語・ことわざ・不規則動詞</p>
     </div>
     <img class="cover" src="cover.jpg" width="576" height="820" alt="『完全マスター英文法』（米原幸大 著・語研）の表紙">
   </div>
@@ -461,6 +461,7 @@
     <button class="st" type="button" data-m="link" aria-pressed="false">リンキング</button>
     <button class="st" type="button" data-m="jeigo" aria-pressed="false">気を付けるべき日本語英語</button>
     <button class="st" type="button" data-m="kotowaza" aria-pressed="false">ことわざ</button>
+    <button class="st" type="button" data-m="fukisoku" aria-pressed="false">不規則動詞</button>
   </div>
 </nav>
 
@@ -591,6 +592,7 @@
 <div class="mode sub" id="m-hatsu"><iframe class="subapp" data-src="hatsu.html" title="発音の難しい単語練習" loading="lazy"></iframe></div>
 <div class="mode sub" id="m-jeigo"><iframe class="subapp" data-src="extra.html#jeigo" title="気を付けるべき日本語英語" loading="lazy"></iframe></div>
 <div class="mode sub" id="m-kotowaza"><iframe class="subapp" data-src="extra.html#kotowaza" title="ことわざ" loading="lazy"></iframe></div>
+<div class="mode sub" id="m-fukisoku"><iframe class="subapp" data-src="extra.html#fukisoku" title="不規則動詞" loading="lazy"></iframe></div>
 <div class="mode sub" id="m-goi"><iframe class="subapp" data-src="goi.html" title="単語・熟語・コロケーション索引" loading="lazy"></iframe></div>
 <div class="toast" id="toast"></div>
 
@@ -762,7 +764,7 @@ function setChapter(ch){
   sIdx = 0;
   renderCheck(); renderSpeak(); drawBars(); drawHead(); savePos();
 }
-const MODE_NAME = { ibk: "異文化コミュニケーション", hatsu: "難発音の単語", jeigo: "気を付けるべき日本語英語", kotowaza: "ことわざ", goi: "単語・熟語・コロケーション", check: "文法理解度チェック", speak: "瞬間英作", link: "リンキング", drill: "入れ替えドリル" };
+const MODE_NAME = { ibk: "異文化コミュニケーション", hatsu: "難発音の単語", jeigo: "気を付けるべき日本語英語", kotowaza: "ことわざ", fukisoku: "不規則動詞", goi: "単語・熟語・コロケーション", check: "文法理解度チェック", speak: "瞬間英作", link: "リンキング", drill: "入れ替えドリル" };
 function drawHead(){
   let badge, h1, sub = "";
   if (MODE === "drill") {
@@ -789,7 +791,7 @@ function drawHead(){
   $("head").innerHTML = '<div class="kicker"><span class="badge">' + badge + '</span><span class="tag t1">' + MODE_NAME[MODE] + '</span>' +
     (MODE === "link" || MODE === "drill" ? "" : '<span class="tag t2">第' + CH + '章 ' + esc(chName(CH)) + '</span>') + '</div><h1 class="jt">' + h1 + '</h1>' + sub;
 }
-const ETC = ["hatsu", "link", "jeigo", "kotowaza"];
+const ETC = ["hatsu", "link", "jeigo", "kotowaza", "fukisoku"];
 function setMode(m){
   stopAll(); MODE = m;
   const etc = ETC.includes(m);
@@ -798,7 +800,7 @@ function setMode(m){
   document.querySelectorAll("#subnav .st").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.m === m)));
   if (etc) { try { localStorage.setItem("km-etc", m); } catch (e) {} }
   document.querySelectorAll(".mode").forEach(d => d.classList.toggle("on", d.id === "m-" + m));
-  const ext = m === "ibk" || m === "hatsu" || m === "goi" || m === "jeigo" || m === "kotowaza";
+  const ext = m === "ibk" || m === "hatsu" || m === "goi" || m === "jeigo" || m === "kotowaza" || m === "fukisoku";
   document.querySelector(".wrap").classList.toggle("ext", ext);
   if (ext) { const f = document.querySelector("#m-" + m + " iframe"); if (!f.src) f.src = f.dataset.src; }
   drawBars(); drawHead(); savePos();
