@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>完全マスター英文法 その他</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#F4F1EA; --paper:#FFFFFF; --soft:#F8F5EE; --ink:#1E2A3A; --ink-2:#4A5568; --ink-3:#8A93A3;
+  --rule:#E2DCCF; --navy:#2B3F5C; --orange:#C8693E; --orange-soft:#F7E6DC; --green:#3E8A6A; --green-soft:#E3F1EA;
+  --violet:#6B5BA8; --violet-soft:#ECE8F6; --hl:#FFF0B8; --hl-line:#E9C46A;
+  --en:"Crimson Pro","Georgia","Times New Roman",serif;
+  --jp:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#13171E; --paper:#1B212B; --soft:#202733; --ink:#E9EDF3; --ink-2:#B8C1CF; --ink-3:#7F8A9C;
+    --rule:#2F3846; --navy:#9CB8E0; --orange:#E89A72; --orange-soft:#3A2A22; --green:#6CC49E; --green-soft:#1C3229;
+    --violet:#B3A6E8; --violet-soft:#2A2540; --hl:#4A3F17; --hl-line:#C9A443;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#13171E; --paper:#1B212B; --soft:#202733; --ink:#E9EDF3; --ink-2:#B8C1CF; --ink-3:#7F8A9C;
+  --rule:#2F3846; --navy:#9CB8E0; --orange:#E89A72; --orange-soft:#3A2A22; --green:#6CC49E; --green-soft:#1C3229;
+  --violet:#B3A6E8; --violet-soft:#2A2540; --hl:#4A3F17; --hl-line:#C9A443;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--jp);font-size:15.5px;line-height:1.8;-webkit-font-smoothing:antialiased}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px 80px}
+button{font:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+
+header{padding:28px 0 10px}
+.kicker{display:flex;align-items:center;gap:10px;flex-wrap:wrap;color:var(--ink-3);font-size:12.5px}
+.badge{background:var(--navy);color:var(--paper);border-radius:6px;padding:5px 11px;line-height:1.15;font-weight:700;font-size:13px}
+.theme{margin-left:auto;border:1px solid var(--rule);background:var(--paper);color:var(--ink-2);border-radius:99px;padding:4px 12px;font-size:12.5px}
+h1{font-size:clamp(22px,5vw,30px);line-height:1.35;margin:12px 0 4px;letter-spacing:.01em}
+.lead{color:var(--ink-2);margin:0;font-size:14px}
+
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:16px 0 4px}
+.search{flex:1 1 220px;min-width:0;border:1px solid var(--rule);background:var(--paper);border-radius:10px;padding:9px 12px;font:inherit;font-family:var(--en);font-size:17px;color:var(--ink)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--rule);background:var(--paper);border-radius:99px;padding:5px 12px;font-size:13px;font-weight:700;color:var(--ink-3)}
+.chip[aria-pressed="true"]{color:var(--ink);border-color:var(--ink-3);background:var(--soft)}
+.chip i{font-style:normal;display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px}
+
+.az{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--rule);margin:10px -16px 0;padding:8px 16px}
+.az-in{display:grid;grid-template-columns:repeat(13,1fr);gap:4px;max-width:900px;margin:0 auto}
+.az button{border:0;background:transparent;border-radius:8px;padding:5px 0;font-family:var(--en);font-weight:700;font-size:18px;color:var(--ink-2)}
+.az button:hover{background:var(--soft)}
+.az button.on{background:var(--navy);color:var(--paper)}
+.az button:disabled{opacity:.3;cursor:default}
+
+.lettertitle{display:flex;align-items:baseline;gap:12px;margin:22px 0 10px}
+.lettertitle b{font-family:var(--en);font-size:44px;line-height:1;color:var(--navy)}
+.lettertitle span{color:var(--ink-3);font-size:13px}
+.words{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.w{display:flex;align-items:center;gap:8px;text-align:left;border:1px solid var(--rule);background:var(--paper);border-radius:10px;padding:7px 10px;min-width:0}
+.w:hover{border-color:var(--ink-3)}
+.w .hw{font-family:var(--en);font-size:18px;font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.w .n{font-size:11.5px;color:var(--ink-3)}
+.lv{flex:none;font-size:10.5px;font-weight:700;border-radius:5px;padding:1px 6px;line-height:1.5;letter-spacing:.02em}
+.lv.B1{background:var(--green-soft);color:var(--green)}
+.lv.B2{background:var(--orange-soft);color:var(--orange)}
+.lv.C1,.lv.C2,.lv.C1p{background:var(--violet-soft);color:var(--violet)}
+.empty{color:var(--ink-3);padding:30px 0;text-align:center}
+
+/* detail */
+.back{border:1px solid var(--rule);background:var(--paper);border-radius:99px;padding:5px 14px;font-size:13px;font-weight:700;color:var(--ink-2);margin-top:20px}
+.dhead{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:14px 0 6px}
+.dhead h2{font-family:var(--en);font-size:clamp(32px,8vw,44px);margin:0;line-height:1.1}
+.dhead .lv{font-size:12px;padding:3px 9px}
+.dsub{color:var(--ink-3);font-size:13px}
+.bar{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 16px}
+.btn{border:1px solid var(--rule);background:var(--paper);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:700;color:var(--ink-2)}
+.btn:hover{border-color:var(--ink-3);color:var(--ink)}
+.btn.primary{background:var(--navy);border-color:var(--navy);color:var(--paper)}
+.btn[aria-pressed="true"]{background:var(--soft);color:var(--ink);border-color:var(--ink-3)}
+.vsel{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--ink-2)}
+.vsel select{max-width:220px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:8px;padding:5px 8px;font:inherit;font-weight:500}
+.cards{display:flex;flex-direction:column;gap:10px}
+.card{background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:12px 16px 12px}
+.card.playing{border-color:var(--orange);box-shadow:0 0 0 2px var(--orange-soft)}
+.loc{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px;color:var(--ink-3);font-weight:500}
+.loc .tag{background:var(--soft);border:1px solid var(--rule);border-radius:5px;padding:0 7px}
+.loc .adv{background:var(--orange-soft);color:var(--orange);border-radius:5px;padding:0 7px;font-weight:700}
+.loc .src{background:var(--green-soft);color:var(--green);border-radius:5px;padding:0 7px;font-weight:700}
+.w.ph .hw{font-style:italic;white-space:normal;overflow:visible;line-height:1.3}
+.w.wide{grid-column:span 2}
+.loc .app{background:var(--navy);color:var(--paper);border-radius:5px;padding:0 7px;font-weight:700}
+.en{font-family:var(--en);font-size:21px;line-height:1.45;margin:6px 0 8px;overflow-wrap:anywhere}
+.en mark{background:linear-gradient(transparent 58%,var(--hl) 58%);color:inherit;font-weight:700;padding:0 1px}
+.ja{color:var(--ink-2);font-size:14.5px;border-left:3px solid var(--hl-line);padding:2px 0 2px 10px;margin:0 0 8px}
+.ja[hidden]{display:none}
+.acts{display:flex;gap:6px}
+.embed header{padding-top:6px}
+.embed .kicker{display:none}
+.embed .az{position:static;backdrop-filter:none;background:transparent}
+.srcsw{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 2px}
+.srcsw .grade{border:2px solid var(--rule);background:var(--paper);border-radius:12px;padding:9px 20px;font-size:15px;font-weight:700;color:var(--ink-2)}
+.srcsw .grade:hover{border-color:var(--ink-3);color:var(--ink)}
+.srcsw .grade[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:var(--paper)}
+.srcsw .grade small{display:block;font-size:11.5px;font-weight:500;opacity:.8}
+@media (max-width:560px){.srcsw{display:grid;grid-template-columns:1fr 1fr;gap:6px}.srcsw .grade{padding:8px 4px;font-size:14px}}
+.e1 #lvchips,.e1 .foot{display:none}
+.ptbox{margin:4px 0 14px;padding:12px 14px;background:var(--paper);border:1px solid var(--rule);border-left:4px solid var(--orange);border-radius:10px;font-size:14px;line-height:1.75;color:var(--ink-2)}
+.ptbox .ptg+.ptg{margin-top:12px;padding-top:10px;border-top:1px dashed var(--rule)}
+.ptbox .ptsrc{font-size:12px;color:var(--ink-3);margin-bottom:4px}
+.ptbox .ptsrc i{font-family:var(--en);font-style:normal;color:var(--ink-2)}
+.ptbox p{margin:0 0 4px}.ptbox p:last-child{margin:0}
+.ptbox .cf{display:inline-block;font-family:var(--en);font-weight:700;font-style:italic;color:var(--orange);margin-right:6px}
+.btn.ptb{border-color:var(--orange);color:var(--orange)}
+.btn.ptb[aria-pressed="true"]{background:var(--orange);color:var(--paper);border-color:var(--orange)}
+.w .ptm{flex:none;font-size:10px;font-weight:700;color:var(--paper);background:var(--orange);border-radius:4px;padding:1px 4px;margin-left:4px;font-style:normal}
+.wnav{display:flex;justify-content:space-between;gap:8px;margin-top:16px}
+.wnav .btn{max-width:48%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.foot{margin-top:48px;color:var(--ink-3);font-size:12px;line-height:1.7;border-top:1px solid var(--rule);padding-top:14px}
+.foot a{color:var(--ink-2)}
+@media (max-width:560px){
+  .az-in{grid-template-columns:repeat(9,1fr)}
+  .az button{font-size:16px}
+  .words{grid-template-columns:repeat(auto-fill,minmax(135px,1fr))}
+  .en{font-size:19.5px}
+}
+
+.xl{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.xc{background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:12px 16px}
+.xc.playing{border-color:var(--orange);box-shadow:0 0 0 2px var(--orange-soft)}
+.xh{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+.xh .no{font-family:var(--en);font-size:13px;color:var(--ink-3);min-width:22px}
+.xh .jp{font-weight:700;font-size:16px}
+.xh .ar{color:var(--ink-3)}
+.xh .en{font-family:var(--en);font-size:22px;font-weight:700;color:var(--navy)}
+.ex{margin-top:8px;padding-top:8px;border-top:1px dashed var(--rule)}
+.ex .alt{font-family:var(--en);font-weight:700;color:var(--navy);font-size:16px}
+.ex .alt::before{content:"または ";font-family:var(--jp);font-size:12px;font-weight:700;color:var(--ink-3)}
+.ex .s{font-family:var(--en);font-size:19px;line-height:1.55}
+.ex .s mark{background:linear-gradient(transparent 55%,var(--hl) 55%);color:inherit;font-weight:700}
+.ex .j{color:var(--ink-2);font-size:14.5px;margin-top:2px}
+.note{margin-top:8px;font-size:13.5px;color:var(--ink-2);background:var(--soft);border-left:3px solid var(--orange);border-radius:6px;padding:6px 10px}
+.note b{color:var(--orange);margin-right:6px}
+.acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.kt .jp{font-size:17px}
+.kt .en{font-size:21px}
+.kt.hide .en{filter:blur(7px);user-select:none;cursor:pointer}
+.bar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:14px 0 4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker"><span class="badge">完全マスター英文法</span><span id="kick"></span>
+      <button class="theme" id="theme" type="button">表示切替</button></div>
+    <h1 id="ttl"></h1>
+    <p class="lead" id="lead"></p>
+    <div class="tools"><input class="search" id="q" type="search" placeholder="検索（日本語・英語）" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
+    <div class="bar" id="bar"></div>
+  </header>
+  <main class="xl" id="list"></main>
+</div>
+<script>
+const JEIGO = [{"jp": "アイスキャンディー", "en": "popsicle", "ex": [{"alt": null, "en": "I bought a popsicle to cool down after our walk.", "ja": "散歩の後、涼もうと思ってアイスキャンディーを買いました。"}], "notes": []}, {"jp": "アイスコーヒー", "en": "iced coffee", "ex": [{"alt": null, "en": "Could I have an iced coffee with no sugar, please?", "ja": "砂糖なしのアイスコーヒーをいただけますか。"}], "notes": []}, {"jp": "アンケート", "en": "questionnaire", "ex": [{"alt": null, "en": "Please fill out this questionnaire before you leave the clinic.", "ja": "診療所を出る前に、このアンケートに記入してください。"}], "notes": []}, {"jp": "オーダーメイドの", "en": "custom-made", "ex": [{"alt": null, "en": "These custom-made shoes fit much better than my old ones.", "ja": "このオーダーメイドの靴は、古い靴よりずっと足に合います。"}], "notes": []}, {"jp": "オルゴール", "en": "a music box", "ex": [{"alt": null, "en": "My grandmother gave me a music box for my birthday.", "ja": "祖母は誕生日にオルゴールをくれました。"}], "notes": []}, {"jp": "OL", "en": "female office worker", "ex": [{"alt": null, "en": "The film follows a female office worker living in Tokyo.", "ja": "その映画は、東京で暮らす女性会社員を描いています。"}], "notes": []}, {"jp": "ガソリンスタンド", "en": "a gas station", "ex": [{"alt": null, "en": "Let's stop at a gas station before we reach town.", "ja": "町に着く前にガソリンスタンドに寄りましょう。"}], "notes": []}, {"jp": "ガードマン", "en": "a security guard", "ex": [{"alt": null, "en": "A security guard helped us find the hospital's main entrance.", "ja": "警備員が、病院の正面入口を見つけるのを手伝ってくれました。"}], "notes": []}, {"jp": "カレーライス", "en": "curry and rice", "ex": [{"alt": null, "en": "I made curry and rice for the children last night.", "ja": "昨夜、子どもたちにカレーライスを作りました。"}], "notes": ["原文の curried rice は、カレー風味のご飯を指します。"]}, {"jp": "キーホルダー", "en": "a key ring", "ex": [{"alt": null, "en": "I keep my house key on a bright red key ring.", "ja": "家の鍵は、真っ赤なキーホルダーに付けています。"}], "notes": []}, {"jp": "クラシック音楽", "en": "classical music", "ex": [{"alt": null, "en": "I often listen to classical music while preparing my lessons.", "ja": "授業の準備をしながら、よくクラシック音楽を聴きます。"}], "notes": []}, {"jp": "グレードアップ、バージョンアップ", "en": "upgrade", "ex": [{"alt": null, "en": "We need to upgrade our computers before the new term.", "ja": "新学期の前に、パソコンをアップグレードする必要があります。"}], "notes": []}, {"jp": "コインランドリー", "en": "a laundromat", "ex": [{"alt": null, "en": "We washed our clothes at a laundromat near the hotel.", "ja": "ホテル近くのコインランドリーで服を洗いました。"}], "notes": []}, {"jp": "コストダウン", "en": "cost reduction", "ex": [{"alt": null, "en": "The company's cost reduction plan includes using less printer paper.", "ja": "会社のコスト削減計画には、印刷用紙の節約が含まれています。"}], "notes": []}, {"jp": "コンセント", "en": "outlet (コードの差し込みはplug)", "ex": [{"alt": null, "en": "Is there an outlet nearby where I can charge my phone?", "ja": "携帯電話を充電できるコンセントは近くにありますか。"}], "notes": []}, {"jp": "コンタクト", "en": "contact lens", "ex": [{"alt": null, "en": "I dropped a contact lens and couldn't find it anywhere.", "ja": "コンタクトレンズを落とし、どこを探しても見つかりませんでした。"}], "notes": []}, {"jp": "サークル、同好会", "en": "club", "ex": [{"alt": null, "en": "I joined a photography club to meet people with similar interests.", "ja": "同じ趣味の人に会おうと、写真の同好会に入りました。"}], "notes": []}, {"jp": "サラリーマン", "en": "salaried/office worker", "ex": [{"alt": null, "en": "My sister is a salaried office worker in central Osaka.", "ja": "姉は、大阪の中心部で働く会社員です。"}], "notes": []}, {"jp": "シャープペンシル", "en": "a mechanical pencil", "ex": [{"alt": null, "en": "Could I borrow your mechanical pencil for the math test?", "ja": "数学のテストに、あなたのシャープペンシルを借りてもいいですか。"}], "notes": []}, {"jp": "シュークリーム", "en": "cream puff", "ex": [{"alt": null, "en": "I bought a cream puff to enjoy with my coffee.", "ja": "コーヒーと一緒に食べようと、シュークリームを買いました。"}], "notes": []}, {"jp": "スイートルーム", "en": "a suite", "ex": [{"alt": null, "en": "We booked a suite so the children would have more space.", "ja": "子どもたちが広々と過ごせるよう、スイートルームを予約しました。"}], "notes": []}, {"jp": "スコップ", "en": "shovel", "ex": [{"alt": null, "en": "Could you bring a shovel to help clear the snow?", "ja": "雪かきを手伝うために、スコップを持ってきてもらえますか。"}], "notes": []}, {"jp": "スペル", "en": "spelling", "ex": [{"alt": null, "en": "Please check the spelling of your name before submitting the form.", "ja": "用紙を提出する前に、名前のつづりを確認してください。"}], "notes": []}, {"jp": "ゼミナール", "en": "seminar", "ex": [{"alt": null, "en": "I presented my research at a university seminar last week.", "ja": "先週、大学のゼミで自分の研究を発表しました。"}], "notes": []}, {"jp": "ダンプカー", "en": "a dump truck", "ex": [{"alt": null, "en": "A dump truck delivered sand for our new garden path.", "ja": "ダンプカーが、新しい庭の小道用の砂を運んできました。"}], "notes": []}, {"jp": "ダンボール(箱)", "en": "cardboard (box)", "ex": [{"alt": null, "en": "Please put these books in a cardboard box for moving.", "ja": "引っ越しのため、この本を段ボール箱に入れてください。"}], "notes": []}, {"jp": "チアガール", "en": "a cheerleader", "ex": [{"alt": null, "en": "My daughter became a cheerleader during her first college year.", "ja": "娘は大学一年生のとき、チアリーダーになりました。"}], "notes": []}, {"jp": "チャック", "en": "a zipper", "ex": [{"alt": null, "en": "The zipper on my jacket broke just before we left.", "ja": "出かける直前に、上着のファスナーが壊れました。"}], "notes": []}, {"jp": "テイクアウトです", "en": "To go, please.", "ex": [{"alt": null, "en": "I'd like two coffees to go, please, with no sugar.", "ja": "砂糖なしのコーヒーを二つ、持ち帰りでお願いします。"}], "notes": []}, {"jp": "ドライブイン", "en": "a roadside restaurant", "ex": [{"alt": null, "en": "We stopped at a roadside restaurant for a quick lunch.", "ja": "手早く昼食を取るため、道沿いのレストランに寄りました。"}], "notes": []}, {"jp": "トランプ", "en": "(playing) cards", "ex": [{"alt": null, "en": "We played cards while waiting for the rain to stop.", "ja": "雨がやむのを待ちながら、トランプをして遊びました。"}], "notes": []}, {"jp": "トレーナー", "en": "sweatshirt", "ex": [{"alt": null, "en": "I always pack a sweatshirt for cool evenings by the sea.", "ja": "海辺の涼しい夜に備え、いつもトレーナーを荷物に入れます。"}], "notes": []}, {"jp": "トレパン", "en": "sweatpants", "ex": [{"alt": null, "en": "He changed into sweatpants before taking the dog for a walk.", "ja": "彼は犬の散歩に行く前に、スウェットパンツに着替えました。"}], "notes": []}, {"jp": "バレンタインデー", "en": "Valentine's Day", "ex": [{"alt": null, "en": "We usually cook something special at home on Valentine's Day.", "ja": "バレンタインデーには、たいてい家で特別な料理を作ります。"}], "notes": []}, {"jp": "ビジネスマン", "en": "an office worker", "ex": [{"alt": null, "en": "As an office worker, I spend most weekdays at my desk.", "ja": "会社員として、平日はほとんど机に向かって過ごしています。"}], "notes": []}, {"jp": "ビフテキ", "en": "beefsteak", "ex": [{"alt": null, "en": "I used thin slices of beefsteak to make this sandwich.", "ja": "このサンドイッチは、ビーフステーキの薄切りを使って作りました。"}], "notes": []}, {"jp": "フライパン", "en": "a frying pan", "ex": [{"alt": null, "en": "Heat a frying pan before adding the oil and vegetables.", "ja": "油と野菜を入れる前に、フライパンを熱してください。"}], "notes": []}, {"jp": "フリーダイヤル", "en": "a toll-free number", "ex": [{"alt": null, "en": "Call this toll-free number if you need help with installation.", "ja": "設置についてお困りなら、このフリーダイヤルにお電話ください。"}], "notes": []}, {"jp": "フリーマーケット", "en": "flea market", "ex": [{"alt": null, "en": "I found this lovely old lamp at a flea market.", "ja": "このすてきな古いランプは、フリーマーケットで見つけました。"}], "notes": []}, {"jp": "フロントで", "en": "at the front desk", "ex": [{"alt": null, "en": "You can leave your bags at the front desk until evening.", "ja": "荷物は夕方までフロントに預けられます。"}], "notes": []}, {"jp": "ベスト10", "en": "top 10", "ex": [{"alt": null, "en": "Her new song reached the top 10 within a week.", "ja": "彼女の新曲は、一週間以内にトップ10入りしました。"}], "notes": []}, {"jp": "ベッドカバー", "en": "bedspread", "ex": [{"alt": null, "en": "This blue bedspread makes the small bedroom feel much brighter.", "ja": "この青いベッドカバーで、小さな寝室がずっと明るく感じられます。"}], "notes": []}, {"jp": "ペーパードライバー", "en": "a licensed driver who rarely drives", "ex": [{"alt": null, "en": "I'm a licensed driver who rarely drives, so I'm nervous.", "ja": "免許はありますがめったに運転しないので、緊張しています。"}], "notes": ["原文の Sunday driver は、一般に、のろのろ運転する人を指します。"]}, {"jp": "ベビーカー", "en": "a baby carriage, a stroller", "ex": [{"alt": null, "en": "We bought a stroller instead of a large baby carriage.", "ja": "大きな乳母車の代わりに、ベビーカーを買いました。"}], "notes": []}, {"jp": "ペンキ", "en": "paint", "ex": [{"alt": null, "en": "Let's choose the paint before we buy the new curtains.", "ja": "新しいカーテンを買う前に、ペンキを選びましょう。"}], "notes": []}, {"jp": "干した魚", "en": "dried fish", "ex": [{"alt": null, "en": "My grandfather likes having dried fish with rice for breakfast.", "ja": "祖父は朝食に、ご飯と干物を食べるのが好きです。"}], "notes": []}, {"jp": "ホッチキス", "en": "a stapler", "ex": [{"alt": null, "en": "Could you lend me a stapler for these application forms?", "ja": "この申請書類をまとめるため、ホッチキスを貸してもらえますか。"}], "notes": []}, {"jp": "マイカー", "en": "a private car", "ex": [{"alt": null, "en": "Without a private car, getting around this village is difficult.", "ja": "自家用車がないと、この村で移動するのは大変です。"}], "notes": []}, {"jp": "マッシュポテト", "en": "mashed potato", "ex": [{"alt": null, "en": "Would you like some mashed potato with your chicken tonight?", "ja": "今夜の鶏肉に、マッシュポテトもいかがですか。"}], "notes": []}, {"jp": "マジックペン、サインペン", "en": "a marking pen", "ex": [{"alt": null, "en": "Please label every box with a black marking pen.", "ja": "黒いマジックペンで、すべての箱に表示を書いてください。"}, {"alt": "a marker (pen)", "en": "I used a marker pen to write the children's names.", "ja": "サインペンで子どもたちの名前を書きました。"}], "notes": []}, {"jp": "マニア", "en": "an enthusiast", "ex": [{"alt": null, "en": "As a railway enthusiast, he spends weekends photographing old trains.", "ja": "鉄道マニアの彼は、週末に古い列車を撮影しています。"}], "notes": ["原文の maniac は、通常、常軌を逸した人などを表す強い語です。"]}, {"jp": "(クラブ活動の)マネージャー", "en": "a team manager", "ex": [{"alt": null, "en": "Our team manager checks the equipment before every practice session.", "ja": "部のマネージャーは、毎回練習前に用具を確認します。"}], "notes": ["原文の caretaker は、一般に、建物などの管理人を指します。"]}, {"jp": "マンション", "en": "an apartment", "ex": [{"alt": null, "en": "We found an apartment within walking distance of the station.", "ja": "駅から歩ける距離にあるマンションを見つけました。"}], "notes": []}, {"jp": "マンツーマン", "en": "one-to-one", "ex": [{"alt": null, "en": "She prefers one-to-one lessons because she can ask questions freely.", "ja": "自由に質問できるので、彼女はマンツーマンのレッスンを好みます。"}], "notes": []}, {"jp": "モーニングサービス", "en": "breakfast special", "ex": [{"alt": null, "en": "The breakfast special includes toast, eggs, and a hot drink.", "ja": "モーニングセットには、トースト、卵、温かい飲み物が付いています。"}], "notes": []}, {"jp": "ハーフの子", "en": "a child of mixed race", "ex": [{"alt": null, "en": "She wrote about growing up as a child of mixed race.", "ja": "彼女は、異なる人種の親を持つ子どもとして育った経験を書きました。"}, {"alt": "a mixed-race child", "en": "I was a mixed-race child growing up in rural Japan.", "ja": "私は異なる人種の親を持ち、日本の田舎で育ちました。"}], "notes": []}, {"jp": "パトカー", "en": "a police car", "ex": [{"alt": null, "en": "A police car stopped outside our house late last night.", "ja": "昨夜遅く、家の前にパトカーが止まりました。"}], "notes": []}, {"jp": "フライドポテト", "en": "french fries", "ex": [{"alt": null, "en": "Could we share some french fries while waiting for dinner?", "ja": "夕食を待つ間、フライドポテトを一緒に食べませんか。"}], "notes": []}, {"jp": "フリーター", "en": "a part-timer", "ex": [{"alt": null, "en": "The cafe hired a part-timer to help during busy mornings.", "ja": "カフェは、忙しい朝を手伝うアルバイトを雇いました。"}], "notes": []}, {"jp": "プリペイカード", "en": "a prepaid card", "ex": [{"alt": null, "en": "I bought a prepaid card for calls during my trip.", "ja": "旅行中の通話用に、プリペイドカードを買いました。"}], "notes": []}, {"jp": "プリント", "en": "a handout", "ex": [{"alt": null, "en": "Please read the handout before we start today's group discussion.", "ja": "今日のグループ討論を始める前に、プリントを読んでください。"}], "notes": []}, {"jp": "ペーパーテスト", "en": "a written examination/test", "ex": [{"alt": null, "en": "I passed the written test but failed the driving test.", "ja": "筆記試験には合格しましたが、運転の実技試験には落ちました。"}], "notes": []}, {"jp": "ペットボトル", "en": "a plastic bottle", "ex": [{"alt": null, "en": "I filled a plastic bottle with water before our hike.", "ja": "ハイキングの前に、ペットボトルに水を入れました。"}], "notes": []}, {"jp": "ホットケーキ", "en": "pancake", "ex": [{"alt": null, "en": "Could I have another pancake with some butter and honey?", "ja": "バターと蜂蜜を添えたホットケーキを、もう一枚いただけますか。"}], "notes": []}, {"jp": "リサイクルショップ", "en": "a second-hand shop", "ex": [{"alt": null, "en": "We bought our dining table at a local second-hand shop.", "ja": "地元のリサイクルショップで、食卓を買いました。"}], "notes": []}, {"jp": "リストラ", "en": "downsizing", "ex": [{"alt": null, "en": "After the downsizing, several employees had to find new jobs.", "ja": "人員削減の後、何人かの従業員は仕事を探さなければなりませんでした。"}], "notes": []}, {"jp": "リビング", "en": "a living room", "ex": [{"alt": null, "en": "We moved the sofa to make our living room feel bigger.", "ja": "リビングが広く感じられるように、ソファを移動しました。"}], "notes": []}, {"jp": "リフォームする", "en": "renovate/remodel", "ex": [{"alt": null, "en": "We plan to renovate the house and remodel the kitchen.", "ja": "家を改修し、台所の間取りを変える予定です。"}], "notes": []}, {"jp": "リモコン", "en": "a remote control", "ex": [{"alt": null, "en": "Has anyone seen the remote control for the air conditioner?", "ja": "エアコンのリモコンを、誰か見ませんでしたか。"}], "notes": []}, {"jp": "リンス", "en": "conditioner", "ex": [{"alt": null, "en": "I forgot to pack conditioner, so my hair feels dry.", "ja": "リンスを荷物に入れ忘れたので、髪がぱさつきます。"}], "notes": []}, {"jp": "レンジ、コンロ", "en": "stove", "ex": [{"alt": null, "en": "Make sure the stove is off before leaving the house.", "ja": "家を出る前に、コンロが消えているか確かめてください。"}], "notes": []}, {"jp": "レンタカー", "en": "a rental car", "ex": [{"alt": null, "en": "We picked up a rental car near the airport yesterday.", "ja": "昨日、空港近くでレンタカーを受け取りました。"}], "notes": []}, {"jp": "ワンルームマンション", "en": "studio apartment", "ex": [{"alt": null, "en": "Her studio apartment is small but gets plenty of sunlight.", "ja": "彼女のワンルームマンションは、小さいですが日当たりがよいです。"}], "notes": []}];
+const KOTO = [{"jp": "後のまつりだ", "en": "The damage is done.", "notes": []}, {"jp": "言うはやすし、行うは難し", "en": "(It's) easier said than done.", "notes": []}, {"jp": "意思の或るところに、道が開けるものだ", "en": "Where there's a will, there's a way.", "notes": []}, {"jp": "一番しゃべる人が一番何もしない", "en": "They do least who talk most.", "notes": []}, {"jp": "遅くなっても全然しないよりいい", "en": "Better late than never.", "notes": []}, {"jp": "終わり良ければ全て良し", "en": "All's well that ends well.", "notes": []}, {"jp": "光陰矢のごとし", "en": "Time flies.", "notes": []}, {"jp": "郷にいれば郷に従え", "en": "When in Rome, do as the Romans do.", "notes": []}, {"jp": "転ばぬ先の杖", "en": "Better safe than sorry.", "notes": []}, {"jp": "サビが鉄を蝕むのと同様、心労は心を蝕む", "en": "As rust eats iron, so care eats the heart.", "notes": []}, {"jp": "去る者、日々に疎し", "en": "Out of sight, out of mind.", "notes": []}, {"jp": "さわらぬ神に祟り無し", "en": "Let sleeping dogs lie.", "notes": []}, {"jp": "事実は小説よりも奇なり", "en": "Truth is stranger than fiction.", "notes": []}, {"jp": "十人十色だ", "en": "So many men, so many minds.", "notes": []}, {"jp": "人生は驚きに満ちている", "en": "Life is full of surprises.", "notes": []}, {"jp": "正反対なものは引き合うものだ", "en": "Opposites attract.", "notes": []}, {"jp": "力は正義なり", "en": "Might is right.", "notes": []}, {"jp": "知は力なり", "en": "Knowledge is power.", "notes": []}, {"jp": "鉄は熱い内に打て", "en": "Strike while the iron is hot.", "notes": []}, {"jp": "時は金なり", "en": "Time is money.", "notes": []}, {"jp": "生兵法は大怪我のもと", "en": "A little knowledge is a dangerous thing.", "notes": []}, {"jp": "似たもの同士だ", "en": "Like attracts like.", "notes": []}, {"jp": "必要は発明の母である", "en": "Necessity is the mother of invention.", "notes": []}, {"jp": "ペンは剣よりも強し", "en": "The pen is mightier than the sword.", "notes": []}, {"jp": "撒いた種は、自ら刈り取らなければならない", "en": "As you sow, so shall you reap.", "notes": []}, {"jp": "見かけだけで物事の判断はできない", "en": "You can't judge a book by its cover.", "notes": []}, {"jp": "身から出た錆びだ", "en": "You asked for it.", "notes": []}, {"jp": "予防は治療に勝る", "en": "Prevention is better than (a) cure.", "notes": []}, {"jp": "料理人が多くてできそこないのスープができてしまう", "en": "Too many cooks spoil the broth.", "notes": ["日本語の「船頭多くして船、山に登る」と同じような意味"]}, {"jp": "類は友を呼ぶ", "en": "Birds of a feather flock together.", "notes": []}, {"jp": "笑いは最良の薬なり", "en": "Laughter is the best medicine.", "notes": []}];
+const EMBED = window.parent !== window;
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const store = {get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const KIND = location.hash.slice(1) === 'kotowaza' ? 'kotowaza' : 'jeigo';
+(function(){const t=store.get('kmv-theme'); if(t) document.documentElement.dataset.theme=t;
+ $('theme').onclick=()=>{const cur=document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  const n=cur==='dark'?'light':'dark'; document.documentElement.dataset.theme=n; store.set('kmv-theme',n);};})();
+if (EMBED) $('theme').hidden = true;
+// speech（語彙・熟語と同じ声の設定を共有）
+let slow=false, voice=null, enVoices=[], playingAll=false;
+const NOVELTY=/\b(Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Fred|Junior|Ralph|Kathy|Grandma|Grandpa|Eddy|Flo|Reed|Rocko|Sandy|Shelley)\b/;
+function vRank(v){ const n=v.name, us=/^en[-_]US/i.test(v.lang)?0:0.5;
+  if(NOVELTY.test(n)) return 9; if(/Natural|Online/i.test(n)) return us; if(/^Google/i.test(n)) return (/US English/i.test(n)?1:1.2)+us;
+  if(/Premium|Enhanced|Siri/i.test(n)) return 2+us; if(/Samantha|Ava|Allison|Aria|Jenny|Alex|Daniel|Karen|Moira/i.test(n)) return 3+us; return 5+us; }
+function pickVoice(){ enVoices=speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang)).sort((a,b)=>vRank(a)-vRank(b)||a.name.localeCompare(b.name));
+  const chosen=store.get('goi-voice'); voice=(chosen&&enVoices.find(v=>v.voiceURI===chosen))||enVoices[0]||null; fillVoices(); }
+function fillVoices(){ const sel=$('vsel'); if(!sel) return; const chosen=store.get('goi-voice')||'';
+  sel.innerHTML='<option value="">（自動）</option>'+enVoices.map(v=>`<option value="${esc(v.voiceURI)}">${vRank(v)<3?'★ ':''}${esc(v.name+' ('+v.lang+')')}</option>`).join('');
+  sel.value=enVoices.some(v=>v.voiceURI===chosen)?chosen:''; sel.onchange=()=>{store.set('goi-voice',sel.value); pickVoice(); stop();}; }
+function speak(text,card,done){ if(!('speechSynthesis' in window)) return;
+  document.querySelectorAll('.xc.playing').forEach(c=>c.classList.remove('playing'));
+  const u=new SpeechSynthesisUtterance(text.replace(/[’‘]/g,"'").replace(/[“”]/g,'"').replace(/\(([^)]*)\)/g,'$1').split(/\s\/\s/)[0]);
+  u.lang='en-US'; if(voice) u.voice=voice; u.rate=slow?0.7:0.95; card&&card.classList.add('playing');
+  u.onend=u.onerror=()=>{card&&card.classList.remove('playing'); done&&done();}; speechSynthesis.speak(u); }
+function stop(){ playingAll=false; if('speechSynthesis' in window) speechSynthesis.cancel(); const p=$('playall'); if(p) p.textContent='▶ 連続読み上げ'; document.querySelectorAll('.xc.playing').forEach(c=>c.classList.remove('playing')); }
+if('speechSynthesis' in window){ pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; setTimeout(pickVoice,800); }
+function hl(s,term){ const t=term.replace(/\s*\([^)]*\)/g,'').replace(/^(a|an|the)\s+/i,'').trim(); if(!t) return esc(s);
+  const i=s.toLowerCase().indexOf(t.toLowerCase()); if(i<0) return esc(s); return esc(s.slice(0,i))+'<mark>'+esc(s.slice(i,i+t.length))+'</mark>'+esc(s.slice(i+t.length)); }
+let showJa=false, hideEn=false, query='';
+function setup(){
+  const J=KIND==='jeigo';
+  $('kick').textContent='その他'; $('ttl').textContent=J?'気を付けるべき日本語英語':'ことわざ';
+  $('lead').textContent=J?`注意が必要なカタカナ語・和製英語 ${JEIGO.length} 語と、英語での正しい言い方・例文です。`:`有用な英語のことわざ ${KOTO.length} 句。日本語を見て、英語で言えるか試してみましょう。`;
+  $('bar').innerHTML=(J?'<button class="btn" type="button" id="allja" aria-pressed="false">日本語訳をすべて表示</button>':'<button class="btn" type="button" id="hideen" aria-pressed="false">英語を隠す</button>')+
+    '<button class="btn primary" type="button" id="playall">▶ 連続読み上げ</button><button class="btn" type="button" id="rate" aria-pressed="false">ゆっくり</button><label class="vsel">声<select id="vsel"></select></label>';
+  fillVoices();
+  $('rate').onclick=e=>{slow=!slow; e.currentTarget.setAttribute('aria-pressed',slow);};
+  if(J) $('allja').onclick=e=>{showJa=!showJa; e.currentTarget.setAttribute('aria-pressed',showJa); e.currentTarget.textContent=showJa?'日本語訳をすべて隠す':'日本語訳をすべて表示'; render();};
+  else $('hideen').onclick=e=>{hideEn=!hideEn; e.currentTarget.setAttribute('aria-pressed',hideEn); e.currentTarget.textContent=hideEn?'英語を表示':'英語を隠す'; render();};
+  $('playall').onclick=()=>{ if(playingAll){stop();return;} playingAll=true; $('playall').textContent='■ 停止';
+    const cards=[...document.querySelectorAll('.xc')]; let i=0;
+    const next=()=>{ if(!playingAll||i>=cards.length){stop();return;} const c=cards[i]; c.scrollIntoView({block:'center',behavior:'smooth'}); speak(c.dataset.say,c,()=>{i++; setTimeout(next,700);}); }; next(); };
+  let qt; $('q').addEventListener('input',e=>{clearTimeout(qt); qt=setTimeout(()=>{query=e.target.value.trim().toLowerCase(); render();},150);});
+}
+function render(){
+  stop();
+  const q=query, J=KIND==='jeigo';
+  const data=(J?JEIGO:KOTO).map((x,i)=>({...x,i})).filter(x=>!q||JSON.stringify(x).toLowerCase().includes(q));
+  $('list').innerHTML = data.length ? data.map(x=> J ? `
+    <div class="xc" data-say="${esc(x.ex.map(e=>e.en).join(' '))}">
+      <div class="xh"><span class="no">${x.i+1}</span><span class="jp">「${esc(x.jp)}」</span><span class="ar">→</span><span class="en" lang="en">${esc(x.en)}</span></div>
+      ${x.ex.map(e=>`<div class="ex">${e.alt?`<div class="alt" lang="en">${esc(e.alt)}</div>`:''}<div class="s" lang="en">${hl(e.en,e.alt||x.en)}</div><div class="j"${showJa?'':' hidden'}>${esc(e.ja)}</div></div>`).join('')}
+      ${x.notes.map(n=>`<div class="note"><b>注</b>${esc(n)}</div>`).join('')}
+      <div class="acts"><button class="btn tj" type="button" aria-pressed="${showJa}">${showJa?'訳を隠す':'日本語訳'}</button><button class="btn say" type="button">🔊 読み上げ</button></div>
+    </div>` : `
+    <div class="xc kt${hideEn?' hide':''}" data-say="${esc(x.en)}">
+      <div class="xh"><span class="no">${x.i+1}</span><span class="jp">「${esc(x.jp)}」</span></div>
+      <div class="xh" style="margin-top:4px"><span class="no"></span><span class="en" lang="en" title="${hideEn?'クリックで表示':''}">${esc(x.en)}</span></div>
+      ${x.notes.map(n=>`<div class="note"><b>注</b>${esc(n)}</div>`).join('')}
+      <div class="acts"><button class="btn say" type="button">🔊 読み上げ</button></div>
+    </div>`).join('') : '<div class="empty">該当するものがありません</div>';
+  document.querySelectorAll('.xc').forEach(c=>{
+    c.querySelector('.say').onclick=()=>{stop(); c.classList.remove('hide'); speak(c.dataset.say,c);};
+    const tj=c.querySelector('.tj'); if(tj) tj.onclick=()=>{const js=c.querySelectorAll('.j'), show=js[0].hidden; js.forEach(j=>j.hidden=!show); tj.setAttribute('aria-pressed',show); tj.textContent=show?'訳を隠す':'日本語訳';};
+    const en=c.querySelector('.kt .en, .xc.kt .en'); if(en) en.onclick=()=>c.classList.remove('hide');
+  });
+}
+setup(); render();
+if (EMBED) {
+  const post = () => parent.postMessage({ sub: true, t: "h", h: Math.ceil(document.documentElement.getBoundingClientRect().height) }, "*");
+  new ResizeObserver(post).observe(document.body); window.addEventListener("load", post);
+  window.addEventListener("message", e => { const d = e.data || {};
+    if (d.t === "theme") document.documentElement.dataset.theme = d.dark ? "dark" : "light";
+    if (d.t === "stop") { try { stop(); } catch (er) {} } });
+  parent.postMessage({ sub: true, t: "ready" }, "*");
+}
+</script>
+</body>
+</html>

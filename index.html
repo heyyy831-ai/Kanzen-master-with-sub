@@ -420,6 +420,12 @@
 
   /* ===== 埋め込みタブ（異文化コミュニケーション・難単語の発音練習） ===== */
   .wrap.ext #chapbar,.wrap.ext #partbar,.wrap.ext #head{display:none}
+  .subnav{max-width:860px;margin:0 auto;padding:2px 18px 8px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  .subnav[hidden]{display:none}
+  .subnav .sl{font-size:11px;font-weight:700;color:var(--ink-3);letter-spacing:.08em;margin-right:4px}
+  .subnav .st{border:1px solid var(--rule);background:var(--paper);color:var(--ink-2);font-size:12.5px;font-weight:700;padding:5px 12px;border-radius:99px;white-space:nowrap}
+  .subnav .st:hover{color:var(--ink);border-color:var(--ink-3)}
+  .subnav .st[aria-pressed="true"]{background:var(--orange);border-color:var(--orange);color:#fff}
   .mode.sub{max-width:none;margin:0}
   iframe.subapp{display:block;width:100%;height:900px;border:0;background:transparent}
   .wrap.ext{padding-bottom:0}
@@ -434,7 +440,7 @@
     <div class="mast-t">
       <p class="mast-en">Kodai Yonehara</p>
       <h1 class="mast-h"><span>完全マスター</span>英文法</h1>
-      <p class="mast-sub">瞬間英作・文法理解度チェック・異文化コミュニケーション・難単語の発音練習・リンキング・入れ替えドリル</p>
+      <p class="mast-sub">瞬間英作・文法理解度チェック・異文化コミュニケーション・入れ替えドリル・難発音の単語・リンキング・日本語英語・ことわざ</p>
     </div>
     <img class="cover" src="cover.jpg" width="576" height="820" alt="『完全マスター英文法』（米原幸大 著・語研）の表紙">
   </div>
@@ -444,11 +450,17 @@
     <button class="mt" type="button" role="tab" data-m="speak" aria-selected="true"><span class="num">1</span>瞬間英作</button>
     <button class="mt" type="button" role="tab" data-m="check" aria-selected="false"><span class="num">2</span>文法理解度チェック</button>
     <button class="mt" type="button" role="tab" data-m="ibk" aria-selected="false"><span class="num">3</span>異文化コミュ</button>
-    <button class="mt" type="button" role="tab" data-m="hatsu" aria-selected="false"><span class="num">4</span>難単語の発音</button>
-    <button class="mt" type="button" role="tab" data-m="link" aria-selected="false"><span class="num">5</span>リンキング</button>
-    <button class="mt" type="button" role="tab" data-m="drill" aria-selected="false"><span class="num">6</span>入れ替えドリル</button>
-    <button class="mt" type="button" role="tab" data-m="goi" aria-selected="false"><span class="num">7</span>語彙・熟語</button>
+    <button class="mt" type="button" role="tab" data-m="drill" aria-selected="false"><span class="num">4</span>入れ替えドリル</button>
+    <button class="mt" type="button" role="tab" data-m="goi" aria-selected="false"><span class="num">5</span>語彙・熟語</button>
+    <button class="mt" type="button" role="tab" data-m="etc" aria-selected="false"><span class="num">6</span>その他</button>
     <button class="theme" id="themeBtn" type="button" aria-pressed="false">ダーク</button>
+  </div>
+  <div class="subnav" id="subnav" hidden>
+    <span class="sl">その他</span>
+    <button class="st" type="button" data-m="hatsu" aria-pressed="false">難発音の単語</button>
+    <button class="st" type="button" data-m="link" aria-pressed="false">リンキング</button>
+    <button class="st" type="button" data-m="jeigo" aria-pressed="false">気を付けるべき日本語英語</button>
+    <button class="st" type="button" data-m="kotowaza" aria-pressed="false">ことわざ</button>
   </div>
 </nav>
 
@@ -577,6 +589,8 @@
 </div>
 <div class="mode sub" id="m-ibk"><iframe class="subapp" data-src="ibk.html" title="日英異文化コミュニケーション" loading="lazy"></iframe></div>
 <div class="mode sub" id="m-hatsu"><iframe class="subapp" data-src="hatsu.html" title="発音の難しい単語練習" loading="lazy"></iframe></div>
+<div class="mode sub" id="m-jeigo"><iframe class="subapp" data-src="extra.html#jeigo" title="気を付けるべき日本語英語" loading="lazy"></iframe></div>
+<div class="mode sub" id="m-kotowaza"><iframe class="subapp" data-src="extra.html#kotowaza" title="ことわざ" loading="lazy"></iframe></div>
 <div class="mode sub" id="m-goi"><iframe class="subapp" data-src="goi.html" title="単語・熟語・コロケーション索引" loading="lazy"></iframe></div>
 <div class="toast" id="toast"></div>
 
@@ -748,7 +762,7 @@ function setChapter(ch){
   sIdx = 0;
   renderCheck(); renderSpeak(); drawBars(); drawHead(); savePos();
 }
-const MODE_NAME = { ibk: "異文化コミュニケーション", hatsu: "難単語の発音練習", goi: "単語・熟語・コロケーション", check: "文法理解度チェック", speak: "瞬間英作", link: "リンキング", drill: "入れ替えドリル" };
+const MODE_NAME = { ibk: "異文化コミュニケーション", hatsu: "難発音の単語", jeigo: "気を付けるべき日本語英語", kotowaza: "ことわざ", goi: "単語・熟語・コロケーション", check: "文法理解度チェック", speak: "瞬間英作", link: "リンキング", drill: "入れ替えドリル" };
 function drawHead(){
   let badge, h1, sub = "";
   if (MODE === "drill") {
@@ -775,17 +789,25 @@ function drawHead(){
   $("head").innerHTML = '<div class="kicker"><span class="badge">' + badge + '</span><span class="tag t1">' + MODE_NAME[MODE] + '</span>' +
     (MODE === "link" || MODE === "drill" ? "" : '<span class="tag t2">第' + CH + '章 ' + esc(chName(CH)) + '</span>') + '</div><h1 class="jt">' + h1 + '</h1>' + sub;
 }
+const ETC = ["hatsu", "link", "jeigo", "kotowaza"];
 function setMode(m){
   stopAll(); MODE = m;
-  document.querySelectorAll(".mt").forEach(b => b.setAttribute("aria-selected", String(b.dataset.m === m)));
+  const etc = ETC.includes(m);
+  document.querySelectorAll(".mt").forEach(b => b.setAttribute("aria-selected", String(b.dataset.m === m || (etc && b.dataset.m === "etc"))));
+  $("subnav").hidden = !etc;
+  document.querySelectorAll("#subnav .st").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.m === m)));
+  if (etc) { try { localStorage.setItem("km-etc", m); } catch (e) {} }
   document.querySelectorAll(".mode").forEach(d => d.classList.toggle("on", d.id === "m-" + m));
-  const ext = m === "ibk" || m === "hatsu" || m === "goi";
+  const ext = m === "ibk" || m === "hatsu" || m === "goi" || m === "jeigo" || m === "kotowaza";
   document.querySelector(".wrap").classList.toggle("ext", ext);
   if (ext) { const f = document.querySelector("#m-" + m + " iframe"); if (!f.src) f.src = f.dataset.src; }
   drawBars(); drawHead(); savePos();
   window.scrollTo({ top: 0 });
 }
-document.querySelector(".nav-in").addEventListener("click", e => { const b = e.target.closest(".mt"); if (b) setMode(b.dataset.m); });
+document.querySelector(".nav-in").addEventListener("click", e => { const b = e.target.closest(".mt"); if (!b) return;
+  if (b.dataset.m === "etc") { if (ETC.includes(MODE)) return; let last = "hatsu"; try { last = localStorage.getItem("km-etc") || "hatsu"; } catch (er) {} setMode(ETC.includes(last) ? last : "hatsu"); }
+  else setMode(b.dataset.m); });
+$("subnav").addEventListener("click", e => { const b = e.target.closest(".st"); if (b && b.dataset.m !== MODE) setMode(b.dataset.m); });
 function stopAll(){ document.querySelectorAll("iframe.subapp").forEach(f => { try { f.contentWindow.postMessage({ t: "stop" }, "*"); } catch (e) {} }); AUD.stop(); sStop(); lStop(); dStop(); }
 function savePos(){ try { localStorage.setItem("k4-pos", JSON.stringify({ m: MODE, ch: CH, c: cLI, s: sKI, g: gI, lv: LEVEL, d: dLI })); } catch (e) {} }
 
