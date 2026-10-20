@@ -254,7 +254,7 @@ function renderF(){
   document.querySelectorAll('.vc').forEach(c=>{ const i=+c.dataset.i, x=FUKI[i];
     c.querySelector('.ans').onclick=()=>{ const show=allAns||open.has(i); if(show){ if(allAns){allAns=false; FUKI.forEach((_,k)=>open.add(k)); const b=$('allans'); b.setAttribute('aria-pressed',false); b.textContent='答えをすべて表示';} open.delete(i);} else open.add(i); render(); };
     c.querySelector('.say').onclick=()=>{ stop(); const show=allAns||open.has(i);
-      const say=show?[x.v,x.p,x.pp].map(t=>t.replace(/\s*\[[^\]]*\]/g,'').replace(/ \/ /g,' or ')).join(', '):x.v; speak(say,c.closest('.vc')); };
+      const say=show?[x.v,x.p,x.pp].map(t=>t.replace(/^read\s*\[rɛd\]$/,'red').replace(/\s*\[[^\]]*\]/g,'').replace(/ \/ /g,' or ')).join(', '):x.v; speak(say,c.closest('.vc')); };
   });
 }
 function render(){
