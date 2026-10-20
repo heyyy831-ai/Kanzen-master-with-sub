@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>英語の母音・子音</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#F4F1EA; --paper:#FFFFFF; --soft:#F8F5EE; --ink:#1E2A3A; --ink-2:#4A5568; --ink-3:#8A93A3;
+  --rule:#E2DCCF; --navy:#2B3F5C; --orange:#C8693E; --orange-soft:#F7E6DC; --green:#3E8A6A; --green-soft:#E3F1EA;
+  --violet:#6B5BA8; --violet-soft:#ECE8F6; --hl:#FFF0B8; --hl-line:#E9C46A;
+  --en:"Crimson Pro","Georgia","Times New Roman",serif;
+  --jp:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#13171E; --paper:#1B212B; --soft:#202733; --ink:#E9EDF3; --ink-2:#B8C1CF; --ink-3:#7F8A9C;
+    --rule:#2F3846; --navy:#9CB8E0; --orange:#E89A72; --orange-soft:#3A2A22; --green:#6CC49E; --green-soft:#1C3229;
+    --violet:#B3A6E8; --violet-soft:#2A2540; --hl:#4A3F17; --hl-line:#C9A443;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#13171E; --paper:#1B212B; --soft:#202733; --ink:#E9EDF3; --ink-2:#B8C1CF; --ink-3:#7F8A9C;
+  --rule:#2F3846; --navy:#9CB8E0; --orange:#E89A72; --orange-soft:#3A2A22; --green:#6CC49E; --green-soft:#1C3229;
+  --violet:#B3A6E8; --violet-soft:#2A2540; --hl:#4A3F17; --hl-line:#C9A443;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--jp);font-size:15.5px;line-height:1.8;-webkit-font-smoothing:antialiased}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px 80px}
+button{font:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+
+header{padding:28px 0 10px}
+.kicker{display:flex;align-items:center;gap:10px;flex-wrap:wrap;color:var(--ink-3);font-size:12.5px}
+.badge{background:var(--navy);color:var(--paper);border-radius:6px;padding:5px 11px;line-height:1.15;font-weight:700;font-size:13px}
+.theme{margin-left:auto;border:1px solid var(--rule);background:var(--paper);color:var(--ink-2);border-radius:99px;padding:4px 12px;font-size:12.5px}
+h1{font-size:clamp(22px,5vw,30px);line-height:1.35;margin:12px 0 4px;letter-spacing:.01em}
+.lead{color:var(--ink-2);margin:0;font-size:14px}
+
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:16px 0 4px}
+.search{flex:1 1 220px;min-width:0;border:1px solid var(--rule);background:var(--paper);border-radius:10px;padding:9px 12px;font:inherit;font-family:var(--en);font-size:17px;color:var(--ink)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--rule);background:var(--paper);border-radius:99px;padding:5px 12px;font-size:13px;font-weight:700;color:var(--ink-3)}
+.chip[aria-pressed="true"]{color:var(--ink);border-color:var(--ink-3);background:var(--soft)}
+.chip i{font-style:normal;display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px}
+
+.lettertitle{display:flex;align-items:baseline;gap:12px;margin:22px 0 10px}
+.lettertitle b{font-family:var(--en);font-size:44px;line-height:1;color:var(--navy)}
+.lettertitle span{color:var(--ink-3);font-size:13px}
+.words{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.w{display:flex;align-items:center;gap:8px;text-align:left;border:1px solid var(--rule);background:var(--paper);border-radius:10px;padding:7px 10px;min-width:0}
+.w:hover{border-color:var(--ink-3)}
+.w .hw{font-family:var(--en);font-size:18px;font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.w .n{font-size:11.5px;color:var(--ink-3)}
+.lv{flex:none;font-size:10.5px;font-weight:700;border-radius:5px;padding:1px 6px;line-height:1.5;letter-spacing:.02em}
+.lv.B1{background:var(--green-soft);color:var(--green)}
+.lv.B2{background:var(--orange-soft);color:var(--orange)}
+.lv.C1,.lv.C2,.lv.C1p{background:var(--violet-soft);color:var(--violet)}
+.empty{color:var(--ink-3);padding:30px 0;text-align:center}
+
+/* detail */
+.back{border:1px solid var(--rule);background:var(--paper);border-radius:99px;padding:5px 14px;font-size:13px;font-weight:700;color:var(--ink-2);margin-top:20px}
+.dhead{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:14px 0 6px}
+.dhead h2{font-family:var(--en);font-size:clamp(32px,8vw,44px);margin:0;line-height:1.1}
+.dhead .lv{font-size:12px;padding:3px 9px}
+.dsub{color:var(--ink-3);font-size:13px}
+.bar{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 16px}
+.btn{border:1px solid var(--rule);background:var(--paper);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:700;color:var(--ink-2)}
+.btn:hover{border-color:var(--ink-3);color:var(--ink)}
+.btn.primary{background:var(--navy);border-color:var(--navy);color:var(--paper)}
+.btn[aria-pressed="true"]{background:var(--soft);color:var(--ink);border-color:var(--ink-3)}
+.vsel{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--ink-2)}
+.vsel select{max-width:220px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:8px;padding:5px 8px;font:inherit;font-weight:500}
+.cards{display:flex;flex-direction:column;gap:10px}
+.card{background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:12px 16px 12px}
+.card.playing{border-color:var(--orange);box-shadow:0 0 0 2px var(--orange-soft)}
+.loc{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px;color:var(--ink-3);font-weight:500}
+.loc .tag{background:var(--soft);border:1px solid var(--rule);border-radius:5px;padding:0 7px}
+.loc .adv{background:var(--orange-soft);color:var(--orange);border-radius:5px;padding:0 7px;font-weight:700}
+.loc .src{background:var(--green-soft);color:var(--green);border-radius:5px;padding:0 7px;font-weight:700}
+.w.ph .hw{font-style:italic;white-space:normal;overflow:visible;line-height:1.3}
+.w.wide{grid-column:span 2}
+.loc .app{background:var(--navy);color:var(--paper);border-radius:5px;padding:0 7px;font-weight:700}
+.en{font-family:var(--en);font-size:21px;line-height:1.45;margin:6px 0 8px;overflow-wrap:anywhere}
+.en mark{background:linear-gradient(transparent 58%,var(--hl) 58%);color:inherit;font-weight:700;padding:0 1px}
+.ja{color:var(--ink-2);font-size:14.5px;border-left:3px solid var(--hl-line);padding:2px 0 2px 10px;margin:0 0 8px}
+.ja[hidden]{display:none}
+.acts{display:flex;gap:6px}
+.embed header{padding-top:6px}
+.embed .kicker{display:none}
+.embed .az{position:static;backdrop-filter:none;background:transparent}
+.foot{margin-top:48px;color:var(--ink-3);font-size:12px;line-height:1.7;border-top:1px solid var(--rule);padding-top:14px}
+.foot a{color:var(--ink-2)}
+@media (max-width:560px){
+  .az-in{grid-template-columns:repeat(9,1fr)}
+  .az button{font-size:16px}
+  .words{grid-template-columns:repeat(auto-fill,minmax(135px,1fr))}
+  .en{font-size:19.5px}
+}
+
+.vbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0 2px}.vbar .vnote{font-size:12px;color:var(--ink-3)}.vbar .vpick{max-width:280px}
+.grades{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:14px 0 4px}
+.grades .grade .lv{font-size:inherit;font-weight:inherit;color:inherit;letter-spacing:inherit;margin:0;padding:0;background:none}
+@media (max-width:560px){.grades{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.grades .grade{padding:8px 2px;font-size:14px;min-width:0}.grades .lv{display:none}}
+.grade{border:2px solid var(--rule);background:var(--paper);border-radius:12px;padding:10px 6px;font-size:15px;white-space:nowrap;font-weight:700;color:var(--ink-2)}
+.grade:hover{border-color:var(--ink-3);color:var(--ink)}
+.grade[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:var(--paper)}
+.grade small{display:block;font-size:11.5px;font-weight:500;opacity:.8}
+.wnav{display:flex;justify-content:space-between;gap:8px;margin-top:16px}
+.wnav .btn{max-width:48%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hint{color:var(--ink-3);font-size:14px;padding:26px 0;text-align:center}
+
+.vbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0 2px}.vbar .vnote{font-size:12px;color:var(--ink-3)}.vbar .vpick{max-width:280px}
+.idx{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px;margin-top:16px}
+.ix{display:flex;align-items:baseline;gap:10px;text-align:left;border:1px solid var(--rule);background:var(--paper);border-radius:12px;padding:10px 14px;min-width:0}
+.ix:hover{border-color:var(--ink-3)}
+.ix .no{flex:none;font-family:var(--en);font-weight:700;font-size:18px;color:var(--orange);min-width:22px}
+.ix .tt{font-weight:700;font-size:15px;line-height:1.5}
+.sech{font-size:18px;margin:26px 0 4px;display:flex;align-items:baseline;gap:10px}
+.sech span{font-size:12.5px;color:var(--ink-3);font-weight:500}
+.wnav{display:flex;justify-content:space-between;gap:8px;margin-top:18px}
+.wnav .btn{max-width:48%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dno{color:var(--orange);font-weight:700;font-size:13px;letter-spacing:.06em;margin-top:14px}
+.dt{font-size:clamp(22px,5vw,30px);line-height:1.4;margin:2px 0 10px}
+.body p{margin:0 0 12px}
+.body h3{font-size:18px;font-family:var(--en);margin:22px 0 6px;color:var(--navy)}
+.body h4{font-size:15px;margin:18px 0 6px;color:var(--navy)}
+.body .fn{font-size:13.5px;color:var(--ink-2);background:var(--soft);border-left:3px solid var(--orange);border-radius:6px;padding:6px 10px;margin:0 0 12px}
+.exs{display:flex;flex-direction:column;gap:0;background:var(--paper);border:1px solid var(--rule);border-radius:12px;margin:4px 0 16px;overflow:hidden}
+.xr{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:10px 14px;border-top:1px dashed var(--rule)}
+.xr:first-child{border-top:0}
+.xr.playing{background:var(--orange-soft)}
+.xr .xj{grid-column:1;color:var(--ink);font-size:14.5px}
+.xr .xe{grid-column:1;font-family:var(--en);font-size:20px;line-height:1.45;color:var(--navy);white-space:pre-line;overflow-wrap:anywhere}
+.xr .xe b{background:linear-gradient(transparent 58%,var(--hl) 58%);color:inherit}
+.xr .xn{grid-column:1;font-size:12.5px;color:var(--ink-3)}
+.xr .sp{grid-column:2;grid-row:1/span 3;align-self:center}
+.hideen .xr .xe,.hideen .xr .xn{display:none}
+.hideen .xr .q{display:block}
+.xr .q{display:none;grid-column:1;font-family:var(--en);color:var(--ink-3);letter-spacing:.2em}
+.hideen .xr .sp{display:none}
+.xr .rv{display:none}
+.hideen .xr.open .xe,.hideen .xr.open .xn{display:block}
+.hideen .xr.open .q{display:none}
+.hideen .xr.open .sp{display:inline-flex}
+.sym{font-family:var(--en);font-size:clamp(40px,10vw,56px);line-height:1.1;color:var(--navy);margin:2px 0 6px}
+.wl{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 12px}
+.wl button{border:1px solid var(--rule);background:var(--paper);border-radius:99px;padding:3px 12px;font-family:var(--en);font-size:19px}
+.wl button:hover{border-color:var(--ink-3)}
+.wl button.playing{border-color:var(--orange);background:var(--orange-soft)}
+.wl b{color:var(--orange);text-decoration:underline;text-underline-offset:3px}
+.wnote{font-size:12.5px;color:var(--ink-3);margin:-6px 0 10px}
+.syms{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:6px;margin-top:8px}
+.sb{display:flex;flex-direction:column;align-items:flex-start;text-align:left;border:1px solid var(--rule);background:var(--paper);border-radius:10px;padding:6px 10px;min-width:0}
+.sb:hover{border-color:var(--ink-3)}
+.sb .s{font-family:var(--en);font-size:24px;font-weight:700;color:var(--navy);line-height:1.2}
+.sb .w{border:0;padding:0;background:none;font-family:var(--en);font-size:14px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;display:block}
+.sb .w b{font-weight:400}
+.top2{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0 0}
+@media (max-width:560px){.xr .xe{font-size:18.5px}.idx{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker"><span class="badge">英語の母音・子音</span><span>母音・子音の発音のしかた</span>
+      <button class="theme" id="theme" type="button">表示切替</button></div>
+    <h1>英語の母音・子音</h1>
+    <div class="vbar">
+      <label class="vsel">声<select class="vpick" aria-label="読み上げの声"></select></label>
+      <button class="btn" type="button" id="rate" aria-pressed="false">ゆっくり</button>
+      <span class="vnote">★ は自然な音声（Google など）</span>
+    </div>
+  </header>
+  <main id="main"></main>
+</div>
+<script>
+const SECS = [{"title": "英語の母音", "items": [{"no": 1, "sym": "i:", "words": ["fee", "she", "believe", "heat"], "note": "", "exp": ["日本語の[イー]のような音で、唇はもっと横に引きます。"], "ex": {"ja": "彼の話を信じます", "en": "I <b>believe</b> his story."}}, {"no": 2, "sym": "ɪ", "words": ["fit", "hit", "kid"], "note": "", "exp": ["日本語の[イ]にわずかに[エ]がある感じです。"], "ex": {"ja": "その子はボールを打った", "en": "The <b>kid</b> <b>hit</b> the ball."}}, {"no": 3, "sym": "eɪ", "words": ["they", "great", "play"], "note": "", "exp": ["強い[エ]から[イ]の方に移動します。"], "ex": {"ja": "彼らは素晴らしい", "en": "<b>They</b> are <b>great</b>."}}, {"no": 4, "sym": "ɛ", "words": ["let", "pet", "air"], "note": "", "exp": ["日本語の[エ]とほとんど同じですが、舌がわずかに低く口はやや広めに開けます。"], "ex": {"ja": "新鮮な空気を入れよう", "en": "<b>Let</b> some fresh <b>air</b> in."}}, {"no": 5, "sym": "æ", "words": ["camp", "bath", "fan", "cap"], "note": "", "exp": ["[ア]と[エ]の中間の音で、のどをしめ付けるような感じです。"], "ex": {"ja": "サリーは車で旅行をした", "en": "<b>Sally</b> <b>traveled</b> by car."}}, {"no": 6, "sym": "u:", "words": ["to", "loose", "Lucy"], "note": "", "exp": ["日本語の[ウー]のような感じで、日本語より大きく口を突き出します([u:]だけでなく[ʊ],[oʊ],[ɔː]は口先が突き出ます)。"], "ex": {"ja": "ルーシーは彼と帰ってきます", "en": "<b>Lucy</b> will come home with him."}}, {"no": 7, "sym": "ʊ", "words": ["book", "should", "put"], "note": "", "exp": ["日本語の[ウ]のような感じで、日本語より口を突き出します。"], "ex": {"ja": "私はその本を買った", "en": "I bought the <b>book</b>."}}, {"no": 8, "sym": "oʊ", "words": ["note", "no", "slow"], "note": "", "exp": ["日本語の[オ]を強く、[ウ]を弱く付ける感じです。"], "ex": {"ja": "これへの注釈がないです", "en": "There is <b>no</b> <b>note</b> for this."}}, {"no": 9, "sym": "ɔː", "words": ["cloth", "cost", "dog", "salt"], "note": "", "exp": ["日本語の[オ]より口を大きく縦に開け、舌は低く奥に引きます。英語では、[ɔ]に[ː]がついて長く発音されることに注意してください。"], "ex": {"ja": "この塩はとても高いです", "en": "This <b>salt</b> is very expensive."}}, {"no": 10, "sym": "ɑ", "words": ["hot", "lock", "not", "pot", "rock", "stop", "Tom"], "note": "", "exp": ["日本語の[ア]より大きく口を縦に開けます。そのため[オ]音がいくぶん含まれます。"], "ex": {"ja": "ここは夏はとても暑いです", "en": "It is very <b>hot</b> here in summer."}}, {"no": 11, "sym": "ə", "words": ["Can<b>a</b>d<b>a</b>", "<b>a</b>bout", "<b>a</b>nd", "kilom<b>e</b>ter", "tul<b>i</b>p", "stam<b>i</b>n<b>a</b>", "cust<b>o</b>m", "calci<b>u</b>m"], "note": "下線部が [ə] の音", "exp": ["全ての母音の中間にあるような短いあいまい音です。弱音なのでストレス(強勢)はきません。"], "ex": {"ja": "私はカナダの文化についてもっと知りたい", "en": "I want to know more <b>about</b> <b>Canada’s</b> culture."}}, {"no": 12, "sym": "ʌ", "words": ["but", "fun", "luck", "come"], "note": "", "exp": ["[ə]音にストレス(強勢)を持った音が[ʌ]です。"], "ex": {"ja": "それは見ていてとても面白い", "en": "It is very <b>fun</b> to watch."}}, {"no": 13, "sym": "ɚ", "words": ["bird", "term", "third"], "note": "", "exp": ["[ə]の後に[r]の響きが少し加わります。"], "ex": {"ja": "彼は３期目の当選を果たした", "en": "He won a <b>third</b> <b>term</b>."}}, {"no": 14, "sym": "aɪ", "words": ["eye", "iron", "idea"], "note": "", "exp": ["[ア]を強く[イ]が少しある感じです。"], "ex": {"ja": "その犬はかわいい目をしている", "en": "The dog has cute <b>eyes</b>."}}, {"no": 15, "sym": "aʊ", "words": ["out", "house", "count"], "note": "", "exp": ["[ア]を強く[ウ]が少しある感じです。"], "ex": {"ja": "すべての星を数えるのは不可能です", "en": "It is impossible to <b>count</b> every star."}}, {"no": 16, "sym": "ɔɪ", "words": ["boy", "joy", "join"], "note": "", "exp": ["[オ]を強く[イ]が少しある感じです。"], "ex": {"ja": "その少年はそのチームに入った", "en": "The <b>boy</b> <b>joined</b> the team."}}]}, {"title": "英語の子音", "items": [{"no": 1, "sym": "p", "words": ["pajamas", "pink", "push"], "note": "", "exp": ["日本語のパ行の子音部分に近く、強く破裂するように発音します。"], "ex": {"ja": "彼女はピンクのパジャマを着ている", "en": "She is wearing <b>pink</b> <b>pajamas</b>."}}, {"no": 2, "sym": "b", "words": ["band", "begin", "belief"], "note": "", "exp": ["[p]の有声音です。"], "ex": {"ja": "そのバンドはレコーディングを始めた", "en": "The <b>band</b> <b>began</b> recording."}}, {"no": 3, "sym": "t", "words": ["towel", "title", "take", "two"], "note": "", "exp": ["日本語のタ行の子音に近く、舌先で上歯茎をはじくような感じです。"], "ex": {"ja": "車で２時間かかります", "en": "It <b>takes</b> <b>two</b> hours by car."}}, {"no": 4, "sym": "d", "words": ["daily", "date", "diary"], "note": "", "exp": ["[t]の有声音です。"], "ex": {"ja": "彼女は日記をつけている", "en": "She keeps a <b>diary</b>."}}, {"no": 5, "sym": "k", "words": ["key", "keep", "cream"], "note": "", "exp": ["日本語のカ行の子音に近く、舌の奥を上顎の後ろの方に強くあてます。"], "ex": {"ja": "その鍵を身につけておいて", "en": "<b>Keep</b> the <b>key</b> with you."}}, {"no": 6, "sym": "g", "words": ["get", "gas", "good"], "note": "", "exp": ["[k]の有声音です。"], "ex": {"ja": "彼は新しい車を手に入れたい", "en": "He wants to <b>get</b> a new car."}}, {"no": 7, "sym": "f", "words": ["far", "fast", "face"], "note": "", "exp": ["下唇を上歯につけ（この部分が日本語のハ行の子音と異なります）、息を強く吹きます。"], "ex": {"ja": "彼の車はとても早い", "en": "His car is very <b>fast</b>."}}, {"no": 8, "sym": "v", "words": ["visit", "save", "voice"], "note": "", "exp": ["[f]の有声音です。"], "ex": {"ja": "ボイスメールを保存することが出来ます", "en": "You can <b>save</b> your <b>voice</b> mail."}}, {"no": 9, "sym": "θ", "words": ["think", "thirty", "healthy"], "note": "", "exp": ["舌先を上前歯の裏、または上下の歯の間に挟んで息を強く出します。"], "ex": {"ja": "それについて考えるいい機会です", "en": "It is a good time to <b>think</b> about it."}}, {"no": 10, "sym": "ð", "words": ["the", "that", "bathe"], "note": "", "exp": ["[θ]の有声音です。"], "ex": {"ja": "私は暑い気候は好きではないです", "en": "I don’t like hot <b>weather</b>."}}, {"no": 11, "sym": "s", "words": ["safe", "salad", "circus"], "note": "", "exp": ["日本語のサ行([シ]を除く)の子音とほぼ同じです。日本語よりやや摩擦が大きめです。"], "ex": {"ja": "それを食べるのは安全です", "en": "It is <b>safe</b> to eat it."}}, {"no": 12, "sym": "z", "words": ["zoom", "zoo", "rise"], "note": "", "exp": ["[s]の有声音です。"], "ex": {"ja": "これにはズームレンズがあります", "en": "This has a <b>zoom</b> lens."}}, {"no": 13, "sym": "ʃ", "words": ["sheep", "shadow", "ship"], "note": "", "exp": ["日本語の[シ]の子音より摩擦が強いです。"], "ex": {"ja": "この国にはたくさんの羊がいます", "en": "There are a lot of <b>sheep</b> in this country."}}, {"no": 14, "sym": "ʒ", "words": ["vision", "pleasure"], "note": "", "exp": ["[ʃ] の有声音です。"], "ex": {"ja": "喜んで", "en": "My <b>pleasure</b>."}}, {"no": 15, "sym": "h", "words": ["had", "he", "head"], "note": "", "exp": ["日本語のハ行の子音と殆ど同じで、少し前に出した唇に息を吹きかける感じです。"], "ex": {"ja": "彼はここに何年も住んでいる", "en": "<b>He</b> <b>has</b> lived <b>here</b> for many years."}}, {"no": 16, "sym": "tʃ", "words": ["church", "pitcher", "channel"], "note": "", "exp": ["日本語の[チ]の子音に近いです。舌は歯茎の後部から、硬い口蓋の前部の付近につきます。"], "ex": {"ja": "彼女は毎週日曜日に教会に行っている", "en": "She goes to <b>church</b> every Sunday."}}, {"no": 17, "sym": "dʒ", "words": ["giant", "gym", "adjust"], "note": "", "exp": ["[tʃ]の有声音です。"], "ex": {"ja": "彼はジムに毎日行っている", "en": "He goes to the <b>gym</b> every day."}}, {"no": 18, "sym": "ts", "words": ["cats", "hats"], "note": "", "exp": ["日本語の[ツ]の子音に近く、歯をもっと噛み合わせて舌先を歯の方に押し付けるようにします。"], "ex": {"ja": "それは約２５ドルかかります", "en": "It <b>costs</b> me about 25 dollars."}}, {"no": 19, "sym": "dz", "words": ["ends", "friends", "bends"], "note": "", "exp": ["[ts]の有声音です。"], "ex": {"ja": "彼女は妹の友達です", "en": "She is <b>friends</b> with my sister."}}, {"no": 20, "sym": "m", "words": ["mirror", "moon"], "note": "", "exp": ["日本語のマ行の子音を少し粘り強く発音します。"], "ex": {"ja": "その湖は鏡のようだ", "en": "The lake is like a <b>mirror</b>."}}, {"no": 21, "sym": "n", "words": ["narrow", "neat", "noon"], "note": "", "exp": ["日本語のナ行の子音を、舌を上顎に押し付けて鼻から息を出す感じです。"], "ex": {"ja": "その道は狭い", "en": "The street is <b>narrow</b>."}}, {"no": 22, "sym": "ŋ", "words": ["hang", "ink", "finger"], "note": "", "exp": ["[k]や[g]と同じ舌の位置です。この音は語の頭には現れません。"], "ex": {"ja": "私はこの壁に鏡をかけたい", "en": "I want to <b>hang</b> a mirror on this wall."}}, {"no": 23, "sym": "l", "words": ["light", "million", "later", "life"], "note": "", "exp": ["舌先が歯茎の位置で少し緊張して閉鎖音を作り、母音および半母音[j]の前に現れます。唇は横に張る[i]の形で、息が舌の両側から出ます。"], "ex": {"ja": "じゃまた", "en": "See you <b>later</b>."}}, {"no": 24, "sym": "j", "words": ["yield", "yard"], "note": "", "exp": ["舌の位置は[i]または[ɪ]と同じで、そこから急速に後ろの母音に移動します。"], "ex": {"ja": "１ヤードは３フィートです", "en": "A <b>yard</b> is three feet."}}, {"no": 25, "sym": "w", "words": ["wood", "way"], "note": "", "exp": ["舌の位置は[u]または[ʊ]と同じで、そこから急速に後ろの母音に移動します。"], "ex": {"ja": "これが正しいやり方です", "en": "This is the right <b>way</b>."}}, {"no": 26, "sym": "r", "words": ["read", "reach"], "note": "", "exp": ["舌先を歯茎の後部に向かって持ち上げて少し奥の方にそり返します。唇を[u]の形で少し丸め、舌先は弛緩します。[l]音は舌先が閉鎖音を作り息が舌の両側から出ますが、[r]音は逆に舌の両側が閉鎖し舌先から息が出る感じです。"], "ex": {"ja": "やった〜！", "en": "All <b>right</b>!"}}]}];
+
+const EMBED = window.parent !== window;
+if (EMBED) document.documentElement.classList.add('embed');
+const store = {get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+(function(){const t=store.get('kmv-theme'); if(t) document.documentElement.dataset.theme=t;
+ $('theme').onclick=()=>{const c=document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  const n=c==='dark'?'light':'dark'; document.documentElement.dataset.theme=n; store.set('kmv-theme',n);};})();
+// speech（自然な音声を優先。選んだ声は単語帳などと共有）
+let slow=false, voice=null, enVoices=[];
+const NOVELTY=/\b(Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Fred|Junior|Ralph|Kathy|Grandma|Grandpa|Eddy|Flo|Reed|Rocko|Sandy|Shelley)\b/;
+function vRank(v){ const n=v.name, us=/^en[-_]US/i.test(v.lang)?0:0.5;
+  if(NOVELTY.test(n)) return 9; if(/Natural|Online/i.test(n)) return us; if(/^Google/i.test(n)) return (/US English/i.test(n)?1:1.2)+us;
+  if(/Premium|Enhanced|Siri/i.test(n)) return 2+us; if(/Samantha|Ava|Allison|Aria|Jenny|Alex|Daniel|Karen|Moira/i.test(n)) return 3+us; return 5+us; }
+function pickVoice(){ enVoices=speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang)).sort((a,b)=>vRank(a)-vRank(b)||a.name.localeCompare(b.name));
+  const chosen=store.get('goi-voice'); voice=(chosen&&enVoices.find(v=>v.voiceURI===chosen))||enVoices[0]||null; fillVoices(); }
+function fillVoices(){ const chosen=store.get('goi-voice')||'';
+  const html='<option value="">（自動）'+esc(voice?voice.name:'')+'</option>'+enVoices.map(v=>`<option value="${esc(v.voiceURI)}">${vRank(v)<3?'★ ':''}${esc(v.name+' ('+v.lang+')')}</option>`).join('');
+  document.querySelectorAll('select.vpick').forEach(sel=>{ sel.innerHTML=html; sel.value=enVoices.some(v=>v.voiceURI===chosen)?chosen:'';
+    sel.onchange=()=>{store.set('goi-voice',sel.value); pickVoice(); stop(); speak('Hello. This is my voice.');}; }); }
+if('speechSynthesis' in window){pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; setTimeout(pickVoice,500); setTimeout(pickVoice,1500);}
+const sayText = s => String(s).replace(/<[^>]+>/g,'').replace(/[’‘]/g,"'").replace(/[“”]/g,'"').replace(/[（(][^）)]*[぀-ヿ一-鿿][^）)]*[）)]/g,' ').replace(/[（）]/g,' ').replace(/＊\d*/g,'').replace(/\s+/g,' ').trim();
+function speak(text,el,done){
+  if(!('speechSynthesis' in window)){alert('このブラウザは読み上げに対応していません');return;}
+  document.querySelectorAll('.playing').forEach(c=>c.classList.remove('playing'));
+  const u=new SpeechSynthesisUtterance(sayText(text)); u.lang='en-US'; if(voice) u.voice=voice; u.rate=slow?0.7:0.95;
+  el&&el.classList.add('playing'); u.onend=u.onerror=()=>{el&&el.classList.remove('playing'); done&&done();}; speechSynthesis.speak(u); }
+function stop(){ if('speechSynthesis' in window) speechSynthesis.cancel(); document.querySelectorAll('.playing').forEach(c=>c.classList.remove('playing')); }
+$('rate').onclick=e=>{slow=!slow; e.currentTarget.setAttribute('aria-pressed',slow);};
+function toTop(){ if (EMBED) parent.postMessage({ sub: true, t: "top" }, "*"); else window.scrollTo(0,0); }
+
+
+const ALL = []; SECS.forEach((s,si)=>s.items.forEach(it=>{ it.sec=si; ALL.push(it); }));
+const plain = s => String(s).replace(/<[^>]+>/g,'');
+function renderIndex(){
+  $('main').innerHTML = SECS.map((s,si)=>`<h2 class="sech">${esc(s.title)}<span>${s.items.length} 音</span></h2>
+    <div class="syms">${s.items.map(it=>`<button class="sb" type="button" data-k="${ALL.indexOf(it)}"><span class="s">[${esc(it.sym)}]</span><span class="w">${esc(it.words.map(plain).slice(0,3).join(', '))}</span></button>`).join('')}</div>`).join('') +
+    `<p class="lead" style="margin-top:18px">発音記号を選ぶと、発音のしかたと例文が出ます。単語や例文は 🔊 で聞けます。</p>`;
+  $('main').querySelectorAll('.sb').forEach(b=>b.onclick=()=>{location.hash='#s'+b.dataset.k;});
+}
+function renderSym(k){
+  const it=ALL[k], prev=ALL[k-1], next=ALL[k+1];
+  $('main').innerHTML = `<button class="back" type="button" id="back">← 一覧へ</button>
+    <div class="dno">${esc(SECS[it.sec].title)} ${it.no}</div>
+    <div class="sym" lang="en">[${esc(it.sym)}]</div>
+    <div class="wl">${it.words.map(w=>`<button type="button" lang="en" data-w="${esc(plain(w))}">${w}</button>`).join('')}<button type="button" id="allw" style="font-family:var(--jp);font-size:13px;font-weight:700">🔊 全部</button></div>
+    ${it.note?`<div class="wnote">${esc(it.note)}</div>`:''}
+    <div class="body">${it.exp.map(t=>`<p>${esc(t)}</p>`).join('')}</div>
+    ${it.ex?`<div class="exs"><div class="xr" id="exr"><div class="xj">「${esc(it.ex.ja)}」</div><div class="xe" lang="en">${it.ex.en}</div><button class="btn sp" type="button" aria-label="読み上げ">🔊</button></div></div>`:''}
+    <div class="wnav">${prev?`<button class="btn" type="button" data-k="${k-1}">◀ [${esc(prev.sym)}]</button>`:'<span></span>'}${next?`<button class="btn" type="button" data-k="${k+1}">[${esc(next.sym)}] ▶</button>`:'<span></span>'}</div>`;
+  $('back').onclick=()=>{location.hash='';};
+  $('main').querySelectorAll('.wnav .btn').forEach(b=>b.onclick=()=>{location.hash='#s'+b.dataset.k;});
+  $('main').querySelectorAll('.wl button[data-w]').forEach(b=>b.onclick=()=>{stop(); speak(b.dataset.w,b);});
+  $('allw').onclick=e=>{stop(); speak(it.words.map(plain).join('. ')+'.',e.currentTarget);};
+  const r=$('exr'); if(r) r.querySelector('.sp').onclick=()=>{stop(); speak(it.ex.en,r);};
+  toTop();
+}
+function route(){
+  stop();
+  const m=location.hash.match(/^#s(\d+)$/), k=m?Number(m[1]):-1;
+  store.set('hatsu-pos', ALL[k]?location.hash:'');
+  if(ALL[k]) renderSym(k); else renderIndex();
+}
+if (!location.hash) { const p=store.get('hatsu-pos'); if (p) history.replaceState(null,'',p); }
+
+
+if (EMBED) {
+  const post = () => parent.postMessage({ sub: true, t: "h", h: Math.ceil(document.documentElement.getBoundingClientRect().height) }, "*");
+  new ResizeObserver(post).observe(document.body); window.addEventListener("load", post);
+  window.addEventListener("message", e => { const d = e.data || {};
+    if (d.t === "theme") document.documentElement.dataset.theme = d.dark ? "dark" : "light";
+    if (d.t === "stop") { try { stop(); } catch (er) {} } });
+}
+window.addEventListener('hashchange',route);
+route();
+if (EMBED) parent.postMessage({ sub: true, t: "ready" }, "*");
+
+</script>
+</body>
+</html>
