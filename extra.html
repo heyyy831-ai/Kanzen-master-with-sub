@@ -203,7 +203,7 @@ function vRank(v){ const n=v.name, us=/^en[-_]US/i.test(v.lang)?0:0.5;
 function pickVoice(){ enVoices=speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang)).sort((a,b)=>vRank(a)-vRank(b)||a.name.localeCompare(b.name));
   const chosen=store.get('goi-voice'); voice=(chosen&&enVoices.find(v=>v.voiceURI===chosen))||enVoices[0]||null; fillVoices(); }
 function fillVoices(){ const sel=$('vsel'); if(!sel) return; const chosen=store.get('goi-voice')||'';
-  sel.innerHTML='<option value="">（自動）</option>'+enVoices.map(v=>`<option value="${esc(v.voiceURI)}">${vRank(v)<3?'★ ':''}${esc(v.name+' ('+v.lang+')')}</option>`).join('');
+  sel.innerHTML='<option value="">（自動）'+(enVoices[0]?esc(enVoices[0].name):'')+'</option>'+enVoices.map(v=>`<option value="${esc(v.voiceURI)}">${vRank(v)<3?'★ ':''}${esc(v.name+' ('+v.lang+')')}</option>`).join('');
   sel.value=enVoices.some(v=>v.voiceURI===chosen)?chosen:''; sel.onchange=()=>{store.set('goi-voice',sel.value); pickVoice(); stop();}; }
 function speak(text,card,done){ if(!('speechSynthesis' in window)) return;
   document.querySelectorAll('.xc.playing,.vc.playing').forEach(c=>c.classList.remove('playing'));

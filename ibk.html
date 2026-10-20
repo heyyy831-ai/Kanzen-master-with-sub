@@ -520,23 +520,31 @@ function speakText(en){
   return s;
 }
 
-/* ===== 合成音声 ===== */
+/* ===== 合成音声（Google などの自然な声を優先。選んだ声は語彙・熟語などと共有） ===== */
+const NOVELTY = /\b(Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Fred|Junior|Ralph|Kathy|Grandma|Grandpa|Eddy|Flo|Reed|Rocko|Sandy|Shelley)\b/;
+const vRank = v => { const n = v.name, us = /^en[-_]US/i.test(v.lang) ? 0 : 0.5;
+  if (NOVELTY.test(n)) return 9; if (/Natural|Online/i.test(n)) return us; if (/^Google/i.test(n)) return (/US English/i.test(n) ? 1 : 1.2) + us;
+  if (/Premium|Enhanced|Siri/i.test(n)) return 2 + us; if (/Samantha|Ava|Allison|Aria|Jenny|Alex|Daniel|Karen|Moira/i.test(n)) return 3 + us; return 5 + us; };
+const vSort = a => a.sort((x, y) => vRank(x) - vRank(y) || x.name.localeCompare(y.name));
+const vOpts = vs => '<option value="">（自動）' + (vs[0] ? esc(vs[0].name) : '') + '</option>' + vs.map(v => '<option value="' + esc(v.voiceURI) + '">' + (vRank(v) < 3 ? '★ ' : '') + esc(v.name + ' (' + v.lang + ')') + '</option>').join('');
+const VKEY = "goi-voice", vGet = () => { try { return localStorage.getItem(VKEY) || ""; } catch (e) { return ""; } }, vSet = x => { try { localStorage.setItem(VKEY, x); } catch (e) {} };
 const AUD = (() => {
   let voices = [];
   const load = () => {
-    voices = (window.speechSynthesis ? speechSynthesis.getVoices() : []).filter(v => /^en/.test(v.lang));
-    const s = $("sVoice"), cur = s.value;
-    s.innerHTML = '<option value="">（自動）</option>' + voices.slice(0, 24).map(v => '<option value="' + esc(v.voiceURI) + '">' + esc(v.name + " (" + v.lang + ")") + '</option>').join("");
-    s.value = cur;
+    voices = vSort((window.speechSynthesis ? speechSynthesis.getVoices() : []).filter(v => /^en/i.test(v.lang)));
+    const s = $("sVoice"), chosen = vGet();
+    s.innerHTML = vOpts(voices);
+    s.value = voices.some(v => v.voiceURI === chosen) ? chosen : "";
+    s.onchange = () => vSet(s.value);
   };
-  if (window.speechSynthesis) { load(); speechSynthesis.onvoiceschanged = load; }
+  if (window.speechSynthesis) { load(); speechSynthesis.onvoiceschanged = load; setTimeout(load, 800); }
   return {
     play(text){
       return new Promise(res => {
         if (!window.speechSynthesis) { toast("このブラウザは音声読み上げに対応していません"); return res(); }
         speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(text);
-        const v = voices.find(v => v.voiceURI === $("sVoice").value) || voices.find(v => /Google US English|Samantha|Ava|Allison|Aria|Jenny/.test(v.name)) || voices.find(v => v.lang === "en-US") || voices[0];
+        const v = voices.find(v => v.voiceURI === $("sVoice").value) || voices[0];
         if (v) u.voice = v;
         u.lang = "en-US"; u.rate = Number($("sSpeed").value); u.onend = u.onerror = () => res();
         speechSynthesis.speak(u);

@@ -326,25 +326,29 @@ function renderDetailE(w){
   $('rate').setAttribute('aria-pressed',slow); $('rate').onclick=e=>{slow=!slow; e.currentTarget.setAttribute('aria-pressed',slow);};
   toTop();
 }
-// speech
+// speech（Google などの自然な声を優先）
+const NOVELTY = /\b(Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Fred|Junior|Ralph|Kathy|Grandma|Grandpa|Eddy|Flo|Reed|Rocko|Sandy|Shelley)\b/;
+const vRank = v => { const n = v.name, us = /^en[-_]US/i.test(v.lang) ? 0 : 0.5;
+  if (NOVELTY.test(n)) return 9; if (/Natural|Online/i.test(n)) return us; if (/^Google/i.test(n)) return (/US English/i.test(n) ? 1 : 1.2) + us;
+  if (/Premium|Enhanced|Siri/i.test(n)) return 2 + us; if (/Samantha|Ava|Allison|Aria|Jenny|Alex|Daniel|Karen|Moira/i.test(n)) return 3 + us; return 5 + us; };
+const vSort = a => a.sort((x, y) => vRank(x) - vRank(y) || x.name.localeCompare(y.name));
+const vOpts = vs => '<option value="">（自動）' + (vs[0] ? esc(vs[0].name) : '') + '</option>' + vs.map(v => '<option value="' + esc(v.voiceURI) + '">' + (vRank(v) < 3 ? '★ ' : '') + esc(v.name + ' (' + v.lang + ')') + '</option>').join('');
 let slow=false, playingAll=false, voice=null;
 let enVoices=[];
 function pickVoice(){
-  enVoices=speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang));
-  const vs=enVoices.filter(v=>/^en[-_]US/i.test(v.lang));
-  const pref=['Samantha','Google US English','Microsoft Aria','Microsoft Jenny','Alex'];
+  enVoices=vSort(speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang)));
   const chosen=store.get('goi-voice');
-  voice=(chosen&&enVoices.find(v=>v.voiceURI===chosen))||vs.find(v=>pref.some(p=>v.name.includes(p)))||vs[0]||enVoices[0]||null;
+  voice=(chosen&&enVoices.find(v=>v.voiceURI===chosen))||enVoices[0]||null;
   fillVoices();
 }
 function fillVoices(){
   const sel=$('vsel'); if(!sel) return;
   const chosen=store.get('goi-voice')||'';
-  sel.innerHTML='<option value="">（自動）</option>'+enVoices.map(v=>`<option value="${esc(v.voiceURI)}">${esc(v.name+' ('+v.lang+')')}</option>`).join('');
+  sel.innerHTML=vOpts(enVoices);
   sel.value=enVoices.some(v=>v.voiceURI===chosen)?chosen:'';
   sel.onchange=()=>{store.set('goi-voice',sel.value); pickVoice(); stop();};
 }
-if('speechSynthesis' in window){pickVoice(); speechSynthesis.onvoiceschanged=pickVoice;}
+if('speechSynthesis' in window){pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; setTimeout(pickVoice,800);}
 function speak(text,card,done){
   if(!('speechSynthesis' in window)){alert('このブラウザは読み上げに対応していません');return;}
   document.querySelectorAll('.card.playing').forEach(c=>c.classList.remove('playing'));
