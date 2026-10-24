@@ -431,6 +431,8 @@
   .wrap.ext{padding-bottom:0}
   #m-reading iframe{display:block;width:100%;height:calc(100vh - 60px);height:calc(100dvh - var(--navh,60px));border:0;border-top:1px solid var(--rule);background:var(--bg)}
   .wrap.rd{padding:0;max-width:none}
+  #m-howto{max-width:900px;margin:0 auto;padding:14px 18px 40px}
+  #m-howto img{display:block;width:100%;height:auto;border-radius:12px;box-shadow:0 2px 14px rgba(0,0,0,.12)}
   .nav .mt{padding:6px 9px}
   .nav .mt .num{margin-right:4px}
 
@@ -459,6 +461,7 @@
   </div>
   <div class="subnav" id="subnav" hidden>
     <span class="sl">その他</span>
+    <button class="st" type="button" data-m="howto" aria-pressed="false">学習方法</button>
     <button class="st" type="button" data-m="drill" aria-pressed="false">入れ替えドリル</button>
     <button class="st" type="button" data-m="boin" aria-pressed="false">英語の母音・子音</button>
     <button class="st" type="button" data-m="hatsu" aria-pressed="false">難発音の単語</button>
@@ -592,6 +595,7 @@
   </div>
 
 </div>
+<div class="mode sub" id="m-howto"><a href="gakushu.jpg" target="_blank" rel="noopener"><img src="gakushu.jpg" width="1130" height="1392" loading="lazy" alt="学習方法：『完全マスター英文法』で伸ばす英語運用力"></a></div>
 <div class="mode sub" id="m-reading"><iframe class="rdapp" data-src="reading/index.html" title="上級リーディング"></iframe></div>
 <div class="mode sub" id="m-ibk"><iframe class="subapp" data-src="ibk.html" title="日英異文化コミュニケーション" loading="lazy"></iframe></div>
 <div class="mode sub" id="m-boin"><iframe class="subapp" data-src="boin.html" title="英語の母音・子音" loading="lazy"></iframe></div>
@@ -774,7 +778,7 @@ function setChapter(ch){
   sIdx = 0;
   renderCheck(); renderSpeak(); drawBars(); drawHead(); savePos();
 }
-const MODE_NAME = { reading: "上級リーディング", ibk: "異文化コミュニケーション", boin: "英語の母音・子音", hatsu: "難発音の単語", jeigo: "気を付けるべき日本語英語", kotowaza: "ことわざ", fukisoku: "不規則動詞", goi: "単語・熟語・コロケーション", check: "文法理解度チェック", speak: "瞬間英作", link: "リンキング", drill: "入れ替えドリル" };
+const MODE_NAME = { howto: "学習方法", reading: "上級リーディング", ibk: "異文化コミュニケーション", boin: "英語の母音・子音", hatsu: "難発音の単語", jeigo: "気を付けるべき日本語英語", kotowaza: "ことわざ", fukisoku: "不規則動詞", goi: "単語・熟語・コロケーション", check: "文法理解度チェック", speak: "瞬間英作", link: "リンキング", drill: "入れ替えドリル" };
 function drawHead(){
   let badge, h1, sub = "";
   if (MODE === "drill") {
@@ -801,7 +805,7 @@ function drawHead(){
   $("head").innerHTML = '<div class="kicker"><span class="badge">' + badge + '</span><span class="tag t1">' + MODE_NAME[MODE] + '</span>' +
     (MODE === "link" || MODE === "drill" ? "" : '<span class="tag t2">第' + CH + '章 ' + esc(chName(CH)) + '</span>') + '</div><h1 class="jt">' + h1 + '</h1>' + sub;
 }
-const ETC = ["drill", "boin", "hatsu", "link", "jeigo", "kotowaza", "fukisoku"];
+const ETC = ["howto", "drill", "boin", "hatsu", "link", "jeigo", "kotowaza", "fukisoku"];
 function setMode(m){
   stopAll(); MODE = m;
   const etc = ETC.includes(m);
@@ -810,17 +814,17 @@ function setMode(m){
   document.querySelectorAll("#subnav .st").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.m === m)));
   if (etc) { try { localStorage.setItem("km-etc", m); } catch (e) {} }
   document.querySelectorAll(".mode").forEach(d => d.classList.toggle("on", d.id === "m-" + m));
-  const ext = m === "reading" || m === "ibk" || m === "hatsu" || m === "goi" || m === "jeigo" || m === "kotowaza" || m === "fukisoku" || m === "boin";
+  const ext = m === "howto" || m === "reading" || m === "ibk" || m === "hatsu" || m === "goi" || m === "jeigo" || m === "kotowaza" || m === "fukisoku" || m === "boin";
   document.querySelector(".wrap").classList.toggle("ext", ext);
   document.querySelector(".wrap").classList.toggle("rd", m === "reading");
   if (m === "reading") { rdFit(); const f = document.querySelector("#m-reading iframe"); if (!f.getAttribute("src")) f.addEventListener("load", rdTheme, { once: true }); }
-  if (ext) { const f = document.querySelector("#m-" + m + " iframe"); if (!f.getAttribute("src")) f.src = f.dataset.src; }
+  if (ext) { const f = document.querySelector("#m-" + m + " iframe"); if (f && !f.getAttribute("src")) f.src = f.dataset.src; }
   drawBars(); drawHead(); savePos();
   if (m === "reading") { const f = document.querySelector("#m-reading iframe"); window.scrollTo({ top: Math.max(0, f.getBoundingClientRect().top + window.scrollY - document.querySelector(".nav").offsetHeight) }); }
   else window.scrollTo({ top: 0 });
 }
 document.querySelector(".nav-in").addEventListener("click", e => { const b = e.target.closest(".mt"); if (!b) return;
-  if (b.dataset.m === "etc") { if (ETC.includes(MODE)) return; let last = "boin"; try { last = localStorage.getItem("km-etc") || "boin"; } catch (er) {} setMode(ETC.includes(last) ? last : "boin"); }
+  if (b.dataset.m === "etc") { if (ETC.includes(MODE)) return; let last = "howto"; try { last = localStorage.getItem("km-etc") || "howto"; } catch (er) {} setMode(ETC.includes(last) ? last : "howto"); }
   else setMode(b.dataset.m); });
 $("subnav").addEventListener("click", e => { const b = e.target.closest(".st"); if (b && b.dataset.m !== MODE) setMode(b.dataset.m); });
 function stopAll(){ rdStop(); document.querySelectorAll("iframe.subapp").forEach(f => { try { f.contentWindow.postMessage({ t: "stop" }, "*"); } catch (e) {} }); AUD.stop(); sStop(); lStop(); dStop(); }
