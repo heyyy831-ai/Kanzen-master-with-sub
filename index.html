@@ -464,15 +464,15 @@
   </div>
   <div class="subnav" id="subnav" hidden>
     <span class="sl">その他</span>
-    <button class="st" type="button" data-m="howto" aria-pressed="false">学習方法</button>
     <button class="st" type="button" data-m="drill" aria-pressed="false">入れ替えドリル</button>
     <button class="st" type="button" data-m="ibk" aria-pressed="false">異文化コミュ</button>
     <button class="st" type="button" data-m="boin" aria-pressed="false">英語の母音・子音</button>
-    <button class="st" type="button" data-m="hatsu" aria-pressed="false">難発音の単語</button>
     <button class="st" type="button" data-m="link" aria-pressed="false">リンキング</button>
+    <button class="st" type="button" data-m="hatsu" aria-pressed="false">難発音の単語</button>
+    <button class="st" type="button" data-m="fukisoku" aria-pressed="false">不規則動詞</button>
     <button class="st" type="button" data-m="jeigo" aria-pressed="false">気を付けるべき日本語英語</button>
     <button class="st" type="button" data-m="kotowaza" aria-pressed="false">ことわざ</button>
-    <button class="st" type="button" data-m="fukisoku" aria-pressed="false">不規則動詞</button>
+    <button class="st" type="button" data-m="howto" aria-pressed="false">学習方法</button>
   </div>
 </nav>
 
@@ -600,7 +600,7 @@
   </div>
 
 </div>
-<div class="mode sub" id="m-howto"><a href="gakushu.jpg?v=20261025" target="_blank" rel="noopener"><img src="gakushu.jpg?v=20261025" width="1131" height="1391" loading="lazy" alt="学習方法：『完全マスター英文法』で伸ばす英語運用力"></a></div>
+<div class="mode sub" id="m-howto"><a href="gakushu.jpg?v=20261027" target="_blank" rel="noopener"><img src="gakushu.jpg?v=20261027" width="941" height="1672" loading="lazy" alt="学習方法：『完全マスター英文法』で伸ばす英語運用力"></a></div>
 <div class="mode sub" id="m-reading"><iframe class="rdapp" data-src="reading/index.html" title="上級リーディング"></iframe></div>
 <div class="mode sub" id="m-sw"><iframe class="subapp" data-src="speech.html" title="スピーチ＆ライティング" loading="lazy"></iframe></div>
 <div class="mode sub" id="m-ibk"><iframe class="subapp" data-src="ibk.html" title="日英異文化コミュニケーション" loading="lazy"></iframe></div>
@@ -811,7 +811,7 @@ function drawHead(){
   $("head").innerHTML = '<div class="kicker"><span class="badge">' + badge + '</span><span class="tag t1">' + MODE_NAME[MODE] + '</span>' +
     (MODE === "link" || MODE === "drill" ? "" : '<span class="tag t2">第' + CH + '章 ' + esc(chName(CH)) + '</span>') + '</div><h1 class="jt">' + h1 + '</h1>' + sub;
 }
-const ETC = ["howto", "drill", "ibk", "boin", "hatsu", "link", "jeigo", "kotowaza", "fukisoku"];
+const ETC = ["drill", "ibk", "boin", "link", "hatsu", "fukisoku", "jeigo", "kotowaza", "howto"];
 function setMode(m){
   stopAll(); MODE = m;
   const etc = ETC.includes(m);
@@ -830,7 +830,7 @@ function setMode(m){
   else window.scrollTo({ top: 0 });
 }
 document.querySelector(".nav-in").addEventListener("click", e => { const b = e.target.closest(".mt"); if (!b) return;
-  if (b.dataset.m === "etc") { if (ETC.includes(MODE)) return; let last = "howto"; try { last = localStorage.getItem("km-etc") || "howto"; } catch (er) {} setMode(ETC.includes(last) ? last : "howto"); }
+  if (b.dataset.m === "etc") { if (ETC.includes(MODE)) return; let last = ETC[0]; try { last = localStorage.getItem("km-etc") || ETC[0]; } catch (er) {} setMode(ETC.includes(last) ? last : ETC[0]); }
   else setMode(b.dataset.m); });
 $("subnav").addEventListener("click", e => { const b = e.target.closest(".st"); if (b && b.dataset.m !== MODE) setMode(b.dataset.m); });
 function stopAll(){ rdStop(); document.querySelectorAll("iframe.subapp").forEach(f => { try { f.contentWindow.postMessage({ t: "stop" }, "*"); } catch (e) {} }); AUD.stop(); sStop(); lStop(); dStop(); }
