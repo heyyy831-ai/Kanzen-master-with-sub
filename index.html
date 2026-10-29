@@ -325,6 +325,7 @@
   .ctrls{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
   .ctrls .btn{min-width:92px;justify-content:center}
   .ctrls .btn.big{min-width:150px;font-size:15px;padding:10px 20px}
+  .ctrls .btn.secj{font-size:12.5px}
   .ctrls .btn.stop{background:var(--red);border-color:var(--red);color:#fff}
   .sets{margin-top:14px;background:var(--paper);border:1px solid var(--rule);border-radius:14px}
   .sets summary{list-style:none;cursor:pointer;padding:12px 18px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px}
@@ -365,6 +366,7 @@
     .stage{padding:16px 14px 14px}
     .ctrls .btn{min-width:0;flex:1}
     .ctrls .btn.big{flex-basis:100%}
+    .ctrls .btn{white-space:nowrap;padding-left:8px;padding-right:8px}
     .tbar{position:static}
     .sec-h .note{display:none}
   }
@@ -519,10 +521,12 @@
       <div class="disp" id="sDisp"></div>
       <div class="tmr" id="sTmr"><i></i></div>
       <div class="ctrls">
+        <button class="btn secj" id="sPrevSec" type="button">⏮ 前のSec</button>
         <button class="btn" id="sPrev" type="button">◀ 前へ</button>
         <button class="btn primary big" id="sShow" type="button">英語を表示＆再生</button>
         <button class="btn" id="sNext" type="button">次へ ▶</button>
         <button class="btn" id="sAuto" type="button">⏵ 自動モード</button>
+        <button class="btn secj" id="sNextSec" type="button">次のSec ⏭</button>
       </div>
       <div class="disp sans" id="sAns"></div>
     </div>
@@ -1070,6 +1074,7 @@ function sShow(){
   $("sAns").innerHTML = sOpen ? '<div class="ans"><div class="en">' + esc(q.en) + '</div></div>' : '';
   $("sDisp").classList.remove("fade"); void $("sDisp").offsetWidth; $("sDisp").classList.add("fade");
   $("sPrev").disabled = sIdx === 0;
+  sSecBtns();
   $("sNext").textContent = sIdx >= qs.length - 1 ? "最初から ↺" : "次へ ▶";
   $("sShow").textContent = sOpen ? "↻ もう一度再生" : "英語を表示＆再生";
   document.querySelectorAll("#sList li").forEach(li => li.classList.toggle("cur", Number(li.dataset.i) === sIdx));
@@ -1102,6 +1107,22 @@ function sStop(){ if (sRun) { sRun.abort(); sRun = null; } timer($("sTmr"), 0); 
 $("sShow").onclick = () => { if (sRun) sStop(); sReveal(); };
 $("sPrev").onclick = () => { sStop(); AUD.stop(); if (sIdx > 0) sIdx--; sOpen = false; sShow(); };
 $("sNext").onclick = () => { sStop(); AUD.stop(); sIdx = sIdx >= sItems().length - 1 ? 0 : sIdx + 1; sOpen = false; sShow(); };
+function sSecAt(d){ for (let i = sKI + d; i >= 0 && i < SPK.length; i += d) if (sItemsOf(i).length) return i; return -1; }
+function sSecLbl(i){ return esc(SPK[i].sec.replace("応用練習 ", "応用 ")); }
+function sSecBtns(){
+  const p = sSecAt(-1), n = sSecAt(1), bp = $("sPrevSec"), bn = $("sNextSec");
+  bp.disabled = p < 0; bn.disabled = n < 0;
+  bp.innerHTML = "⏮ " + (p < 0 ? "前のSec" : sSecLbl(p)); bn.innerHTML = (n < 0 ? "次のSec" : sSecLbl(n)) + " ⏭";
+  bp.title = p < 0 ? "" : "前のセクション：第" + SPK[p].ch + "章 " + SPK[p].sec; bn.title = n < 0 ? "" : "次のセクション：第" + SPK[n].ch + "章 " + SPK[n].sec;
+}
+function sGoSec(d){
+  const i = sSecAt(d); if (i < 0) return;
+  stopAll(); sKI = i; sIdx = 0;
+  if (SPK[i].ch !== CH) { CH = SPK[i].ch; const ci = LESSONS.findIndex(L => chOf(L.id) === CH); if (ci >= 0) cLI = ci; renderCheck(); }
+  renderSpeak(); drawBars(); drawHead(); savePos();
+}
+$("sPrevSec").onclick = () => sGoSec(-1);
+$("sNextSec").onclick = () => sGoSec(1);
 $("sAuto").onclick = () => { if (sRun) { sStop(); AUD.stop(); } else sFlow(); };
 $("sList").addEventListener("click", e => { const li = e.target.closest("li"); if (!li) return; sStop(); AUD.stop(); sIdx = Number(li.dataset.i); sOpen = false; sShow(); $("m-speak").querySelector(".stage").scrollIntoView({ behavior: "smooth", block: "center" }); });
 $("sEn").onclick = () => { sHideEn = !sHideEn; $("sList").classList.toggle("hide-en", sHideEn); $("sEn").textContent = sHideEn ? "英文を表示" : "英文を隠す"; };
