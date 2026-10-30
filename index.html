@@ -523,7 +523,7 @@
       <div class="ctrls">
         <button class="btn secj" id="sPrevSec" type="button">⏮ 前のSec</button>
         <button class="btn" id="sPrev" type="button">◀ 前へ</button>
-        <button class="btn primary big" id="sShow" type="button">英語を表示＆再生</button>
+        <button class="btn primary big" id="sShow" type="button">再生</button>
         <button class="btn" id="sNext" type="button">次へ ▶</button>
         <button class="btn" id="sAuto" type="button">⏵ 自動モード</button>
         <button class="btn secj" id="sNextSec" type="button">次のSec ⏭</button>
@@ -1070,13 +1070,13 @@ function sShow(){
   if (!q) { $("sDisp").innerHTML = '<p class="ph">このセクションには問題がありません</p>'; $("sAns").innerHTML = ''; return; }
   $("sProg").textContent = (sIdx + 1) + " / " + qs.length;
   $("sDisp").innerHTML = '<div class="qjp big">' + esc(q.ja) + '</div>' +
-    (sOpen ? '' : '<p class="ph">頭の中で英語にしてから「英語を表示＆再生」</p>');
+    (sOpen ? '' : '<p class="ph">口頭で瞬間英作してから「再生」＆口頭でリピート</p>');
   $("sAns").innerHTML = sOpen ? '<div class="ans"><div class="en">' + esc(q.en) + '</div></div>' : '';
   $("sDisp").classList.remove("fade"); void $("sDisp").offsetWidth; $("sDisp").classList.add("fade");
   $("sPrev").disabled = sIdx === 0;
   sSecBtns();
   $("sNext").textContent = sIdx >= qs.length - 1 ? "最初から ↺" : "次へ ▶";
-  $("sShow").textContent = sOpen ? "↻ もう一度再生" : "英語を表示＆再生";
+  $("sShow").textContent = sOpen ? "↻ もう一度再生" : "再生";
   document.querySelectorAll("#sList li").forEach(li => li.classList.toggle("cur", Number(li.dataset.i) === sIdx));
 }
 function sReveal(){
